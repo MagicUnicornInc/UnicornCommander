@@ -1,0 +1,77 @@
+--- client.py.orig	2025-03-16 00:00:00.000000000 +0000
++++ client.py	2025-03-16 00:00:00.000000000 +0000
+@@ def send_message(self, message, model_params=None, stream=False):
+-    self.context.append({"role": "user", "content": message})
+-    try:
+-        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=120)) as session:
+-             async with session.post(self.endpoint, json=data, timeout=aiohttp.ClientTimeout(total=120)) as response:
+-                if response.status != 200:
+-                    error_text = await response.text()
+-                    self.message_error.emit(f"Error: {response.status} - {error_text}")
+-                    return
+-                
+-                if stream:
+-                    # Handle streaming response
+-                    full_response = ""
+-                    async for line in response.content:
+-                        line = line.decode('utf-8').strip()
+-                        if line and line != "data: [DONE]" and line.startswith("data: "):
+-                            try:
+-                                data = json.loads(line[6:])  # Remove "data: " prefix
+-                                if "choices" in data and data["choices"]:
+-                                    delta = data["choices"][0].get("delta", {})
+-                                    content = delta.get("content", "")
+-                                    if content:
+-                                        full_response += content
+-                                        self.message_chunk.emit(content)
+-                            except json.JSONDecodeError:
+-                                self.logger.warning(f"Failed to parse JSON: {line}")
+-                    
+-                    # Add assistant response to context
+-                    self.context.append({"role": "assistant", "content": full_response})
+-                    self.message_completed.emit(full_response)
+-                    return full_response
+-                else:
+-                    # Handle non-streaming response
+-                    data = await response.json()
+-                    response_text = data["choices"][0]["message"]["content"]
+-                    
+-                    # Add assistant response to context
+-                    self.context.append({"role": "assistant", "content": response_text})
+-                    self.message_completed.emit(response_text)
+-                    return response_text
+-    except aiohttp.ClientError as e:
+-        self.message_error.emit(f"Connection error: {str(e)}")
+-    except asyncio.TimeoutError:
+-        self.message_error.emit("Request timed out")
+-    except Exception as e:
+-        self.message_error.emit(f"Error: {str(e)}")
++    self.context.append({"role": "user", "content": message})
++    try:
++        # Use Ollama's API endpoint:
++        ollama_url = "http://localhost:11434/api/chat"
++        payload = {
++            "model": model_params.get("model") if model_params else "default-model",
++            "prompt": message
++        }
++
++        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=120)) as session:
++            async with session.post(ollama_url, json=payload, timeout=aiohttp.ClientTimeout(total=120)) as response:
++                if response.status != 200:
++                    error_text = await response.text()
++                    self.message_error.emit(f"Ollama Error: {response.status} - {error_text}")
++                    return
++
++                data = await response.json()
++                # Assuming Ollama returns the response in a key named "response"
++                response_text = data.get("response", "")
++
++                self.context.append({"role": "assistant", "content": response_text})
++                self.message_completed.emit(response_text)
++                return response_text
++    except aiohttp.ClientError as e:
++        self.message_error.emit(f"Connection error: {str(e)}")
++    except asyncio.TimeoutError:
++        self.message_error.emit("Request timed out")
++    except Exception as e:
++        self.message_error.emit(f"Error: {str(e)}")

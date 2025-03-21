@@ -1,0 +1,947 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.torch.quantization.tensor_quantize &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/torch/quantization/tensor_quantize';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.torch.quantization.tensor_quantize</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.torch.quantization.tensor_quantize</h1><div class="highlight"><pre>
+<span></span>#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+import quark.torch.kernel  # noqa
+
+from typing import Optional, List, Dict, Any, Union
+from abc import ABC, abstractmethod
+import math
+import torch
+import torch.nn as nn
+from quark.torch.quantization.observer.observer import ObserverBase, PlaceholderObserver
+from quark.torch.quantization.config.config import QuantizationSpec
+from quark.torch.quantization.observer.tqt_observer import TQTObserver
+from quark.torch.quantization.observer.lsq_observer import LSQObserver
+from quark.torch.quantization.config.type import Dtype, QSchemeType, ZeroPointType, ScaleType
+from quark.torch.quantization.utils import calculate_qmin_qmax, get_num_bits
+
+
+<div class="viewcode-block" id="FakeQuantizeBase">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/quantization/tensor_quantize/index.html#quark.torch.quantization.tensor_quantize.FakeQuantizeBase">[docs]</a>
+class FakeQuantizeBase(ABC, nn.Module):
+    r&quot;&quot;&quot;Base fake quantize module.
+
+    Base fake quantize module
+    Any fake quantize implementation should derive from this class.
+
+    Concrete fake quantize module should follow the same API. In forward, they will update
+    the statistics of the observed Tensor and fake quantize the input. They should also provide a
+    `calculate_qparams` function that computes the quantization parameters given
+    the collected statistics.
+
+    &quot;&quot;&quot;
+
+    fake_quant_enabled: torch.Tensor
+    observer_enabled: torch.Tensor
+
+    def __init__(self, quant_spec: QuantizationSpec, device: Optional[torch.device] = None) -&gt; None:
+        &quot;&quot;&quot;Set fake_quant_enabled and observer_enabled.&quot;&quot;&quot;
+        super().__init__()
+
+        self.quant_spec = quant_spec
+
+        # fake_quant_enabled and observer_enabled are buffers to support their
+        # replication in DDP. Data type is uint8 because Multi-GPU does not support
+        # bool tensors.
+        self.register_buffer(&#39;fake_quant_enabled&#39;, torch.tensor([1], dtype=torch.uint8, device=device))
+        self.register_buffer(&#39;observer_enabled&#39;, torch.tensor([1], dtype=torch.uint8, device=device))
+
+    @abstractmethod
+    def forward(self, x: torch.Tensor) -&gt; torch.Tensor:
+        pass
+
+    def calculate_qparams(self, x: torch.Tensor) -&gt; None:
+        pass
+
+    @abstractmethod
+    def to_freezed_module(self) -&gt; nn.Module:
+        pass
+
+    def enable_fake_quant(self, enabled: bool = True) -&gt; None:
+        self.fake_quant_enabled[0] = 1 if enabled else 0
+
+    def disable_fake_quant(self) -&gt; None:
+        self.enable_fake_quant(False)
+
+    def enable_observer(self, enabled: bool = True) -&gt; None:
+        self.observer_enabled[0] = 1 if enabled else 0
+
+    def disable_observer(self) -&gt; None:
+        self.enable_observer(False)
+
+    @property
+    def is_observer_enabled(self) -&gt; bool:
+        return self.observer_enabled[0].item() == 1
+
+    @property
+    def is_fake_quant_enabled(self) -&gt; bool:
+        return self.fake_quant_enabled[0].item() == 1
+
+<div class="viewcode-block" id="FakeQuantizeBase.update_buffer">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/quantization/tensor_quantize/index.html#quark.torch.quantization.tensor_quantize.FakeQuantizeBase.update_buffer">[docs]</a>
+    def update_buffer(self, buffer_name: str, new_value: Union[torch.Tensor, None],
+                      input_tensor_device: torch.device) -&gt; None:
+        &quot;&quot;&quot;
+        Update the value of a registered buffer while ensuring that its shape,
+        device, and data type match the input tensor.
+
+        Parameters:
+        - buffer_name: The name of the buffer to update
+        - new_value: The new value to assign to the buffer
+        - input_tensor_device: The target device (e.g., torch.device(&#39;cuda&#39;) or torch.device(&#39;cpu&#39;))
+        &quot;&quot;&quot;
+
+        buffer = getattr(self, buffer_name)
+
+        if new_value is not None:
+            if buffer.shape != new_value.shape:
+                buffer.resize_(new_value.shape)
+            buffer = buffer.to(new_value.dtype)
+            buffer.copy_(new_value)
+
+        buffer = buffer.to(input_tensor_device)
+        setattr(self, buffer_name, buffer)</div>
+
+
+    @staticmethod  # type: ignore
+    def get_fake_quantize(quant_spec: QuantizationSpec,
+                          device: Optional[torch.device] = None,
+                          **kwargs) -&gt; &#39;FakeQuantizeBase&#39;:
+        if quant_spec.dtype in [Dtype.mx, Dtype.mx6, Dtype.mx9, Dtype.bfp16]:
+            return NonScaledFakeQuantize(quant_spec=quant_spec, device=device)
+        else:
+            return ScaledFakeQuantize(quant_spec=quant_spec, device=device, **kwargs)</div>
+
+
+
+<div class="viewcode-block" id="ScaledFakeQuantize">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/quantization/tensor_quantize/index.html#quark.torch.quantization.tensor_quantize.ScaledFakeQuantize">[docs]</a>
+class ScaledFakeQuantize(FakeQuantizeBase):
+    scale: torch.Tensor
+    zero_point: torch.Tensor
+
+    def __init__(
+            self,
+            quant_spec: QuantizationSpec,
+            device: Optional[torch.device] = None,
+            **kwargs: Any,  # TODO: Delete kwargs here
+    ) -&gt; None:
+        super().__init__(quant_spec, device)
+
+        # Set properties with Quant Config
+        self.dtype = quant_spec.dtype
+        self.mx_element_dtype = quant_spec.mx_element_dtype
+        self.is_dynamic = quant_spec.is_dynamic
+        self.qscheme = quant_spec.qscheme
+        self.qscheme_str_name = getattr(quant_spec.qscheme, &quot;value&quot;, None)
+        self.ch_axis = quant_spec.ch_axis
+        self.group_size = quant_spec.group_size
+        self.symmetric = quant_spec.symmetric
+        self.round_method = getattr(quant_spec.round_method, &quot;value&quot;, None)
+        self.scale_type = quant_spec.scale_type
+        self._num_bits = get_num_bits(quant_spec.dtype)
+
+        self.scale_torch_dtype = None
+        if self.scale_type in [ScaleType.float32, ScaleType.float16, ScaleType.bfloat16]:
+            self.scale_torch_dtype = self.scale_type.to_torch_dtype()
+
+        self.zero_point_type = quant_spec.zero_point_type
+
+        if self.dtype is Dtype.mx:
+            assert self.mx_element_dtype is not None
+            self.quant_min, self.quant_max = calculate_qmin_qmax(self.mx_element_dtype)
+        elif self.dtype in [Dtype.mx6, Dtype.mx9]:
+            self.quant_min = self.quant_max = 0.0
+        else:
+            self.quant_min, self.quant_max = calculate_qmin_qmax(self.dtype)
+        self.observer = self.create_observer(quant_spec, device)
+        self.verify_observer(quant_spec, self.observer)
+        self.register_buffer(&#39;scale&#39;, torch.tensor(1.0, dtype=self.scale_torch_dtype, device=device))
+
+        if self.zero_point_type == ZeroPointType.float32:
+            self.register_buffer(&#39;zero_point&#39;, torch.tensor(0.0, dtype=torch.float, device=device))
+        else:
+            self.register_buffer(&#39;zero_point&#39;, torch.tensor(0, dtype=torch.int, device=device))
+
+    @staticmethod
+    def create_observer(quant_spec: QuantizationSpec, device: Optional[torch.device] = None) -&gt; ObserverBase:
+        if quant_spec.observer_cls is not None:
+            return quant_spec.observer_cls(quant_spec, device)
+        else:
+            return PlaceholderObserver(quant_spec)
+
+    # TODO: Add verify_observer to init.
+    @staticmethod
+    def verify_observer(quant_spec: QuantizationSpec, observer: ObserverBase) -&gt; None:
+        if quant_spec.dtype in [Dtype.bfloat16, Dtype.float16]:
+            assert isinstance(observer, PlaceholderObserver), f&quot;{quant_spec.dtype} only suuport for PlaceholderObserver&quot;
+        # elif quant_spec.dtype in [Dtype.int4, Dtype.uint4, Dtype.int8, Dtype.uint8]:
+        #     assert isinstance(observer, UniformScalingObserver)
+        # elif quant_spec.dtype in [Dtype.fp8_e4m3]:
+        #     assert isinstance(
+        #         observer,
+        #         (PerTensorMinMaxObserver, PerTensorMSEObserver, PerTensorPercentileObserver, PerChannelMinMaxObserver))
+
+    def calculate_qparams(self, X: torch.Tensor) -&gt; None:
+        qparams = self.observer._calculate_qparams()
+        if qparams is not None:
+            _scale, _zero_point = qparams
+            self.update_buffer(&#39;scale&#39;, _scale, X.device)
+            self.update_buffer(&#39;zero_point&#39;, _zero_point, X.device)
+
+    def forward(self, X: torch.Tensor) -&gt; torch.Tensor:
+        # Do observation
+        if self.is_observer_enabled or self.is_dynamic:
+            self.observer(X.detach())
+            self.calculate_qparams(X)
+
+        # Do fake quantize
+        if self.is_fake_quant_enabled:
+            if isinstance(self.observer, TQTObserver):
+                X = quark.torch.kernel.tqt_quantize(  # type: ignore[attr-defined]
+                    X, self.observer.log_threshold, self.zero_point, self.observer.domain, self.round_method)
+            elif isinstance(self.observer, LSQObserver):
+                grad_factor = 1.0 / math.sqrt(X.numel() * self.observer.quant_max)
+                X = quark.torch.kernel.lsq_quantize(  # type: ignore[attr-defined]
+                    X, self.observer.scale + self.observer.eps, self.observer.zero_point, grad_factor,
+                    self.observer.quant_min, self.observer.quant_max, self.ch_axis, self.round_method)
+            else:
+                mx_element_dtype_value = &#39;None&#39; if self.mx_element_dtype is None else self.mx_element_dtype.value
+                if self.zero_point_type == ZeroPointType.float32:
+                    X = quark.torch.kernel.scaled_fake_quantize(  # type: ignore[attr-defined]
+                        self.dtype.value,
+                        X,
+                        self.scale,
+                        self.zero_point.to(torch.float),
+                        self.ch_axis,
+                        self.group_size,
+                        self.quant_min,
+                        self.quant_max,
+                        self.round_method,
+                        self.qscheme_str_name,
+                        mx_element_dtype_value,
+                    )
+                else:
+                    X = quark.torch.kernel.scaled_fake_quantize(  # type: ignore[attr-defined]
+                        self.dtype.value,
+                        X,
+                        self.scale,
+                        self.zero_point.to(torch.int),
+                        self.ch_axis,
+                        self.group_size,
+                        self.quant_min,
+                        self.quant_max,
+                        self.round_method,
+                        self.qscheme_str_name,
+                        mx_element_dtype_value,
+                    )
+
+        return X
+
+    def extra_repr(self) -&gt; str:
+        return &#39;fake_quant_enabled={}, observer_enabled={}, &#39; \
+                   &#39;quant_min={}, quant_max={}, dtype={}, qscheme={}, mx_element_dtype={}, ch_axis={}, &#39; \
+                   &#39;scale={}, zero_point={}&#39;.format(
+                       self.fake_quant_enabled, self.observer_enabled,
+                       self.quant_min, self.quant_max,
+                       self.dtype, self.qscheme, self.mx_element_dtype, self.ch_axis, self.scale, self.zero_point)
+
+    def _save_to_state_dict(self, destination: Dict[str, Union[torch.nn.Parameter, torch.Tensor]], prefix: str,
+                            keep_vars: bool) -&gt; None:
+        # We cannot currently register scalar values as buffers, so need to manually
+        # specify serialization here.
+        super()._save_to_state_dict(destination, prefix, keep_vars)  # type: ignore
+        if self.dtype in [
+                Dtype.int4, Dtype.uint4, Dtype.int8, Dtype.uint8, Dtype.fp8_e4m3, Dtype.fp8_e5m2, Dtype.mx, Dtype.mx6,
+                Dtype.mx9
+        ]:
+            destination[prefix + &#39;scale&#39;] = self.scale
+            destination[prefix + &#39;zero_point&#39;] = self.zero_point
+
+    def _load_from_state_dict(self, state_dict: Dict[str, Union[torch.nn.Parameter, torch.Tensor]], prefix: str,
+                              local_metadata: Dict[str, Any], strict: bool, missing_keys: List[str],
+                              unexpected_keys: List[str], error_msgs: List[str]) -&gt; None:
+        # Removing this function throws an error that the the size of the loaded tensor does not match the original size
+        # i.e., These buffers start out with numel 0 and become numel 1 once they have their first forward pass.
+        local_state = [&#39;scale&#39;, &#39;zero_point&#39;]
+        for name in local_state:
+            key = prefix + name
+            if key in state_dict:
+                val = state_dict[key]
+                # Custom handling to allow loading scale and zero_point
+                # of size N into uninitialized buffers of size 0. The
+                # buffers are resized here, and the values are copied in
+                # the default state_dict loading code of the parent.
+                if name == &#39;scale&#39;:
+                    self.scale.resize_(val.shape)
+                else:
+                    assert name == &#39;zero_point&#39;
+                    self.zero_point.resize_(val.shape)
+                # For torchscript module we need to update the attributes here since we do not
+                # call the `_load_from_state_dict` function defined module.py
+                if torch.jit.is_scripting():  # type: ignore[attr-defined]
+                    if name == &#39;scale&#39;:
+                        self.scale.copy_(val)
+                    else:
+                        assert name == &#39;zero_point&#39;
+                        self.zero_point.copy_(val)
+            elif strict:
+                missing_keys.append(key)
+
+        super()._load_from_state_dict(state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys,
+                                      error_msgs)  # type: ignore
+
+    def to_freezed_module(self) -&gt; nn.Module:
+        freezed_fake_quantize_model = FreezedScaledFakeQuantize(self.dtype, self.quant_spec)
+        if self.dtype in [
+                Dtype.int4, Dtype.uint4, Dtype.int8, Dtype.uint8, Dtype.fp8_e4m3, Dtype.fp8_e5m2, Dtype.mx, Dtype.mx6,
+                Dtype.mx9
+        ]:
+            freezed_fake_quantize_model.register_buffer(&#39;scale&#39;, self.scale)
+            freezed_fake_quantize_model.register_buffer(&#39;zero_point&#39;, self.zero_point)
+        freezed_fake_quantize_model.qscheme = self.qscheme
+        freezed_fake_quantize_model.qscheme_str_name = self.qscheme_str_name
+        freezed_fake_quantize_model.ch_axis = self.ch_axis
+        freezed_fake_quantize_model.group_size = self.group_size
+        freezed_fake_quantize_model.round_method = self.round_method
+        freezed_fake_quantize_model.quant_min = getattr(self, &#39;quant_min&#39;, None)
+        freezed_fake_quantize_model.quant_max = getattr(self, &#39;quant_max&#39;, None)
+        freezed_fake_quantize_model.mx_element_dtype = self.mx_element_dtype
+        freezed_fake_quantize_model.zero_point_type = self.zero_point_type
+        freezed_fake_quantize_model.quant_spec = self.quant_spec
+        return freezed_fake_quantize_model</div>
+
+
+
+class FreezedScaledFakeQuantize(nn.Module):
+    scale: torch.Tensor
+    zero_point: torch.Tensor
+
+    def __init__(self, dtype: Dtype, quant_spec: QuantizationSpec) -&gt; None:
+        super(FreezedScaledFakeQuantize, self).__init__()
+        self.zero_point_type: Optional[ZeroPointType] = quant_spec.zero_point_type
+        self.register_buffer(&#39;scale&#39;, torch.tensor([1.0], dtype=torch.float))
+        if self.zero_point_type == ZeroPointType.float32:
+            self.register_buffer(&#39;zero_point&#39;, torch.tensor([0.0], dtype=torch.float))
+        else:
+            self.register_buffer(&#39;zero_point&#39;, torch.tensor([0], dtype=torch.int))
+        self.dtype: Dtype = dtype
+        self.quant_spec = quant_spec
+        self.quant_min: Optional[int] = None
+        self.quant_max: Optional[int] = None
+        self.qscheme: Optional[QSchemeType] = None
+        self.qscheme_str_name: Optional[str] = None
+        self.ch_axis: Optional[int] = None
+        self.group_size: Optional[int] = None
+        self.round_method: Optional[int] = None
+        self.mx_element_dtype: Optional[Dtype] = None
+
+    def forward(self, X: torch.Tensor) -&gt; torch.Tensor:
+        mx_element_dtype_value = &#39;None&#39; if self.mx_element_dtype is None else self.mx_element_dtype.value
+        if self.zero_point_type == ZeroPointType.float32:
+            X = quark.torch.kernel.scaled_fake_quantize(  # type: ignore[attr-defined]
+                self.dtype.value, X, self.scale, self.zero_point.to(torch.float), self.ch_axis, self.group_size,
+                self.quant_min, self.quant_max, self.round_method, self.qscheme_str_name, mx_element_dtype_value)
+        else:
+            X = quark.torch.kernel.scaled_fake_quantize(  # type: ignore[attr-defined]
+                self.dtype.value, X, self.scale, self.zero_point.to(torch.int), self.ch_axis, self.group_size,
+                self.quant_min, self.quant_max, self.round_method, self.qscheme_str_name, mx_element_dtype_value)
+        assert isinstance(X, torch.Tensor)
+
+        return X
+
+    def _load_from_state_dict(
+        self,
+        state_dict: Dict[str, Any],
+        prefix: str,
+        local_metadata: Dict[str, Any],
+        strict: bool,
+        missing_keys: List[str],
+        unexpected_keys: List[str],
+        error_msgs: List[str],
+    ) -&gt; None:
+
+        for name, value in state_dict.items():
+            if &quot;scale&quot; in name:
+                self.scale.resize_(value.shape)
+            if &quot;zero_point&quot; in name:
+                self.zero_point.resize_(value.shape)
+
+        super()._load_from_state_dict(state_dict, prefix, local_metadata, strict, missing_keys, unexpected_keys,
+                                      error_msgs)  # type: ignore
+
+
+<div class="viewcode-block" id="NonScaledFakeQuantize">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/quantization/tensor_quantize/index.html#quark.torch.quantization.tensor_quantize.NonScaledFakeQuantize">[docs]</a>
+class NonScaledFakeQuantize(FakeQuantizeBase):
+
+    def __init__(self, quant_spec: QuantizationSpec, device: Optional[torch.device] = None) -&gt; None:
+        super().__init__(quant_spec, device)
+
+        self.dtype = quant_spec.dtype
+        self.mx_element_dtype = quant_spec.mx_element_dtype
+        self.axis = quant_spec.ch_axis
+        self.group_size = quant_spec.group_size
+        self.is_dynamic = quant_spec.is_dynamic
+
+    def forward(self, X: torch.Tensor) -&gt; torch.Tensor:
+        X = quark.torch.kernel.non_scaled_fake_quantize(  # type: ignore[attr-defined]
+            X, self.dtype.value, self.mx_element_dtype.value if self.mx_element_dtype is not None else &quot;&quot;, self.axis,
+            self.group_size)
+        assert isinstance(X, torch.Tensor)
+        return X
+
+    def to_freezed_module(self) -&gt; nn.Module:
+        return self</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

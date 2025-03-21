@@ -1,0 +1,5 @@
+apiVersion: v2
+name: kde-ai-interface
+description: KDE AI Interface with AMD hardware acceleration
+version: 0.1.0
+appVersion: "1.0.0"

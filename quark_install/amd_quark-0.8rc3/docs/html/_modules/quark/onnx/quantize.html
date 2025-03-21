@@ -1,0 +1,1697 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.onnx.quantize &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/onnx/quantize';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.onnx.quantize</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.onnx.quantize</h1><div class="highlight"><pre>
+<span></span>#
+# Modifications copyright(c) 2023 Advanced Micro Devices,Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+# -------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for
+# license information.
+# --------------------------------------------------------------------------
+from quark.shares.utils.log import ScreenLogger, log_errors
+import tempfile
+from pathlib import Path
+from typing import Union, Optional, List, Dict, Any, Tuple
+
+import time
+import onnx
+from onnxruntime.quantization.calibrate import (CalibrationDataReader, CalibrationMethod)
+from onnxruntime.quantization.quant_utils import (ms_domain, QuantizationMode, QuantType, QuantFormat)
+from onnxruntime.quantization.onnx_model import ONNXModel
+from onnxsim import simplify
+from .calibrate import (create_calibrator_power_of_two, create_calibrator_float_scale)
+from .optimize import optimize
+from .equalization import cle_transforms, replace_all_clip6_to_relu
+from .quant_utils import (VAI_DOMAIN, COP_DOMAIN, VitisQuantType, VitisQuantFormat, get_exclude_nodes,
+                          get_matmul_nodes_without_weights, CachedDataReader, RandomDataReader, check_onnx_model,
+                          run_onnx_model, print_quantize_info, print_quantize_dynamic_info, is_ort_version_below,
+                          Int16Method, PathDataReader, remove_initializer_from_input, fp32_nodes, print_fp32_nodes,
+                          check_model_quantizable, save_tensor_hist_fig, PowerOfTwoMethod, customqdq_to_contribqdq,
+                          skip_node_with_inf_tensor, add_or_update_opset_import, check_ir_version, check_opset_version,
+                          check_qdq_model, print_quantized_info, check_extra_quant_op_types, convert_fp16_scale_to_fp32,
+                          get_eltwise_op, get_fake_tensor_range, match_exclude_subgraphs, check_model_is_fp16)
+
+from .registry import (QLinearOpsRegistry, QDQRegistry, NPUCnnRegistry, NPUTransformerRegistry)
+from .bias_correction import bias_correction
+from .smooth_quant import smooth_transforms
+from .quarot import rotation_transforms
+if is_ort_version_below(&quot;1.18.0&quot;):
+    from .cpu_quantizer import VitisQDQCPUQuantizer
+    from .onnx_quantizer import VitisONNXQuantizer, ONNXQuantizer
+    from .qdq_quantizer import VitisExtendedQuantizer, VitisQDQQuantizer, VitisQDQNPUCNNQuantizer, VitisBFPQuantizer, QDQNPUTransformerQuantizer
+else:
+    from .quantizers.cpu_quantizer import VitisQDQCPUQuantizer  # type: ignore
+    from .quantizers.onnx_quantizer import ONNXQuantizer, VitisONNXQuantizer
+    from .quantizers.qdq_quantizer import VitisQDQQuantizer
+    from .quantizers.npu_cnn_quantizer import VitisQDQNPUCNNQuantizer
+    from .quantizers.npu_transformer_quantizer import QDQNPUTransformerQuantizer
+    from .quantizers.extended_quantizer import VitisExtendedQuantizer
+    from .quantizers.bfp_quantizer import VitisBFPQuantizer
+from .quantizers.matmul_nbits_quantizer import (MatMulNBitsQuantizer, DefaultWeightOnlyQuantConfig,
+                                                GPTQWeightOnlyQuantConfig, HQQWeightOnlyQuantConfig)
+
+logger = ScreenLogger(__name__)
+
+
+@log_errors
+def check_static_quant_arguments(quant_format: VitisQuantFormat, activation_type: Union[QuantType, VitisQuantType],
+                                 weight_type: Union[QuantType, VitisQuantType],
+                                 calibrate_method: Union[CalibrationMethod, PowerOfTwoMethod, Int16Method]) -&gt; None:
+
+    vitis_qwb_types = [VitisQuantType.QInt32, VitisQuantType.QUInt32, VitisQuantType.QFloat16, VitisQuantType.QBFloat16]
+    ort_int4_types = []
+    if not is_ort_version_below(&quot;1.19.0&quot;):
+        ort_int4_types = [QuantType.QInt4, QuantType.QUInt4]
+    if (activation_type in vitis_qwb_types or weight_type in vitis_qwb_types) and quant_format != VitisQuantFormat.QDQ:
+        raise ValueError(&quot;Only VitisQuantFormat.QDQ supports wide bits quantization types.&quot;)
+
+    elif (activation_type in ort_int4_types
+          or weight_type in ort_int4_types) and (not isinstance(calibrate_method, CalibrationMethod)
+                                                 or not isinstance(quant_format, QuantFormat)):
+        raise ValueError(
+            &quot;Only MinMax, Percentile Method and QuantFormat supports int4/uint4 quantization types or onnxruntime version below 1.19.0&quot;
+        )
+
+
+@log_errors
+def check_fast_fintune_arguments(extra_options: Dict[str, Any], activation_type: Union[QuantType, VitisQuantType],
+                                 weight_type: Union[QuantType, VitisQuantType]) -&gt; None:
+
+    if not is_ort_version_below(&quot;1.19.0&quot;):
+        int_types = [QuantType.QInt4, QuantType.QUInt4]
+        if activation_type in int_types or weight_type in int_types:
+            raise ValueError(&quot;Fast finetune does not support int4 or uint4.&quot;)
+
+    if weight_type in [VitisQuantType.QFloat16, VitisQuantType.QBFloat16]:
+        if &quot;AddQDQPairToWeight&quot; in extra_options and not extra_options[&quot;AddQDQPairToWeight&quot;]:
+            logger.warning(&quot;Fast finetune requires not to fold QuantizeLinear for weights.&quot;)
+        extra_options[&quot;AddQDQPairToWeight&quot;] = True
+    else:
+        if &quot;AddQDQPairToWeight&quot; in extra_options and extra_options[&quot;AddQDQPairToWeight&quot;]:
+            logger.warning(&quot;Fast finetune requires folding QuantizeLinear for weights.&quot;)
+        extra_options[&quot;AddQDQPairToWeight&quot;] = False
+
+
+@log_errors
+def quantize_static(
+    model_input: str,
+    model_output: str,
+    calibration_data_reader: CalibrationDataReader,
+    calibration_data_path: Optional[str] = None,
+    quant_format: Union[QuantFormat, VitisQuantFormat] = QuantFormat.QDQ,
+    calibrate_method: Union[CalibrationMethod, PowerOfTwoMethod, Int16Method] = PowerOfTwoMethod.MinMSE,
+    input_nodes: Optional[List[str]] = [],
+    output_nodes: Optional[List[str]] = [],
+    op_types_to_quantize: Optional[List[str]] = [],
+    extra_op_types_to_quantize: List[str] = [],
+    per_channel: bool = False,
+    reduce_range: bool = False,
+    activation_type: QuantType = QuantType.QInt8,
+    weight_type: QuantType = QuantType.QInt8,
+    nodes_to_quantize: List[str] = [],
+    nodes_to_exclude: List[str] = [],
+    subgraphs_to_exclude: List[Tuple[List[str]]] = [],
+    optimize_model: bool = True,
+    use_external_data_format: bool = False,
+    execution_providers: Optional[List[str]] = [&#39;CPUExecutionProvider&#39;],
+    enable_dpu: bool = False,
+    enable_npu_cnn: bool = False,
+    enable_npu_transformer: bool = False,
+    specific_tensor_precision: bool = False,
+    convert_fp16_to_fp32: bool = False,
+    convert_nchw_to_nhwc: bool = False,
+    debug_mode: bool = False,
+    include_cle: bool = False,
+    include_sq: bool = False,
+    include_rotation: bool = False,
+    include_fast_ft: bool = False,
+    include_auto_mp: bool = False,
+    print_summary: bool = True,
+    extra_options: Optional[Dict[str, Any]] = {},
+) -&gt; None:
+    if nodes_to_quantize is None:
+        nodes_to_quantize = []
+    if nodes_to_exclude is None:
+        nodes_to_exclude = []
+    if subgraphs_to_exclude is None:
+        subgraphs_to_exclude = []
+    if extra_options is None:
+        extra_options = {}
+    if not convert_fp16_to_fp32 and not extra_options.get(&quot;QuantizeFP16&quot;, False):
+        model_is_fp16 = check_model_is_fp16(model_input)
+        if model_is_fp16:
+            logger.warning(
+                &quot;Detected that the input model is an FP16 model. It will proceed with quantization based on the FP16 model. &quot;
+            )
+            extra_options[&quot;QuantizeFP16&quot;] = True
+
+    if enable_dpu:
+        logger.warning(
+            &quot;The &#39;enable_dpu&#39; parameter will be deprecated in future versions. Please use &#39;enable_npu_cnn&#39; instead.&quot;)
+        enable_npu_cnn = enable_dpu
+
+    print_quantize_info(model_input, model_output, calibration_data_reader, calibration_data_path, quant_format,
+                        input_nodes, output_nodes, op_types_to_quantize, extra_op_types_to_quantize, per_channel,
+                        reduce_range, activation_type, weight_type, nodes_to_quantize, nodes_to_exclude,
+                        subgraphs_to_exclude, optimize_model, use_external_data_format, calibrate_method,
+                        execution_providers, enable_npu_cnn, enable_npu_transformer, specific_tensor_precision,
+                        debug_mode, convert_fp16_to_fp32, convert_nchw_to_nhwc, include_cle, include_sq,
+                        include_rotation, include_fast_ft, extra_options)
+
+    fp32_nodes_dict = fp32_nodes(model_input)
+
+    if extra_options.get(&quot;QuantizeAllOpTypes&quot;, False):
+        all_op_types = list(fp32_nodes_dict.keys())
+        extra_op_types_to_quantize.extend(all_op_types)
+
+    if subgraphs_to_exclude:
+        nodes_to_exclude += match_exclude_subgraphs(model_input, subgraphs_to_exclude)
+        nodes_to_exclude = list(set(nodes_to_exclude))
+
+    if &quot;ConvertOpsetVersion&quot; in extra_options:
+        opset_version = extra_options[&quot;ConvertOpsetVersion&quot;]
+        from .tools.convert_opset_version import convert_opset_version
+        model = onnx.load(model_input)
+        model_update_opset_version = convert_opset_version(model, opset_version)
+        model_update_opset_version_path = tempfile.TemporaryDirectory(prefix=&quot;vai.tools.&quot;)
+        model_input = Path(model_update_opset_version_path.name).joinpath(&quot;update_opset_version.onnx&quot;).as_posix()
+        onnx.save_model(model_update_opset_version, model_input, save_as_external_data=use_external_data_format)
+
+    skip_calibration = False
+    if extra_options.get(&quot;UseMatMulNBits&quot;,
+                         False) or (activation_type in [VitisQuantType.QBFloat16, VitisQuantType.QFloat16]
+                                    and not extra_options.get(&quot;ActivationScaled&quot;, False)) or quant_format in [
+                                        VitisQuantFormat.BFPFixNeuron, VitisQuantFormat.MXFixNeuron
+                                    ]:
+        skip_calibration = True
+
+    if convert_fp16_to_fp32:
+        logger.info(f&quot;Start converting {model_input} to float32 model.&quot;)
+        from .tools import float16
+        fp16_model = onnx.load(model_input)
+        try:
+            fp32_model = float16.convert_float16_to_float(fp16_model)
+            try:
+                model_simp, check = simplify(fp32_model)
+                assert check, &quot;Simplified ONNX model could not be validated&quot;
+                logger.info(f&quot;Convert {model_input} to float32 model sucessfully&quot;)
+            except Exception as e2:
+                logger.warning(f&quot;Fail to Simplify ONNX model because of {e2}.&quot;)
+                model_simp = fp32_model
+        except Exception as e:
+            logger.warning(f&quot;Fail to convert fp16 to fp32 beacuse {e}, &quot;
+                           &quot;skip fp16 to fp32 conversion.&quot;)
+            model_simp = fp16_model
+
+        fp32_path = tempfile.TemporaryDirectory(prefix=&quot;vai.tools.&quot;)
+        model_input = Path(fp32_path.name).joinpath(&quot;fp32.onnx&quot;).as_posix()
+        onnx.save_model(model_simp, model_input, save_as_external_data=use_external_data_format)
+
+    mode = QuantizationMode.QLinearOps
+
+    quantize_fp16 = extra_options.get(&quot;QuantizeFP16&quot;, False)
+    use_fp32_scale = extra_options.get(&quot;UseFP32Scale&quot;, quantize_fp16)
+    if quantize_fp16:
+        optimize_model = False
+        if is_ort_version_below(&quot;1.18.0&quot;):
+            logger.warning(
+                &quot;The parameter QuantizeFP16 only takes effect in onnxruntime 1.18 and above. It will output a model same as the input model if onnxruntime version is 1.17 or lower.&quot;
+            )
+        logger.info(
+            &quot;The parameter optimize_model is set to False automatically when the parameter QuantizeFP16 is set to True.&quot;
+        )
+    if not quantize_fp16 and use_fp32_scale:
+        logger.warning(&quot;The parameter UseFP32Scale could be True only if the parameter QuantizeFP16 is True.&quot;)
+
+    if not skip_calibration:
+        if calibration_data_reader is not None and calibration_data_path is not None:
+            logger.warning(
+                &quot;Both calibration_data_reader and calibration_data_path are provided. Will use the calibration_data_reader for calibration.&quot;
+            )
+        elif calibration_data_reader is None and calibration_data_path is not None:
+            logger.info(f&quot;calibration_data_reader is None, using {calibration_data_path} to do calibration.&quot;)
+            calibration_data_reader = PathDataReader(model_input, calibration_data_path)
+
+        check_onnx_model(model_input)
+
+    if calibration_data_reader is None:
+        if not extra_options.get(&quot;UseRandomData&quot;, False):
+            raise ValueError(
+                &#39;A calibration data reader is required for static quantization, but none was provided. Please provide a calibration data reader, or alternatively enable random data generation for calibration by setting `config.global_quant_config.extra_options[&quot;UseRandomData&quot;]` to `True`.&#39;
+            )
+        else:
+            calibration_data_reader = RandomDataReader(model_input,
+                                                       input_shape=extra_options.get(&quot;RandomDataReaderInputShape&quot;, {}),
+                                                       input_data_range=extra_options.get(
+                                                           &quot;RandomDataReaderInputDataRange&quot;, None))
+
+    if not check_ir_version(model_input):
+        (&#39;The ir version of input model is below 4. It is recommended to upgrade ir version to 7 or higher.&#39;)
+    if not check_opset_version(model_input):
+        logger.warning(
+            &#39;The opset version of input model is below 10. It is recommended to upgrade opset version to 17 or higher.&#39;)
+    if check_qdq_model(model_input):
+        raise RuntimeError(
+            &quot;The input model is already a quantized model. Please make sure that input model is a float model.&quot;)
+    cached_data_reader = CachedDataReader(calibration_data_reader, None, convert_nchw_to_nhwc, quantize_fp16)
+
+    is_save_hist = False
+    if &quot;SaveTensorHistFig&quot; in extra_options and extra_options[&quot;SaveTensorHistFig&quot;]:
+        is_save_hist = True
+    if is_save_hist:
+        with tempfile.TemporaryDirectory(prefix=&quot;vai.quant.&quot;) as quant_tmp_dir:
+            hist_calibrator = create_calibrator_float_scale(
+                Path(model_input),
+                op_types_to_quantize,
+                augmented_model_path=Path(quant_tmp_dir).joinpath(&quot;augmented_model.onnx&quot;).as_posix(),
+                calibrate_method=CalibrationMethod.Percentile,
+                use_external_data_format=use_external_data_format,
+                execution_providers=execution_providers,
+                extra_options={&quot;symmetric&quot;: False},
+            )
+            save_tensor_hist_fig(hist_calibrator, cached_data_reader, extra_options)
+    if not skip_calibration:
+        cached_data_reader.reset_iter()
+
+    if input_nodes or output_nodes:
+        if nodes_to_exclude:
+            nodes_to_exclude += get_exclude_nodes(model_input, input_nodes, output_nodes)
+        else:
+            nodes_to_exclude = get_exclude_nodes(model_input, input_nodes, output_nodes)
+
+    if extra_options.get(&quot;MatMulConstBOnly&quot;, enable_npu_transformer):
+        nodes_to_exclude += get_matmul_nodes_without_weights(model_input)
+
+    if not op_types_to_quantize or len(op_types_to_quantize) == 0:
+        if enable_npu_transformer:
+            op_types_to_quantize = list(NPUTransformerRegistry.keys())
+        else:
+            q_linear_ops = list(QLinearOpsRegistry.keys())
+            qdq_ops = list(QDQRegistry.keys())
+            if enable_npu_cnn or quant_format is VitisQuantFormat.QDQ:
+                dpu_ops = list(NPUCnnRegistry.keys())
+                qdq_ops = list(set(dpu_ops + qdq_ops))
+            op_types_to_quantize = list(set(q_linear_ops + qdq_ops))
+
+    check_extra_quant_op_types(model_input, extra_op_types_to_quantize)
+
+    op_types_to_quantize += extra_op_types_to_quantize
+    op_types_to_quantize = list(set(op_types_to_quantize))
+
+    remove_input_init = True
+    if &quot;RemoveInputInit&quot; in extra_options:
+        remove_input_init = extra_options[&quot;RemoveInputInit&quot;]
+    if remove_input_init:
+        try:
+            model = onnx.load(model_input)
+            model_rm_input_init = remove_initializer_from_input(model)
+            model_rm_input_init_path = tempfile.TemporaryDirectory(prefix=&quot;vai.tools.&quot;)
+            model_input = Path(model_rm_input_init_path.name).joinpath(&quot;rm_input_init.onnx&quot;).as_posix()
+            onnx.save_model(model_rm_input_init, model_input, save_as_external_data=use_external_data_format)
+            logger.info(&quot;Removed initializers from input&quot;)
+        except Exception as e:
+            logger.debug(f&quot;Fail to remove init from input because {e}&quot;)
+
+    if extra_options.get(&quot;SimplifyModel&quot;, True) and not extra_options.get(&quot;UseMatMulNBits&quot;, False):
+        try:
+            model = onnx.load(model_input)
+            model_simp, check = simplify(model)
+            assert check, &quot;Simplified ONNX model could not be validated&quot;
+            model_simp_path = tempfile.TemporaryDirectory(prefix=&quot;vai.simp.&quot;)
+            model_input = Path(model_simp_path.name).joinpath(&quot;model_simp.onnx&quot;).as_posix()
+            onnx.save_model(model_simp, model_input, save_as_external_data=use_external_data_format)
+            logger.info(&quot;Simplified model sucessfully&quot;)
+        except Exception as e:
+            logger.warning(f&quot;Fail to Simplify ONNX model because of {e}.&quot;)
+
+    shared_init_optypes = extra_options.get(&quot;CopySharedInit&quot;, [])
+    if shared_init_optypes is not None:
+        from quark.onnx.tools import convert_shared_initializer_to_unique
+        try:
+            model = onnx.load(model_input)
+            model_simp_path = tempfile.TemporaryDirectory(prefix=&quot;vai.cpinit.&quot;)
+            model_input = Path(model_simp_path.name).joinpath(&quot;model_cpinit.onnx&quot;).as_posix()
+            model_copyinit = convert_shared_initializer_to_unique.convert(model, shared_init_optypes)
+            onnx.save_model(model_copyinit, model_input, save_as_external_data=use_external_data_format)
+            logger.info(
+                &quot;Duplicate the shared initializers in the model for separate quantization use across different nodes!&quot;)
+        except Exception as e:
+            logger.warning(f&quot;Fail to duplicate the shared initializers in the ONNX model because of {e}.&quot;)
+
+    logger.info(&quot;Loading model...&quot;)
+    fold_batch_norm = optimize_model
+    from onnxruntime.quantization.quant_utils import load_model_with_shape_infer
+    if optimize_model and not use_external_data_format:
+        from onnxruntime.quantization.quant_utils import optimize_model as om
+        try:
+            quant_opt_tmp_dir = tempfile.TemporaryDirectory(prefix=&quot;vai.quant.opt.&quot;)
+            opt_model_path = Path(quant_opt_tmp_dir.name).joinpath(&quot;model.onnx&quot;).as_posix()
+
+            om(Path(model_input), Path(opt_model_path))
+            model = load_model_with_shape_infer(Path(opt_model_path))
+        except Exception as e:
+            logger.warning(f&quot;Failed to run quantization preprocessing with error of {e}. &quot;
+                           &quot;Using original model. Please check.&quot;)
+            try:
+                model = load_model_with_shape_infer(Path(model_input))
+            except Exception as e:
+                raise RuntimeError(f&quot;Model loading failed as {e}&quot;
+                                   &quot;Shape inference needs write access to the model input directory.&quot;
+                                   &quot;Please verify permissions of the model input directory.&quot;)
+                return
+    else:
+        try:
+            model = load_model_with_shape_infer(Path(model_input))
+        except Exception as e:
+            raise RuntimeError(f&quot;Model loading failed as {e}&quot;
+                               &quot;Shape inference needs write access to the model input directory.&quot;
+                               &quot;Please verify permissions of the model input directory.&quot;)
+            return
+    if convert_nchw_to_nhwc:
+        from .utils.model_utils import convert_nchw_to_nhwc as convert_func
+        logger.info(f&quot;Start converting {model_input} ncwh to nhwc model.&quot;)
+        try:
+            model = convert_func(model)
+            converted_path = tempfile.TemporaryDirectory(prefix=&quot;vai.tools.&quot;)
+            model_input = Path(converted_path.name).joinpath(&quot;converted.onnx&quot;).as_posix()
+            onnx.save_model(model, model_input, save_as_external_data=use_external_data_format)
+        except Exception as e:
+            logger.warning(f&quot;Failed to convert nchw to nhwc beacuse {e}, &quot;)
+
+    if not skip_calibration:
+        run_onnx_model(model_input, cached_data_reader)
+        cached_data_reader.reset_iter()
+
+    if not check_model_quantizable(model, op_types_to_quantize, nodes_to_exclude):
+        onnx.save_model(model, model_output, save_as_external_data=use_external_data_format)
+        logger.warning(&quot;No quantizable ops in this model, quantization is skipped.&quot;)
+        return
+
+    clip6_to_relu6 = False
+    if &quot;ReplaceClip6Relu&quot; in extra_options:
+        clip6_to_relu6 = extra_options[&#39;ReplaceClip6Relu&#39;]
+
+    if clip6_to_relu6:
+        model = replace_all_clip6_to_relu(model, op_types_to_quantize, nodes_to_quantize, nodes_to_exclude)
+        clip6relu_path = tempfile.TemporaryDirectory(prefix=&quot;vai.quant.&quot;)
+        clip6relu_model_output = Path(clip6relu_path.name).joinpath(&quot;clip6relu_model.onnx&quot;).as_posix()
+        onnx.save_model(model, clip6relu_model_output, save_as_external_data=use_external_data_format)
+        model_input = clip6relu_model_output
+        topo_model = ONNXModel(onnx.load(clip6relu_model_output))
+        topo_model.topological_sort()
+        model = topo_model.model
+
+    if include_cle:
+        cle_balance_method = &quot;max&quot;
+        cle_steps = 1
+        cle_weight_threshold = 0.5
+        cle_scale_append_bias = True
+        cle_scale_use_threshold = True
+        cle_total_layer_diff_threshold = 2e-7
+
+        if &quot;CLEBalanceMethod&quot; in extra_options:
+            cle_balance_method = extra_options[&#39;CLEBalanceMethod&#39;]
+        if &quot;CLEWeightThreshold&quot; in extra_options:
+            cle_weight_threshold = extra_options[&#39;CLEWeightThreshold&#39;]
+        if &quot;CLEScaleUseThreshold&quot; in extra_options:
+            cle_scale_use_threshold = extra_options[&#39;CLEScaleUseThreshold&#39;]
+        if &quot;CLEScaleAppendBias&quot; in extra_options:
+            cle_scale_append_bias = extra_options[&#39;CLEScaleAppendBias&#39;]
+        if &quot;CLESteps&quot; in extra_options:
+            cle_steps = extra_options[&#39;CLESteps&#39;]
+        if &quot;CLETotalLayerDiffThreshold&quot; in extra_options:
+            cle_total_layer_diff_threshold = extra_options[&#39;CLETotalLayerDiffThreshold&#39;]
+        if nodes_to_exclude is None:
+            nodes_to_exclude = []
+        model = cle_transforms(
+            model,
+            op_types_to_quantize,
+            nodes_to_quantize,
+            nodes_to_exclude,
+            cle_steps,
+            cle_balance_method,
+            cle_weight_threshold,
+            cle_scale_append_bias,
+            cle_scale_use_threshold,
+            cle_total_layer_diff_threshold,
+        )
+
+        cle_path = tempfile.TemporaryDirectory(prefix=&quot;vai.quant.&quot;)
+        cle_model_output = Path(cle_path.name).joinpath(&quot;cle_model.onnx&quot;).as_posix()
+        onnx.save_model(model, cle_model_output, save_as_external_data=use_external_data_format)
+        model_input = cle_model_output
+
+    if include_rotation:
+        from quark.torch.algorithm.rotation.rotation_utils import get_rotation_matrix
+        logger.info(&quot;Start rotation ....&quot;)
+        hidden_size = extra_options.get(&#39;RMatrixDim&#39;, 4096)
+        random_had = extra_options.get(&#39;UseRandomHad&#39;, False)
+        rotation_config_file = extra_options.get(&#39;RConfigPath&#39;, None)
+        assert rotation_config_file is not None, &quot;Error! Please specify the rotation config file via extra_options[\&quot;RConfigPath\&quot;]&quot;
+
+        try:
+            r1_matrix = get_rotation_matrix(num_channels=hidden_size, random=random_had)
+        except AssertionError as e:
+            raise AssertionError(
+                &quot;Error! The dim of the target R1 matrix is not support while requiring random_had as true.&quot;)
+        r1_matrix_np = r1_matrix.numpy()
+
+        r_matrixs = {&quot;R1&quot;: r1_matrix_np}
+
+        rotation_path = tempfile.TemporaryDirectory(prefix=&quot;vai.quant.&quot;)
+        rotation_model_output = Path(rotation_path.name).joinpath(&quot;rotated_model.onnx&quot;).as_posix()
+        model = rotation_transforms(rotation_model_output, model, r_matrixs, rotation_config_file)
+        onnx.save_model(model, rotation_model_output, save_as_external_data=use_external_data_format)
+
+        model_input = rotation_model_output
+        model = onnx.load_model(rotation_model_output)
+        logger.info(&quot;Rotation complete!&quot;)
+
+    if include_sq:
+        smooth_alpha = 0.5
+        if &quot;SmoothAlpha&quot; in extra_options:
+            smooth_alpha = extra_options[&#39;SmoothAlpha&#39;]
+        logger.info(f&quot;Start smoothing model, the smooth alpha was set as {smooth_alpha}&quot;)
+        smooth_path = tempfile.TemporaryDirectory(prefix=&quot;vai.quant.&quot;)
+        smooth_model_output = Path(smooth_path.name).joinpath(&quot;smooth_model.onnx&quot;).as_posix()
+        model = smooth_transforms(smooth_model_output, model, cached_data_reader, alpha=smooth_alpha)
+        onnx.save_model(model, smooth_model_output, save_as_external_data=use_external_data_format)
+        cached_data_reader.reset_iter()
+        model_input = smooth_model_output
+        model = onnx.load_model(smooth_model_output)
+
+    skip_node_with_inf_tensor_list = skip_node_with_inf_tensor(model)
+    nodes_to_exclude.extend(skip_node_with_inf_tensor_list)
+
+    int16_scale = False
+    if &quot;Int16Scale&quot; in extra_options:
+        int16_scale = extra_options[&quot;Int16Scale&quot;]
+    if int16_scale:
+        if enable_npu_cnn:
+            raise ValueError(&quot;Int16Scale is an experimental feature&quot;
+                             &quot;and cannot be used simultaneously with enable_npu_cnn&quot;)
+
+    add_or_update_opset_import(model, ms_domain, 1)
+    if quant_format == VitisQuantFormat.QDQ:
+        add_or_update_opset_import(model, VAI_DOMAIN, 1)
+    if quant_format in [VitisQuantFormat.QDQ, VitisQuantFormat.BFPFixNeuron, VitisQuantFormat.MXFixNeuron]:
+        add_or_update_opset_import(model, COP_DOMAIN, 1)
+
+    fuse_instance_norm = True
+    fuse_l2_norm = True
+    fuse_gelu = True
+    fuse_layer_norm = True
+    convert_split_to_slice = False
+    convert_bn_to_conv = False
+    convert_reduce_mean_to_global_avg_pool = False
+    split_large_kernel_pool = False
+
+    # TODO: Refactor logics of optimization for xcompiler and vaiml in the future.
+    if (enable_npu_cnn or enable_npu_transformer
+            or (quant_format is VitisQuantFormat.QDQ and not extra_options.get(&#39;BF16QDQToCast&#39;, False)
+                and not extra_options.get(&#39;EnableVaimlBF16&#39;, False))):
+        logger.info(&quot;optimize the model for better hardware compatibility.&quot;)
+        convert_split_to_slice = True
+        convert_bn_to_conv = True
+        convert_reduce_mean_to_global_avg_pool = True
+        split_large_kernel_pool = True
+
+    if &quot;FoldBatchNorm&quot; in extra_options:
+        fold_batch_norm = extra_options[&quot;FoldBatchNorm&quot;]
+    if &quot;FuseInstanceNorm&quot; in extra_options:
+        fuse_instance_norm = extra_options[&quot;FuseInstanceNorm&quot;]
+    if &quot;FuseL2Norm&quot; in extra_options:
+        fuse_l2_norm = extra_options[&quot;FuseL2Norm&quot;]
+    if &quot;FuseGelu&quot; in extra_options:
+        fuse_gelu = extra_options[&quot;FuseGelu&quot;]
+    if &quot;FuseLayerNorm&quot; in extra_options:
+        fuse_layer_norm = extra_options[&quot;FuseLayerNorm&quot;]
+    if &quot;ConvertSplitToSlice&quot; in extra_options:
+        convert_split_to_slice = extra_options[&quot;ConvertSplitToSlice&quot;]
+    if &quot;ConvertBNToConv&quot; in extra_options:
+        convert_bn_to_conv = extra_options[&quot;ConvertBNToConv&quot;]
+    if &quot;ConvertReduceMeanToGlobalAvgPool&quot; in extra_options:
+        convert_reduce_mean_to_global_avg_pool = extra_options[&quot;ConvertReduceMeanToGlobalAvgPool&quot;]
+    if &quot;SplitLargeKernelPool&quot; in extra_options:
+        split_large_kernel_pool = extra_options[&quot;SplitLargeKernelPool&quot;]
+
+    if (fuse_instance_norm or fuse_l2_norm or fuse_gelu or fuse_layer_norm or convert_bn_to_conv
+            or convert_reduce_mean_to_global_avg_pool or split_large_kernel_pool or convert_split_to_slice
+            or fold_batch_norm):
+        model = optimize(model,
+                         op_types_to_quantize,
+                         nodes_to_quantize,
+                         nodes_to_exclude,
+                         convert_bn_to_conv,
+                         convert_reduce_mean_to_global_avg_pool,
+                         split_large_kernel_pool,
+                         convert_split_to_slice,
+                         fuse_instance_norm,
+                         fuse_l2_norm,
+                         fuse_gelu,
+                         fuse_layer_norm,
+                         fold_batch_norm,
+                         convert_clip_to_relu=False,
+                         fold_batch_norm_after_concat=fold_batch_norm)
+
+        from onnxruntime.quantization.quant_utils import save_and_reload_model_with_shape_infer
+        model = save_and_reload_model_with_shape_infer(model)
+
+    calib_extra_options_keys = [
+        (&quot;CalibTensorRangeSymmetric&quot;, &quot;symmetric&quot;),
+        (&quot;CalibMovingAverage&quot;, &quot;moving_average&quot;),
+        (&quot;CalibMovingAverageConstant&quot;, &quot;averaging_constant&quot;),
+        (&quot;MinMSEMode&quot;, &quot;minmse_mode&quot;),
+        (&quot;Percentile&quot;, &quot;percentile&quot;),
+        (&quot;NumBins&quot;, &quot;num_bins&quot;),
+        (&quot;NumQuantizedBins&quot;, &quot;num_quantized_bins&quot;),
+    ]
+    calib_extra_options = {
+        key: extra_options.get(name)
+        for (name, key) in calib_extra_options_keys if name in extra_options
+    }
+
+    quantized_tensor_type = {}
+    if specific_tensor_precision:
+        if extra_options.get(&quot;MixedPrecisionTensor&quot;):
+            for k, v in extra_options[&quot;MixedPrecisionTensor&quot;].items():
+                for t in v:
+                    quantized_tensor_type[t] = k
+            if quantized_tensor_type:
+                logger.info(&quot;In the specific_tensor_precision mode, &quot;
+                            &quot;the quant_format will use VitisQuantFormat.QDQ&quot;)
+                quant_format = VitisQuantFormat.QDQ
+
+    if extra_options.get(&quot;AlignEltwiseQuantType&quot;):
+        if enable_npu_cnn is False and enable_npu_transformer is False and enable_dpu is False and quant_format == VitisQuantFormat.QDQ:
+            eltwise_tensors = get_eltwise_op(model_input)
+            for tensor_name in eltwise_tensors:
+                quantized_tensor_type[tensor_name] = activation_type
+            logger.info(
+                &quot;The parameter AlignEltwiseQuantType takes effect, the weights of nodes will be quantized with the activation quant type if the operation type is in [Mul, Div, Add, Sub, Min, Max].&quot;
+            )
+        else:
+            logger.warning(
+                &quot;The parameter AlignEltwiseQuantType only takes effect when quant_format is VitisQuantFormat.QDQ and enable_npu_cnn is False and enable_npu_transformer is False and enable_dpu is False&quot;
+            )
+
+    if extra_options.get(&quot;UseMatMulNBits&quot;, False):
+        matmul_nbits_quantize_dict = extra_options.get(&quot;MatMulNBitsParams&quot;, {})
+        assert isinstance(matmul_nbits_quantize_dict,
+                          dict), &quot;The parameter &#39;MatMulNBitsParams&#39; in extra_options must be a dict.&quot;
+        if &quot;GroupSize&quot; in matmul_nbits_quantize_dict:
+            matmul_nbits_group_size = matmul_nbits_quantize_dict[&quot;GroupSize&quot;]
+        else:
+            matmul_nbits_group_size = 128
+        if &quot;Symmetric&quot; in matmul_nbits_quantize_dict:
+            matmul_nbits_symmetric = matmul_nbits_quantize_dict[&quot;Symmetric&quot;]
+        else:
+            matmul_nbits_symmetric = True
+        if &quot;Bits&quot; in matmul_nbits_quantize_dict:
+            matmul_nbits_bits = matmul_nbits_quantize_dict[&quot;Bits&quot;]
+        else:
+            matmul_nbits_bits = 4
+        if &quot;AccuracyLevel&quot; in matmul_nbits_quantize_dict:
+            matmul_nbits_accuracy_level = matmul_nbits_quantize_dict[&quot;AccuracyLevel&quot;]
+        else:
+            matmul_nbits_accuracy_level = 0
+
+        algo_config: Union[DefaultWeightOnlyQuantConfig, GPTQWeightOnlyQuantConfig, HQQWeightOnlyQuantConfig,
+                           None] = None
+        if extra_options.get(&quot;MatMulNBitsParams&quot;, {}).get(&quot;Algorithm&quot;, &quot;DEFAULT&quot;) == &quot;GPTQ&quot;:
+            algo_config = GPTQWeightOnlyQuantConfig(calibration_data_reader=cached_data_reader,
+                                                    percdamp=extra_options.get(&#39;GPTQParams&#39;, {}).get(&#39;PercDamp&#39;, 0.01),
+                                                    block_size=extra_options.get(&#39;GPTQParams&#39;,
+                                                                                 {}).get(&#39;BlockSize&#39;, 128),
+                                                    actorder=extra_options.get(&#39;GPTQParams&#39;, {}).get(&#39;ActOrder&#39;, False),
+                                                    mse=extra_options.get(&#39;GPTQParams&#39;, {}).get(&#39;MSE&#39;, False),
+                                                    perchannel=extra_options.get(&#39;GPTQParams&#39;,
+                                                                                 {}).get(&#39;PerChannel&#39;, False))
+        elif extra_options.get(&quot;MatMulNBitsParams&quot;, {}).get(&quot;Algorithm&quot;, &quot;DEFAULT&quot;) == &quot;HQQ&quot;:
+            algo_config = HQQWeightOnlyQuantConfig(block_size=matmul_nbits_group_size, bits=matmul_nbits_bits)
+        else:
+            algo_config = DefaultWeightOnlyQuantConfig(block_size=matmul_nbits_group_size,
+                                                       is_symmetric=matmul_nbits_symmetric,
+                                                       bits=matmul_nbits_bits,
+                                                       accuracy_level=matmul_nbits_accuracy_level)
+
+        quantizer = MatMulNBitsQuantizer(model,
+                                         matmul_nbits_group_size,
+                                         matmul_nbits_symmetric,
+                                         matmul_nbits_bits,
+                                         accuracy_level=matmul_nbits_accuracy_level,
+                                         algo_config=algo_config,
+                                         extra_options=extra_options)
+        quantizer.quantize_model()
+        quantizer.model.save_model_to_file(model_output, use_external_data_format)
+        cached_data_reader.reset_iter()
+
+    # TODO: Refactor logics for quantize.py in the future.
+    optimized_path = tempfile.TemporaryDirectory(prefix=&quot;vai.quant.&quot;)
+    model_input = Path(optimized_path.name).joinpath(&quot;opt_model.onnx&quot;).as_posix()
+    topo_model = ONNXModel(model)
+    topo_model.topological_sort()
+    model = topo_model.model
+    onnx.save_model(model, model_input, save_as_external_data=use_external_data_format)
+
+    if not skip_calibration:
+        logger.info(&quot;Start calibration...&quot;)
+        start_time = time.perf_counter()
+        # Get calib data reader with specified data size
+        calib_data_size = extra_options.get(&#39;CalibDataSize&#39;, None)
+        if calib_data_size is not None:
+            logger.info(f&#39;CalibDataSize is {calib_data_size}, use the {calib_data_size} data for calibration&#39;)
+            calib_data_size = int(calib_data_size)
+            calib_dr = CachedDataReader(cached_data_reader, calib_data_size, convert_nchw_to_nhwc, quantize_fp16)
+        else:
+            calib_dr = cached_data_reader
+        # Do calibration
+        if isinstance(calibrate_method, PowerOfTwoMethod):
+            with tempfile.TemporaryDirectory(prefix=&quot;vai.quant.&quot;) as quant_tmp_dir:
+                calibrator = create_calibrator_power_of_two(
+                    Path(model_input),
+                    op_types_to_quantize,
+                    augmented_model_path=Path(quant_tmp_dir).joinpath(&quot;augmented_model.onnx&quot;).as_posix(),
+                    activation_type=activation_type,
+                    method=calibrate_method,
+                    use_external_data_format=use_external_data_format,
+                    execution_providers=execution_providers,
+                    quantized_tensor_type=quantized_tensor_type,
+                    extra_options=calib_extra_options,
+                )
+                logger.info(
+                    &quot;Start collecting data, runtime depends on your model size and the number of calibration dataset.&quot;)
+                calibrator.collect_data(calib_dr)
+                if calibrate_method == PowerOfTwoMethod.MinMSE:
+                    tensors_range = calibrator.compute_range()
+                    from onnxruntime.quantization.calibrate import TensorsData
+                    tensors_range = TensorsData(CalibrationMethod.MinMax, tensors_range)
+                else:
+                    tensors_range = calibrator.compute_data()
+                del calibrator
+        else:
+            with tempfile.TemporaryDirectory(prefix=&quot;ort.quant.&quot;) as quant_tmp_dir:
+                calibrator = create_calibrator_float_scale(
+                    Path(model_input),
+                    op_types_to_quantize,
+                    augmented_model_path=Path(quant_tmp_dir).joinpath(&quot;augmented_model.onnx&quot;).as_posix(),
+                    calibrate_method=calibrate_method,
+                    use_external_data_format=use_external_data_format,
+                    execution_providers=execution_providers,
+                    extra_options=calib_extra_options,
+                )
+                logger.info(
+                    &quot;Start collecting data, runtime depends on your model size and the number of calibration dataset.&quot;)
+                calibrator.collect_data(calib_dr)
+                tensors_range = calibrator.compute_data()
+                del calibrator
+        end_time = time.perf_counter()
+        calib_time = end_time - start_time
+        logger.info(f&quot;Finished the calibration of {calibrate_method} which costs {calib_time:.1f}s&quot;)
+        cached_data_reader.reset_iter()
+    else:
+        from onnxruntime.quantization.calibrate import TensorsData
+        fake_tensor_range = get_fake_tensor_range(model)
+        tensors_range = TensorsData(CalibrationMethod.MinMax, fake_tensor_range)
+
+    if not extra_options.get(&quot;UseMatMulNBits&quot;, False):
+        from onnxruntime.quantization.quant_utils import load_model_with_shape_infer
+        model = load_model_with_shape_infer(Path(model_input))
+
+    from .quant_utils import remove_qdq_op_type, annotate_op_type
+    if extra_options.get(&quot;RemoveQDQConvClip&quot;, True):
+        remove_qdq_op_type.append(&quot;Clip&quot;)
+    if extra_options.get(&quot;RemoveQDQConvRelu&quot;, True):
+        remove_qdq_op_type.append(&quot;Relu&quot;)
+    if extra_options.get(&quot;RemoveQDQConvLeakyRelu&quot;, True):
+        remove_qdq_op_type.append(&quot;LeakyRelu&quot;)
+    if extra_options.get(&quot;RemoveQDQConvPRelu&quot;, True):
+        remove_qdq_op_type.append(&quot;PRelu&quot;)
+    if extra_options.get(&quot;RemoveQDQConvGelu&quot;, False):
+        remove_qdq_op_type.append(&quot;Gelu&quot;)
+    if extra_options.get(&quot;RemoveQDQInstanceNorm&quot;, False):
+        annotate_op_type.append(&quot;InstanceNormalization&quot;)
+
+    check_static_quant_arguments(quant_format, activation_type, weight_type, calibrate_method)
+    if include_fast_ft and include_auto_mp is False:
+        check_fast_fintune_arguments(extra_options, activation_type, weight_type)
+
+    if int16_scale:
+        calibrate_method = Int16Method.MinMax
+
+    if not extra_options.get(&quot;UseMatMulNBits&quot;, False):
+        # BFP and MX quantization don&#39;t need calibration, so they are not sensitive to calibration method
+        if quant_format in [VitisQuantFormat.BFPFixNeuron, VitisQuantFormat.MXFixNeuron]:
+            quantizer = VitisBFPQuantizer(
+                model,
+                per_channel,
+                reduce_range,
+                mode,
+                quant_format,
+                True,
+                weight_type,
+                activation_type,
+                tensors_range,
+                nodes_to_quantize,
+                nodes_to_exclude,
+                op_types_to_quantize,
+                calibrate_method,
+                quantized_tensor_type,
+                extra_options,
+            )
+        elif calibrate_method in CalibrationMethod:
+            if quant_format is QuantFormat.QOperator:
+                quantizer = ONNXQuantizer(
+                    model,
+                    per_channel,
+                    reduce_range,
+                    mode,
+                    True,  # static
+                    weight_type,
+                    activation_type,
+                    tensors_range,
+                    nodes_to_quantize,
+                    nodes_to_exclude,
+                    op_types_to_quantize,
+                    extra_options,
+                )
+            elif quant_format is QuantFormat.QDQ:
+                if not enable_npu_transformer:
+                    quantizer = VitisQDQCPUQuantizer(
+                        model,
+                        per_channel,
+                        reduce_range,
+                        mode,
+                        True,  # static
+                        weight_type,
+                        activation_type,
+                        tensors_range,
+                        nodes_to_quantize,
+                        nodes_to_exclude,
+                        op_types_to_quantize,
+                        calibrate_method,
+                        quantized_tensor_type,
+                        extra_options,
+                    )
+                else:
+                    quantizer = QDQNPUTransformerQuantizer(
+                        model,
+                        per_channel,
+                        reduce_range,
+                        mode,
+                        True,  # static
+                        weight_type,
+                        activation_type,
+                        tensors_range,
+                        nodes_to_quantize,
+                        nodes_to_exclude,
+                        op_types_to_quantize,
+                        extra_options,
+                    )
+            elif quant_format is VitisQuantFormat.QDQ:
+                quantizer = VitisExtendedQuantizer(
+                    model,
+                    per_channel,
+                    reduce_range,
+                    mode,
+                    quant_format,
+                    True,
+                    weight_type,
+                    activation_type,
+                    tensors_range,
+                    nodes_to_quantize,
+                    nodes_to_exclude,
+                    op_types_to_quantize,
+                    calibrate_method,
+                    quantized_tensor_type,
+                    extra_options,
+                )
+            else:
+                raise ValueError(&quot;No corresponding quantizer for this set of arguments.&quot;)
+        elif calibrate_method in PowerOfTwoMethod or calibrate_method in Int16Method:
+            if quant_format is QuantFormat.QOperator:
+                quantizer = VitisONNXQuantizer(
+                    model,
+                    per_channel,
+                    reduce_range,
+                    mode,
+                    True,
+                    weight_type,
+                    activation_type,
+                    tensors_range,
+                    nodes_to_quantize,
+                    nodes_to_exclude,
+                    op_types_to_quantize,
+                    calibrate_method,
+                    quantized_tensor_type,
+                    extra_options,
+                )
+            elif quant_format is QuantFormat.QDQ:
+                if not enable_npu_cnn:
+                    quantizer = VitisQDQQuantizer(
+                        model,
+                        per_channel,
+                        reduce_range,
+                        mode,
+                        True,
+                        weight_type,
+                        activation_type,
+                        tensors_range,
+                        nodes_to_quantize,
+                        nodes_to_exclude,
+                        op_types_to_quantize,
+                        calibrate_method,
+                        quantized_tensor_type,
+                        extra_options,
+                    )
+                else:
+                    quantizer = VitisQDQNPUCNNQuantizer(
+                        model,
+                        per_channel,
+                        reduce_range,
+                        mode,
+                        True,
+                        weight_type,
+                        activation_type,
+                        tensors_range,
+                        nodes_to_quantize,
+                        nodes_to_exclude,
+                        op_types_to_quantize,
+                        calibrate_method,
+                        quantized_tensor_type,
+                        extra_options,
+                    )
+            elif quant_format is VitisQuantFormat.QDQ:
+                quantizer = VitisExtendedQuantizer(
+                    model,
+                    per_channel,
+                    reduce_range,
+                    mode,
+                    quant_format,
+                    True,
+                    weight_type,
+                    activation_type,
+                    tensors_range,
+                    nodes_to_quantize,
+                    nodes_to_exclude,
+                    op_types_to_quantize,
+                    calibrate_method,
+                    quantized_tensor_type,
+                    extra_options,
+                )
+            else:
+                raise ValueError(&quot;No corresponding quantizer for this set of arguments.&quot;)
+        quantizer.quantize_model()
+
+        if extra_options.get(&#39;RemoveQDQMulAdd&#39;, False):
+            from .tools.remove_qdq_mul_add import remove_qdq_mul_add
+            remove_qdq_mul_add(quantizer.model.model)
+
+        if &#39;RemoveQDQBetweenOps&#39; in extra_options:
+            from .tools.remove_qdq_between_ops import remove_qdq_between_ops
+
+            between_ops = extra_options.get(&#39;RemoveQDQBetweenOps&#39;)
+            if not (isinstance(between_ops, list) and all(
+                    isinstance(item, tuple) and len(item) == 2 and all(isinstance(elem, str) for elem in item)
+                    for item in between_ops)):
+                logger.warning(f&quot;&#39;RemoveQDQBetweenOps&#39; should be a list of (str, str) tuples. Actual: {between_ops}&quot;)
+
+            remove_qdq_between_ops(quantizer.model.model, between_ops)
+
+        quantizer.model.save_model_to_file(model_output, use_external_data_format)
+
+    if quantize_fp16 and use_fp32_scale:
+        convert_fp16_scale_to_fp32(model_output, use_external_data_format)
+
+    if quant_format is VitisQuantFormat.QDQ:
+        # Since the ONNXRuntime 1.17.0 starts supportting 16bit quantization,
+        # we convert our custom QDQs to the MSFT contributed QDQs by default
+        customqdq_to_contribqdq(model_output, use_external_data_format)
+
+    bias_corr = False
+    if &#39;BiasCorrection&#39; in extra_options:
+        bias_corr = extra_options[&#39;BiasCorrection&#39;]
+    if bias_corr:
+        quant_model = bias_correction(model_input, model_output, use_external_data_format, cached_data_reader,
+                                      activation_type, calibrate_method, extra_options)
+        onnx.save(quant_model, model_output)
+
+    if &#39;FixShapes&#39; in extra_options:
+        from .tools.convert_dynamic_to_fixed import fix_shapes
+        fix_name_shape = extra_options[&#39;FixShapes&#39;]
+        model = onnx.load(model_output)
+        model = fix_shapes(model, fix_name_shape)
+        onnx.save(model, model_output)
+
+    if include_auto_mp:
+        from quark.onnx.mprecision.auto_mixprecision import auto_mixprecision
+        cached_data_reader.reset_iter()
+        model = auto_mixprecision(model_input, model_output, cached_data_reader, activation_type, weight_type,
+                                  extra_options)
+        onnx.save(model, model_output)
+
+    if include_fast_ft:
+        from quark.onnx.finetuning.fast_finetune import fast_finetune
+        cached_data_reader.reset_iter()
+        model = fast_finetune(model_input, model_output, cached_data_reader, extra_options)
+        onnx.save(model, model_output)
+
+    use_gptq = False
+    if &#39;UseGPTQ&#39; in extra_options:
+        use_gptq = extra_options[&#39;UseGPTQ&#39;]
+    if use_gptq:
+        from .gptq.gptq import GptqProcessor
+        gptq_path = tempfile.TemporaryDirectory(prefix=&quot;vai.quant.&quot;)
+        gptq_model_output = Path(gptq_path.name).joinpath(&quot;gptq_model.onnx&quot;).as_posix()
+        cached_data_reader.reset_iter()
+        gptq_processor = GptqProcessor(gptq_model_output, model_input, model_output, cached_data_reader, extra_options)
+        model = gptq_processor.apply()
+        onnx.save(model, model_output)
+
+    if extra_options.get(&#39;BF16WithClip&#39;, False):
+        from .tools.insert_clip_bfloat16_qdq import insert_clip_bfloat16_qdq
+        model = insert_clip_bfloat16_qdq(model)
+        onnx.save(model, model_output)
+
+    if extra_options.get(&#39;BF16QDQToCast&#39;, extra_options.get(&#39;EnableVaimlBF16&#39;, False)):
+        from .tools.replace_bfloat16_qdq_cast import replace_bfloat16_qdq_cast
+        quant_model = onnx.load(model_output)
+        quant_model = replace_bfloat16_qdq_cast(quant_model)
+        onnx.save(quant_model, model_output)
+
+    if extra_options.get(&#39;EnableVaimlBF16&#39;, False):
+        from .tools.remove_bf16_cast import remove_bf16_cast
+        quant_model = onnx.load(model_output)
+        quant_model = remove_bf16_cast(quant_model)
+        onnx.save(quant_model, model_output)
+
+    # This optimization should after calibration
+    convert_clip_to_relu = False
+    if &quot;ConvertClipToRelu&quot; in extra_options:
+        convert_clip_to_relu = extra_options[&quot;ConvertClipToRelu&quot;]
+    # This is a post processing of quantization
+    dedicate_dq_node = False
+    if &quot;DedicateDQNode&quot; in extra_options:
+        dedicate_dq_node = extra_options[&quot;DedicateDQNode&quot;]
+    if convert_clip_to_relu or dedicate_dq_node:
+        model = optimize(
+            model,
+            op_types_to_quantize,
+            nodes_to_quantize,
+            nodes_to_exclude,
+            convert_bn_to_conv=False,
+            convert_reduce_mean_to_global_avg_pool=False,
+            split_large_kernel_pool=False,
+            convert_split_to_slice=False,
+            fuse_instance_norm=False,
+            fuse_l2_norm=False,
+            fuse_gelu=False,
+            convert_clip_to_relu=convert_clip_to_relu,
+            dedicate_dq_node=dedicate_dq_node,
+        )
+        from onnxruntime.quantization.quant_utils import save_and_reload_model_with_shape_infer
+        model = save_and_reload_model_with_shape_infer(model)
+
+        onnx.save(model, model_output)
+
+    if print_summary and fp32_nodes_dict:
+        print_fp32_nodes(fp32_nodes_dict, model_output)
+        print_quantized_info(model_output, debug_mode)
+        if not extra_options.get(&quot;UseMatMulNBits&quot;, False):
+            if not check_ir_version(model_input):
+                print(
+                    &#39;WARNING: The ir version of input model is below 4. It is recommended to upgrade ir version to 7 or higher.&#39;
+                )
+            if not check_opset_version(model_input):
+                print(
+                    &#39;WARNING: The opset version of input model is below 10. It is recommended to upgrade opset version to 17 or higher.&#39;
+                )
+            if check_qdq_model(model_input):
+                print(
+                    &quot;ERROR: The input model is already a quantized model. Please make sure that input model is a float model.&quot;
+                )
+
+
+<div class="viewcode-block" id="quantize_dynamic">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/quantize/index.html#quark.onnx.quantize.quantize_dynamic">[docs]</a>
+def quantize_dynamic(
+    model_input: Union[str, Path, onnx.ModelProto],
+    model_output: Union[str, Path],
+    op_types_to_quantize: Union[List[str], None] = [],
+    per_channel: bool = False,
+    reduce_range: bool = False,
+    weight_type: QuantType = QuantType.QInt8,
+    nodes_to_quantize: List[str] = [],
+    nodes_to_exclude: List[str] = [],
+    subgraphs_to_exclude: List[Tuple[List[str]]] = [],
+    use_external_data_format: bool = False,
+    debug_mode: bool = False,
+    extra_options: Optional[Dict[str, Any]] = {},
+) -&gt; None:
+    &quot;&quot;&quot;Given an onnx model, create a quantized onnx model and save it into a file
+
+    Args:
+        model_input: file path of model or ModelProto to quantize
+        model_output: file path of quantized model
+        op_types_to_quantize:
+            specify the types of operators to quantize, like [&#39;Conv&#39;] to quantize Conv only.
+            It quantizes all supported operators by default.
+        per_channel: quantize weights per channel
+        reduce_range:
+            quantize weights with 7-bits. It may improve the accuracy for some models running on non-VNNI machine,
+            especially for per-channel mode
+        weight_type:
+            quantization data type of weight. Please refer to
+            https://onnxruntime.ai/docs/performance/quantization.html for more details on data type selection
+        nodes_to_quantize:
+            List of nodes names to quantize. When this list is not None only the nodes in this list
+            are quantized.
+            example:
+            [
+                &#39;Conv__224&#39;,
+                &#39;Conv__252&#39;
+            ]
+        nodes_to_exclude:
+            List of nodes names to exclude. The nodes in this list will be excluded from quantization
+            when it is not None.
+        subgraphs_to_exclude:
+            List of start and end nodes names of subgraphs to exclude. The nodes matched by the subgraphs will be excluded from quantization
+            when it is not None.
+        use_external_data_format: option used for large size (&gt;2GB) model. Set to False by default.
+        extra_options:
+            key value pair dictionary for various options in different case. Current used:
+                extra.Sigmoid.nnapi = True/False  (Default is False)
+                ActivationSymmetric = True/False: symmetrize calibration data for activations (default is False).
+                WeightSymmetric = True/False: symmetrize calibration data for weights (default is True).
+                EnableSubgraph = True/False :
+                    Default is False. If enabled, subgraph will be quantized. Dynamic mode currently is supported. Will
+                    support more in the future.
+                ForceQuantizeNoInputCheck = True/False :
+                    By default, some latent operators like maxpool, transpose, do not quantize if their input is not
+                    quantized already. Setting to True to force such operator always quantize input and so generate
+                    quantized output. Also the True behavior could be disabled per node using the nodes_to_exclude.
+                MatMulConstBOnly = True/False:
+                    Default is True for dynamic mode. If enabled, only MatMul with const B will be quantized.
+    &quot;&quot;&quot;
+    from onnxruntime.quantization.registry import IntegerOpsRegistry
+    from onnxruntime.quantization.quant_utils import load_model_with_shape_infer, model_has_pre_process_metadata, save_and_reload_model_with_shape_infer
+
+    extra_options = extra_options or {}
+    nodes_to_exclude = nodes_to_exclude or []
+    subgraphs_to_exclude = subgraphs_to_exclude or []
+    nodes_to_quantize = nodes_to_quantize or []
+    op_types_to_quantize = op_types_to_quantize or []
+
+    mode = QuantizationMode.IntegerOps
+
+    if not op_types_to_quantize or len(op_types_to_quantize) == 0:
+        op_types_to_quantize = list(IntegerOpsRegistry.keys())
+
+    print_quantize_dynamic_info(model_input, model_output, op_types_to_quantize, per_channel, reduce_range, weight_type,
+                                nodes_to_quantize, nodes_to_exclude, subgraphs_to_exclude, use_external_data_format,
+                                debug_mode, extra_options)
+
+    if not subgraphs_to_exclude:
+        nodes_to_exclude += match_exclude_subgraphs(model_input, subgraphs_to_exclude)
+        nodes_to_exclude = list(set(nodes_to_exclude))
+
+    model = (save_and_reload_model_with_shape_infer(model_input)
+             if isinstance(model_input, onnx.ModelProto) else load_model_with_shape_infer(Path(model_input)))
+
+    pre_processed: bool = model_has_pre_process_metadata(model)
+    if not pre_processed:
+        logger.warning(
+            &quot;Please consider to run pre-processing before quantization. Refer to example: &quot;
+            &quot;https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification&quot;
+            &quot;/cpu/ReadMe.md &quot;)
+
+    if &quot;MatMulConstBOnly&quot; not in extra_options:
+        extra_options[&quot;MatMulConstBOnly&quot;] = True
+
+    quantizer = ONNXQuantizer(
+        model,
+        per_channel,
+        reduce_range,
+        mode,
+        False,  # static
+        weight_type,
+        QuantType.QUInt8,  # dynamic activation only supports uint8
+        None,
+        nodes_to_quantize,
+        nodes_to_exclude,
+        op_types_to_quantize,
+        extra_options,
+    )
+
+    quantizer.quantize_model()
+    quantizer.model.save_model_to_file(model_output, use_external_data_format)</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

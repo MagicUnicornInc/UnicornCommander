@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kde-ai-interface
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kde-ai-interface
+  template:
+    metadata:
+      labels:
+        app: kde-ai-interface
+    spec:
+      containers:
+      - name: kde-ai-interface
+        image: kde-ai-interface:latest
+        resources:
+          limits:
+            amd.com/gpu: 1

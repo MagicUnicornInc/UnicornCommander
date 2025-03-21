@@ -1,0 +1,17 @@
+# KDE AI Interface Requirements
+
+# Core dependencies
+PyQt5>=5.15.0
+qdarkstyle>=3.0.0
+
+# OpenAI backend
+openai>=1.0.0
+anyio>=3.5.0
+
+# Ollama backend
+requests>=2.25.0
+
+# Optional dependencies
+huggingface_hub>=0.7.0
+numpy>=1.20.0
+pillow>=9.0.0

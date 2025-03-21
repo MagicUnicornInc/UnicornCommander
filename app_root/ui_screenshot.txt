@@ -1,0 +1,39 @@
++--------------------------------------------------------------+
+|  KDE AI Assistant                                  [_] [X]  |
++--------------------------------------------------------------+
+|                                                              |
+|  Hello! How can I assist you today?                          |
+|  +---------------------------------------------------------+ |
+|  |                                                         | |
+|  +---------------------------------------------------------+ |
+|                                                              |
+|  What is KDE?                                                |
+|  +---------------------------------------------------------+ |
+|  |                                                         | |
+|  +---------------------------------------------------------+ |
+|                                                              |
+|  KDE is a powerful open-source desktop environment for       |
+|  Linux systems. It offers a customizable and feature-rich    |
+|  experience for users.                                       |
+|  +---------------------------------------------------------+ |
+|  |                                                         | |
+|  +---------------------------------------------------------+ |
+|                                                              |
+| +----------------------------------------------------------+ |
+| | Type your message here...                            [>] | |
+| +----------------------------------------------------------+ |
+|                                                              |
++--------------------------------------------------------------+
+
+Key features of the KDE AI Interface:
+
+1. Alt+Space global shortcut to show/hide the interface
+2. Minimal view when first opened (just search bar)
+3. Expands to conversation view when user sends a message
+4. System tray icon for easy access
+5. Settings dialog for configuring MCP server connections
+6. Markdown rendering in responses
+7. Code syntax highlighting
+8. Theme integration with KDE Plasma
+9. Draggable, resizable window
+10. Secure credential storage

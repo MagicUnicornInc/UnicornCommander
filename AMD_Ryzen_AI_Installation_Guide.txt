@@ -1,0 +1,42 @@
+# AMD Ryzen AI Software Stack Installation Guide
+
+This guide explains how to install and configure the AMD Ryzen AI Software stack, including:
+- ROCm (for GPU acceleration)
+- AMD Radeon GPU Profiler (RGP) and ROCProfiler
+- Required patches for kernel and Mesa drivers
+- Vitis AI Toolchain (for compiling custom ONNX models using the XDNA NPU)
+- Optimized math libraries like ZenDNN
+
+## Step 1: Update Your System
+Update your package listings and upgrade existing packages:
+
+    sudo apt update && sudo apt upgrade
+
+## Step 2: Install ROCm SDK
+Follow the official ROCm installation guide:
+https://rocmdocs.amd.com/en/latest/Installation_Guide/Installation-Guide.html
+For Ubuntu, for example, you might run:
+
+    wget -qO - http://repo.radeon.com/rocm/rocm.gpg.key | sudo apt-key add -
+    echo 'deb [arch=amd64] http://repo.radeon.com/rocm/apt/debian/ xenial main' | sudo tee /etc/apt/sources.list.d/rocm.list
+    sudo apt update && sudo apt install rocm-dkms
+
+## Step 3: Install Developer Tools
+Install AMD Radeon GPU Profiler (RGP) and ROCProfiler as outlined in AMD documentation.
+
+## Step 4: Install Vitis AI Toolchain
+Follow the Vitis AI documentation from Xilinx:
+https://www.xilinx.com/products/design-tools/vitis-ai.html
+This toolchain helps compile and optimize ONNX models for the XDNA NPU.
+
+## Step 5: Install Optimized Math Libraries
+Install libraries such as ZenDNN for improved CPU math performance on AMD Ryzen.
+
+## Step 6: System Configurations
+Ensure your BIOS/UEFI and firmware are updated, and consider the following:
+- Enable Memory Interleaving
+- Apply any recommended AMD patches for the kernel and Mesa drivers
+
+Once these steps are complete, your system should be properly configured to leverage AMD Ryzen AI acceleration.
+
+Happy AI inference on AMD Ryzen!

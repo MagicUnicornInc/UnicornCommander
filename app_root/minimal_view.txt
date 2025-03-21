@@ -1,0 +1,21 @@
+Minimal View (when first activated with Alt+Space):
+
++--------------------------------------------------------------+
+|  KDE AI Assistant                                  [_] [X]  |
++--------------------------------------------------------------+
+|                                                              |
+| +----------------------------------------------------------+ |
+| | Type your message here...                            [>] | |
+| +----------------------------------------------------------+ |
+|                                                              |
++--------------------------------------------------------------+
+
+This minimal view appears in the center of the screen when the user presses Alt+Space.
+It's similar to Spotlight on macOS or the KRunner interface in KDE, providing a quick
+way to interact with the AI assistant without taking up much screen space.
+
+When the user types a message and sends it, the interface expands to show the
+conversation view with both the user's message and the assistant's response.
+
+The window can be moved by dragging the title bar, and can be hidden again by
+pressing Escape or clicking outside the window.

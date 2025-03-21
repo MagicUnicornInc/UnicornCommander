@@ -1,0 +1,1281 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>quark.torch.quantization.config.config &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'autoapi/quark/torch/quantization/config/config/index';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="quark.torch.export.config.config" href="../../../export/config/config/index.html" />
+    <link rel="prev" title="quark.torch.pruning.config" href="../../../pruning/config/index.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../../../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../../../../pytorch/pytorch_apis.html" class="nav-link">Quark APIs for PyTorch</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quark.torch.quantization.config.config</span></code></span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>quark.torch.quantization.config.config</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.ConfigBase"><code class="docutils literal notranslate"><span class="pre">ConfigBase</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Config.set_algo_config"><code class="docutils literal notranslate"><span class="pre">Config.set_algo_config()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Config.add_pre_optimization_config"><code class="docutils literal notranslate"><span class="pre">Config.add_pre_optimization_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.QuantizationConfig"><code class="docutils literal notranslate"><span class="pre">QuantizationConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.DataTypeSpec"><code class="docutils literal notranslate"><span class="pre">DataTypeSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint4PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">Uint4PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint4PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">Uint4PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint4PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">Uint4PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int4PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">Int4PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int4PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">Int4PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int4PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">Int4PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint8PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">Uint8PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint8PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">Uint8PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint8PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">Uint8PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int8PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">Int8PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int8PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">Int8PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int8PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">Int8PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E4M3PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">FP8E4M3PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E4M3PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">FP8E4M3PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E4M3PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">FP8E4M3PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E5M2PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">FP8E5M2PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E5M2PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">FP8E5M2PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E5M2PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">FP8E5M2PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Float16Spec"><code class="docutils literal notranslate"><span class="pre">Float16Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Bfloat16Spec"><code class="docutils literal notranslate"><span class="pre">Bfloat16Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.MXSpec"><code class="docutils literal notranslate"><span class="pre">MXSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.MX6Spec"><code class="docutils literal notranslate"><span class="pre">MX6Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.MX9Spec"><code class="docutils literal notranslate"><span class="pre">MX9Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.BFP16Spec"><code class="docutils literal notranslate"><span class="pre">BFP16Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.QuantizationSpec"><code class="docutils literal notranslate"><span class="pre">QuantizationSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.TQTSpec"><code class="docutils literal notranslate"><span class="pre">TQTSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.load_pre_optimization_config_from_file"><code class="docutils literal notranslate"><span class="pre">load_pre_optimization_config_from_file()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.load_quant_algo_config_from_file"><code class="docutils literal notranslate"><span class="pre">load_quant_algo_config_from_file()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.AlgoConfigBase"><code class="docutils literal notranslate"><span class="pre">AlgoConfigBase</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.PreQuantOptConfig"><code class="docutils literal notranslate"><span class="pre">PreQuantOptConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.AlgoConfig"><code class="docutils literal notranslate"><span class="pre">AlgoConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.SmoothQuantConfig"><code class="docutils literal notranslate"><span class="pre">SmoothQuantConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.RotationConfig"><code class="docutils literal notranslate"><span class="pre">RotationConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.QuaRotConfig"><code class="docutils literal notranslate"><span class="pre">QuaRotConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.AutoSmoothQuantConfig"><code class="docutils literal notranslate"><span class="pre">AutoSmoothQuantConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.AWQConfig"><code class="docutils literal notranslate"><span class="pre">AWQConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.GPTQConfig"><code class="docutils literal notranslate"><span class="pre">GPTQConfig</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-quark.torch.quantization.config.config">
+<span id="quark-torch-quantization-config-config"></span><h1><a class="reference internal" href="#module-quark.torch.quantization.config.config" title="quark.torch.quantization.config.config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quark.torch.quantization.config.config</span></code></a><a class="headerlink" href="#module-quark.torch.quantization.config.config" title="Link to this heading">#</a></h1>
+<p>Quark Quantization Config API for PyTorch</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.ConfigBase" title="quark.torch.quantization.config.config.ConfigBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConfigBase</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Config" title="quark.torch.quantization.config.config.Config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Config</span></code></a></p></td>
+<td><p>A class that encapsulates comprehensive quantization configurations for a machine learning model, allowing for detailed and hierarchical control over quantization parameters across different model components.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationConfig" title="quark.torch.quantization.config.config.QuantizationConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantizationConfig</span></code></a></p></td>
+<td><p>A data class that specifies quantization configurations for different components of a module, allowing hierarchical control over how each tensor type is quantized.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.DataTypeSpec" title="quark.torch.quantization.config.config.DataTypeSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataTypeSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Uint4PerTensorSpec" title="quark.torch.quantization.config.config.Uint4PerTensorSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Uint4PerTensorSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Uint4PerChannelSpec" title="quark.torch.quantization.config.config.Uint4PerChannelSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Uint4PerChannelSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Uint4PerGroupSpec" title="quark.torch.quantization.config.config.Uint4PerGroupSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Uint4PerGroupSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Int4PerTensorSpec" title="quark.torch.quantization.config.config.Int4PerTensorSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Int4PerTensorSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Int4PerChannelSpec" title="quark.torch.quantization.config.config.Int4PerChannelSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Int4PerChannelSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Int4PerGroupSpec" title="quark.torch.quantization.config.config.Int4PerGroupSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Int4PerGroupSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Uint8PerTensorSpec" title="quark.torch.quantization.config.config.Uint8PerTensorSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Uint8PerTensorSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Uint8PerChannelSpec" title="quark.torch.quantization.config.config.Uint8PerChannelSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Uint8PerChannelSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Uint8PerGroupSpec" title="quark.torch.quantization.config.config.Uint8PerGroupSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Uint8PerGroupSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Int8PerTensorSpec" title="quark.torch.quantization.config.config.Int8PerTensorSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Int8PerTensorSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Int8PerChannelSpec" title="quark.torch.quantization.config.config.Int8PerChannelSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Int8PerChannelSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Int8PerGroupSpec" title="quark.torch.quantization.config.config.Int8PerGroupSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Int8PerGroupSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.FP8E4M3PerTensorSpec" title="quark.torch.quantization.config.config.FP8E4M3PerTensorSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FP8E4M3PerTensorSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.FP8E4M3PerChannelSpec" title="quark.torch.quantization.config.config.FP8E4M3PerChannelSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FP8E4M3PerChannelSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.FP8E4M3PerGroupSpec" title="quark.torch.quantization.config.config.FP8E4M3PerGroupSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FP8E4M3PerGroupSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.FP8E5M2PerTensorSpec" title="quark.torch.quantization.config.config.FP8E5M2PerTensorSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FP8E5M2PerTensorSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.FP8E5M2PerChannelSpec" title="quark.torch.quantization.config.config.FP8E5M2PerChannelSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FP8E5M2PerChannelSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.FP8E5M2PerGroupSpec" title="quark.torch.quantization.config.config.FP8E5M2PerGroupSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FP8E5M2PerGroupSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Float16Spec" title="quark.torch.quantization.config.config.Float16Spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Float16Spec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.Bfloat16Spec" title="quark.torch.quantization.config.config.Bfloat16Spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Bfloat16Spec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.MXSpec" title="quark.torch.quantization.config.config.MXSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MXSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.MX6Spec" title="quark.torch.quantization.config.config.MX6Spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MX6Spec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.MX9Spec" title="quark.torch.quantization.config.config.MX9Spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MX9Spec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.BFP16Spec" title="quark.torch.quantization.config.config.BFP16Spec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BFP16Spec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationSpec" title="quark.torch.quantization.config.config.QuantizationSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantizationSpec</span></code></a></p></td>
+<td><p>A data class that defines the specifications for quantizing tensors within a model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.TQTSpec" title="quark.torch.quantization.config.config.TQTSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TQTSpec</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.AlgoConfigBase" title="quark.torch.quantization.config.config.AlgoConfigBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlgoConfigBase</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.PreQuantOptConfig" title="quark.torch.quantization.config.config.PreQuantOptConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PreQuantOptConfig</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.AlgoConfig" title="quark.torch.quantization.config.config.AlgoConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlgoConfig</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.SmoothQuantConfig" title="quark.torch.quantization.config.config.SmoothQuantConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SmoothQuantConfig</span></code></a></p></td>
+<td><p>A data class that defines the specifications for Smooth Quantization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.RotationConfig" title="quark.torch.quantization.config.config.RotationConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RotationConfig</span></code></a></p></td>
+<td><p>A data class that defines the specifications for rotation settings in processing algorithms.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.QuaRotConfig" title="quark.torch.quantization.config.config.QuaRotConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuaRotConfig</span></code></a></p></td>
+<td><p>A data class that defines the specifications for the QuaRot algorithm.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.AutoSmoothQuantConfig" title="quark.torch.quantization.config.config.AutoSmoothQuantConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AutoSmoothQuantConfig</span></code></a></p></td>
+<td><p>A data class that defines the specifications for AutoSmoothQuant.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.AWQConfig" title="quark.torch.quantization.config.config.AWQConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AWQConfig</span></code></a></p></td>
+<td><p>Configuration for Activation-aware Weight Quantization (AWQ).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.GPTQConfig" title="quark.torch.quantization.config.config.GPTQConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GPTQConfig</span></code></a></p></td>
+<td><p>A data class that defines the specifications for Accurate Post-Training Quantization for Generative Pre-trained Transformers (GPTQ).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.load_pre_optimization_config_from_file" title="quark.torch.quantization.config.config.load_pre_optimization_config_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_pre_optimization_config_from_file</span></code></a>(→ PreQuantOptConfig)</p></td>
+<td><p>Load pre-optimization configuration from a JSON file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#quark.torch.quantization.config.config.load_quant_algo_config_from_file" title="quark.torch.quantization.config.config.load_quant_algo_config_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_quant_algo_config_from_file</span></code></a>(→ AlgoConfig)</p></td>
+<td><p>Load quantization algorithm configuration from a JSON file.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.ConfigBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">ConfigBase</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#ConfigBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.ConfigBase" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Config" title="Link to this definition">#</a></dt>
+<dd><p>A class that encapsulates comprehensive quantization configurations for a machine learning model, allowing for detailed and hierarchical control over quantization parameters across different model components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>global_quant_config</strong> (<a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationConfig" title="quark.torch.quantization.config.config.QuantizationConfig"><em>QuantizationConfig</em></a>) – Global quantization configuration applied to the entire model unless overridden at the layer level.</p></li>
+<li><p><strong>layer_type_quant_config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationConfig" title="quark.torch.quantization.config.config.QuantizationConfig"><em>QuantizationConfig</em></a><em>]</em>) – A dictionary mapping from layer types (e.g., nn.Conv2d, nn.Linear) to their quantization configurations.</p></li>
+<li><p><strong>layer_quant_config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationConfig" title="quark.torch.quantization.config.config.QuantizationConfig"><em>QuantizationConfig</em></a><em>]</em>) – A dictionary mapping from layer names to their quantization configurations, allowing for per-layer customization. Default is an empty dictionary.</p></li>
+<li><p><strong>kv_cache_quant_config</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationConfig" title="quark.torch.quantization.config.config.QuantizationConfig"><em>QuantizationConfig</em></a><em>]</em>) – A dictionary mapping from layer names to kv_cache quantization configurations. Default is an empty dictionary.</p></li>
+<li><p><strong>exclude</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of layer names to be excluded from quantization, enabling selective quantization of the model. Default is an empty list.</p></li>
+<li><p><strong>algo_config</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#quark.torch.quantization.config.config.AlgoConfig" title="quark.torch.quantization.config.config.AlgoConfig"><em>AlgoConfig</em></a><em>]</em>) – Optional configuration for the quantization algorithm, such as GPTQ and AWQ. After this process, the datatype/fake_datatype of weights will be changed with quantization scales. Default is None.</p></li>
+<li><p><strong>quant_mode</strong> (<a class="reference internal" href="../type/index.html#quark.torch.quantization.config.type.QuantizationMode" title="quark.torch.quantization.config.type.QuantizationMode"><em>QuantizationMode</em></a>) – The quantization mode to be used (eager_mode or fx_graph_mode). Default is eager_mode.</p></li>
+<li><p><strong>pre_quant_opt_config</strong> (<em>List</em><em>[</em><a class="reference internal" href="#quark.torch.quantization.config.config.PreQuantOptConfig" title="quark.torch.quantization.config.config.PreQuantOptConfig"><em>PreQuantOptConfig</em></a><em>]</em>) – Optional pre-processing optimization, such as Equalization and SmoothQuant. After this process, the value of weights will be changed, but the dtype/fake_dtype will be the same. Default is an empty list.</p></li>
+<li><p><strong>log_severity_level</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – 0:DEBUG, 1:INFO, 2:WARNING. 3:ERROR, 4:CRITICAL/FATAL. Default is 1.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Config.set_algo_config">
+<span class="sig-name descname"><span class="pre">set_algo_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#quark.torch.quantization.config.config.AlgoConfig" title="quark.torch.quantization.config.config.AlgoConfig"><span class="pre">AlgoConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Config.set_algo_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Config.set_algo_config" title="Link to this definition">#</a></dt>
+<dd><p>Sets the algorithm configuration for quantization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>algo_config</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#quark.torch.quantization.config.config.AlgoConfig" title="quark.torch.quantization.config.config.AlgoConfig"><em>AlgoConfig</em></a><em>]</em>) – The quantization algorithm configuration to be set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Config.add_pre_optimization_config">
+<span class="sig-name descname"><span class="pre">add_pre_optimization_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pre_quant_opt_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#quark.torch.quantization.config.config.PreQuantOptConfig" title="quark.torch.quantization.config.config.PreQuantOptConfig"><span class="pre">PreQuantOptConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Config.add_pre_optimization_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Config.add_pre_optimization_config" title="Link to this definition">#</a></dt>
+<dd><p>Adds a pre-processing optimization configuration to the list of existing pre-quant optimization configs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pre_quant_opt_config</strong> (<a class="reference internal" href="#quark.torch.quantization.config.config.PreQuantOptConfig" title="quark.torch.quantization.config.config.PreQuantOptConfig"><em>PreQuantOptConfig</em></a>) – The pre-quantization optimization configuration to add.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.QuantizationConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">QuantizationConfig</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#QuantizationConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.QuantizationConfig" title="Link to this definition">#</a></dt>
+<dd><p>A data class that specifies quantization configurations for different components of a module, allowing hierarchical control over how each tensor type is quantized.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_tensors</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationSpec" title="quark.torch.quantization.config.config.QuantizationSpec"><em>QuantizationSpec</em></a><em>]</em>) – Input tensors quantization specification. If None, following the hierarchical quantization setup. e.g. If the input_tensors in layer_type_quant_config is None, the configuration from global_quant_config will be used instead. Defaults to None. If None in global_quant_config, input_tensors are not quantized.</p></li>
+<li><p><strong>output_tensors</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationSpec" title="quark.torch.quantization.config.config.QuantizationSpec"><em>QuantizationSpec</em></a><em>]</em>) – Output tensors quantization specification. Defaults to None. If None, the same as above.</p></li>
+<li><p><strong>weight</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationSpec" title="quark.torch.quantization.config.config.QuantizationSpec"><em>QuantizationSpec</em></a><em>]</em>) – The weights tensors quantization specification. Defaults to None. If None, the same as above.</p></li>
+<li><p><strong>bias</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#quark.torch.quantization.config.config.QuantizationSpec" title="quark.torch.quantization.config.config.QuantizationSpec"><em>QuantizationSpec</em></a><em>]</em>) – The bias tensors quantization specification. Defaults to None. If None, the same as above.</p></li>
+<li><p><strong>target_device</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../type/index.html#quark.torch.quantization.config.type.DeviceType" title="quark.torch.quantization.config.type.DeviceType"><em>DeviceType</em></a><em>]</em>) – Configuration specifying the target device (e.g., CPU, GPU, IPU) for the quantized model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.DataTypeSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">DataTypeSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#DataTypeSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.DataTypeSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Uint4PerTensorSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Uint4PerTensorSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Uint4PerTensorSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Uint4PerTensorSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Uint4PerChannelSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Uint4PerChannelSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Uint4PerChannelSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Uint4PerChannelSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Uint4PerGroupSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Uint4PerGroupSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Uint4PerGroupSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Uint4PerGroupSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Int4PerTensorSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Int4PerTensorSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Int4PerTensorSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Int4PerTensorSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Int4PerChannelSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Int4PerChannelSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Int4PerChannelSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Int4PerChannelSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Int4PerGroupSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Int4PerGroupSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Int4PerGroupSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Int4PerGroupSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Uint8PerTensorSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Uint8PerTensorSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Uint8PerTensorSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Uint8PerTensorSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Uint8PerChannelSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Uint8PerChannelSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Uint8PerChannelSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Uint8PerChannelSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Uint8PerGroupSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Uint8PerGroupSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Uint8PerGroupSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Uint8PerGroupSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Int8PerTensorSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Int8PerTensorSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Int8PerTensorSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Int8PerTensorSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Int8PerChannelSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Int8PerChannelSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Int8PerChannelSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Int8PerChannelSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Int8PerGroupSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Int8PerGroupSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Int8PerGroupSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Int8PerGroupSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.FP8E4M3PerTensorSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">FP8E4M3PerTensorSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#FP8E4M3PerTensorSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.FP8E4M3PerTensorSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.FP8E4M3PerChannelSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">FP8E4M3PerChannelSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#FP8E4M3PerChannelSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.FP8E4M3PerChannelSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.FP8E4M3PerGroupSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">FP8E4M3PerGroupSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#FP8E4M3PerGroupSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.FP8E4M3PerGroupSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.FP8E5M2PerTensorSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">FP8E5M2PerTensorSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#FP8E5M2PerTensorSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.FP8E5M2PerTensorSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.FP8E5M2PerChannelSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">FP8E5M2PerChannelSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#FP8E5M2PerChannelSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.FP8E5M2PerChannelSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.FP8E5M2PerGroupSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">FP8E5M2PerGroupSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#FP8E5M2PerGroupSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.FP8E5M2PerGroupSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Float16Spec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Float16Spec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Float16Spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Float16Spec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.Bfloat16Spec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">Bfloat16Spec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#Bfloat16Spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.Bfloat16Spec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.MXSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">MXSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#MXSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.MXSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.MX6Spec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">MX6Spec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#MX6Spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.MX6Spec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.MX9Spec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">MX9Spec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#MX9Spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.MX9Spec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.BFP16Spec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">BFP16Spec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#BFP16Spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.BFP16Spec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.QuantizationSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">QuantizationSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#QuantizationSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.QuantizationSpec" title="Link to this definition">#</a></dt>
+<dd><p>A data class that defines the specifications for quantizing tensors within a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dtype</strong> (<a class="reference internal" href="../type/index.html#quark.torch.quantization.config.type.Dtype" title="quark.torch.quantization.config.type.Dtype"><em>Dtype</em></a>) – The data type for quantization (e.g., int8, int4).</p></li>
+<li><p><strong>is_dynamic</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Specifies whether dynamic or static quantization should be used. Default is None, which indicates no specification.</p></li>
+<li><p><strong>observer_cls</strong> (<em>Optional</em><em>[</em><em>Type</em><em>[</em><a class="reference internal" href="../../observer/observer/index.html#quark.torch.quantization.observer.observer.ObserverBase" title="quark.torch.quantization.observer.observer.ObserverBase"><em>ObserverBase</em></a><em>]</em><em>]</em>) – The class of observer to be used for determining quantization parameters like min/max values. Default is None.</p></li>
+<li><p><strong>qscheme</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../type/index.html#quark.torch.quantization.config.type.QSchemeType" title="quark.torch.quantization.config.type.QSchemeType"><em>QSchemeType</em></a><em>]</em>) – The quantization scheme to use, such as per_tensor, per_channel or per_group. Default is None.</p></li>
+<li><p><strong>ch_axis</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The channel axis for per-channel quantization. Default is None.</p></li>
+<li><p><strong>group_size</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The size of the group for per-group quantization, also the block size for MX datatypes. Default is None.</p></li>
+<li><p><strong>symmetric</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em>) – Indicates if the quantization should be symmetric around zero. If True, quantization is symmetric. If None, it defers to a higher-level or global setting. Default is None.</p></li>
+<li><p><strong>round_method</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../type/index.html#quark.torch.quantization.config.type.RoundType" title="quark.torch.quantization.config.type.RoundType"><em>RoundType</em></a><em>]</em>) – The rounding method during quantization, such as half_even. If None, it defers to a higher-level or default method. Default is None.</p></li>
+<li><p><strong>scale_type</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../type/index.html#quark.torch.quantization.config.type.ScaleType" title="quark.torch.quantization.config.type.ScaleType"><em>ScaleType</em></a><em>]</em>) – Defines the scale type to be used for quantization, like power of two or float. If None, it defers to a higher-level setting or uses a default method. Default is None.</p></li>
+<li><p><strong>mx_element_dtype</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../type/index.html#quark.torch.quantization.config.type.Dtype" title="quark.torch.quantization.config.type.Dtype"><em>Dtype</em></a><em>]</em>) – Defines the data type to be used for the element type when using mx datatypes, the shared scale effectively uses FP8 E8M0.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.TQTSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">TQTSpec</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#TQTSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.TQTSpec" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.load_pre_optimization_config_from_file">
+<span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">load_pre_optimization_config_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#quark.torch.quantization.config.config.PreQuantOptConfig" title="quark.torch.quantization.config.config.PreQuantOptConfig"><span class="pre">PreQuantOptConfig</span></a></span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#load_pre_optimization_config_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.load_pre_optimization_config_from_file" title="Link to this definition">#</a></dt>
+<dd><p>Load pre-optimization configuration from a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to the JSON file containing the pre-optimization configuration.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The pre-optimization configuration.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#quark.torch.quantization.config.config.PreQuantOptConfig" title="quark.torch.quantization.config.config.PreQuantOptConfig">PreQuantOptConfig</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.load_quant_algo_config_from_file">
+<span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">load_quant_algo_config_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#quark.torch.quantization.config.config.AlgoConfig" title="quark.torch.quantization.config.config.AlgoConfig"><span class="pre">AlgoConfig</span></a></span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#load_quant_algo_config_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.load_quant_algo_config_from_file" title="Link to this definition">#</a></dt>
+<dd><p>Load quantization algorithm configuration from a JSON file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to the JSON file containing the quantization algorithm configuration.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The quantization algorithm configuration.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#quark.torch.quantization.config.config.AlgoConfig" title="quark.torch.quantization.config.config.AlgoConfig">AlgoConfig</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.AlgoConfigBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">AlgoConfigBase</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#AlgoConfigBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.AlgoConfigBase" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.PreQuantOptConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">PreQuantOptConfig</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#PreQuantOptConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.PreQuantOptConfig" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.AlgoConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">AlgoConfig</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#AlgoConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.AlgoConfig" title="Link to this definition">#</a></dt>
+<dd><p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.SmoothQuantConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">SmoothQuantConfig</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#SmoothQuantConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.SmoothQuantConfig" title="Link to this definition">#</a></dt>
+<dd><p>A data class that defines the specifications for Smooth Quantization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the configuration, typically used to identify different quantization settings. Default is “smoothquant”.</p></li>
+<li><p><strong>alpha</strong> (<em>int</em>) – The factor of adjustment in the quantization formula, influencing how aggressively weights are quantized. Default is 1.</p></li>
+<li><p><strong>scale_clamp_min</strong> (<em>float</em>) – The minimum scaling factor to be used during quantization, preventing the scale from becoming too small. Default is 1e-3.</p></li>
+<li><p><strong>scaling_layers</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – Specific settings for scaling layers, allowing customization of quantization parameters for different layers within the model. Default is None.</p></li>
+<li><p><strong>model_decoder_layers</strong> (<em>str</em>) – Specifies any particular decoder layers in the model that might have unique quantization requirements. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.RotationConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">RotationConfig</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#RotationConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.RotationConfig" title="Link to this definition">#</a></dt>
+<dd><p>A data class that defines the specifications for rotation settings in processing algorithms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the configuration, typically used to identify different rotation settings. Default is “rotation”.</p></li>
+<li><p><strong>random</strong> (<em>bool</em>) – A boolean flag indicating whether the rotation should be applied randomly. This can be useful for data augmentation purposes where random rotations may be required. Default is False.</p></li>
+<li><p><strong>scaling_layers</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – Specific settings for scaling layers, allowing customization of quantization parameters for different layers within the model. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.QuaRotConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">QuaRotConfig</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#QuaRotConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.QuaRotConfig" title="Link to this definition">#</a></dt>
+<dd><p>A data class that defines the specifications for the QuaRot algorithm.
+:param str name: The name of the configuration, typically used to identify different rotation settings. Default is “quarot”.
+:param bool random: A boolean flag indicating whether R1 should be applied randomly. This can be useful for data augmentation purposes where random rotations may be required. Default is False.
+:param bool random2: A boolean flag indicating whether R2 should be applied randomly. This can be useful for data augmentation purposes where random rotations may be required. Default is False.</p>
+<blockquote>
+<div><p>random and random2 are only relevant if we are using Hadamard rotations for R1 and R2. If optimized_rotation_path specified,
+then we will load R1 and R2 matrices from a file instad of using Hadamard matrices.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scaling_layers</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – Specific settings for scaling layers, allowing customization of quantization parameters for different layers within the model. Default is None.</p></li>
+<li><p><strong>had</strong> (<em>bool</em>) – A boolean flag indicating whether online hadamard operations R3 and R4 should be performed.</p></li>
+<li><p><strong>optimized_rotation_path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The path to the file ‘R.bin’ that has saved optimized R1 and (per decoder) R2 matrices.
+If this is specified, R1 and R2 rotations will be loaded from this file. Otherwise they will be Hadamard matrices.</p></li>
+<li><p><strong>kv_cache_quant</strong> (<em>bool</em>) – A boolean flag indicating whether there is kv-cache quantization. R3 rotation is applied only if there is.</p></li>
+<li><p><strong>act_quant</strong> (<em>bool</em>) – A boolean flag indicating whether there is kv-cache quantization. R3 rotation is applied only if there is.</p></li>
+<li><p><strong>backbone</strong> (<em>str</em>) – A string indicating the path to the model backbone.</p></li>
+<li><p><strong>model_decoder_layers</strong> (<em>str</em>) – A string indicating the path to the list of decoder layers.</p></li>
+<li><p><strong>v_proj</strong> (<em>str</em>) – A string indicating the path to the v projection layer, starting from the decoder layer it is in.</p></li>
+<li><p><strong>o_proj</strong> (<em>str</em>) – A string indicating the path to the o projection layer, starting from the decoder layer it is in.</p></li>
+<li><p><strong>self_attn</strong> (<em>str</em>) – A string indicating the path to the self attention block, starting from the decoder layer it is in.</p></li>
+<li><p><strong>mlp</strong> (<em>str</em>) – A string indicating the path to the multilayer perceptron layer, starting from the decoder layer it is in.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.AutoSmoothQuantConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">AutoSmoothQuantConfig</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#AutoSmoothQuantConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.AutoSmoothQuantConfig" title="Link to this definition">#</a></dt>
+<dd><p>A data class that defines the specifications for AutoSmoothQuant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the quantization configuration. Default is “autosmoothquant”.</p></li>
+<li><p><strong>scaling_layers</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – Configuration details for scaling layers within the model, specifying custom scaling parameters per layer. Default is None.</p></li>
+<li><p><strong>compute_scale_loss</strong> (<em>str</em>) – Calculate the best scale loss, “MSE” or “MAE”. Default is “MSE”.</p></li>
+<li><p><strong>model_decoder_layers</strong> (<em>str</em>) – Specifies the layers involved in model decoding that may require different quantization parameters. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.AWQConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">AWQConfig</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#AWQConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.AWQConfig" title="Link to this definition">#</a></dt>
+<dd><p>Configuration for Activation-aware Weight Quantization (AWQ).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the quantization configuration. Default is “awq”.</p></li>
+<li><p><strong>scaling_layers</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – Configuration details for scaling layers within the model, specifying custom scaling parameters per layer. Default is None.</p></li>
+<li><p><strong>model_decoder_layers</strong> (<em>str</em>) – Specifies the layers involved in model decoding that may require different quantization parameters. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.quantization.config.config.GPTQConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.quantization.config.config.</span></span><span class="sig-name descname"><span class="pre">GPTQConfig</span></span><a class="reference internal" href="../../../../../../_modules/quark/torch/quantization/config/config.html#GPTQConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#quark.torch.quantization.config.config.GPTQConfig" title="Link to this definition">#</a></dt>
+<dd><p>A data class that defines the specifications for Accurate Post-Training Quantization for Generative Pre-trained Transformers (GPTQ).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The configuration name. Default is “gptq”.</p></li>
+<li><p><strong>damp_percent</strong> (<em>float</em>) – The percentage used to dampen the quantization effect, aiding in the maintenance of accuracy post-quantization. Default is 0.01.</p></li>
+<li><p><strong>desc_act</strong> (<em>bool</em>) – Indicates whether descending activation is used, typically to enhance model performance with quantization. Default is True.</p></li>
+<li><p><strong>static_groups</strong> (<em>bool</em>) – Specifies whether the order of groups for quantization are static or can be dynamically adjusted. Default is True. Quark export only support static_groups as True.</p></li>
+<li><p><strong>true_sequential</strong> (<em>bool</em>) – Indicates whether the quantization should be applied in a truly sequential manner across the layers. Default is True.</p></li>
+<li><p><strong>inside_layer_modules</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Lists the names of internal layer modules within the model that require specific quantization handling. Default is None.</p></li>
+<li><p><strong>model_decoder_layers</strong> (<em>str</em>) – Specifies custom settings for quantization on specific decoder layers of the model. Default is None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../../pruning/config/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quark.torch.pruning.config</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../../export/config/config/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quark.torch.export.config.config</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.ConfigBase"><code class="docutils literal notranslate"><span class="pre">ConfigBase</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Config.set_algo_config"><code class="docutils literal notranslate"><span class="pre">Config.set_algo_config()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Config.add_pre_optimization_config"><code class="docutils literal notranslate"><span class="pre">Config.add_pre_optimization_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.QuantizationConfig"><code class="docutils literal notranslate"><span class="pre">QuantizationConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.DataTypeSpec"><code class="docutils literal notranslate"><span class="pre">DataTypeSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint4PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">Uint4PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint4PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">Uint4PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint4PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">Uint4PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int4PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">Int4PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int4PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">Int4PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int4PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">Int4PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint8PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">Uint8PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint8PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">Uint8PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Uint8PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">Uint8PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int8PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">Int8PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int8PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">Int8PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Int8PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">Int8PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E4M3PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">FP8E4M3PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E4M3PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">FP8E4M3PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E4M3PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">FP8E4M3PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E5M2PerTensorSpec"><code class="docutils literal notranslate"><span class="pre">FP8E5M2PerTensorSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E5M2PerChannelSpec"><code class="docutils literal notranslate"><span class="pre">FP8E5M2PerChannelSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.FP8E5M2PerGroupSpec"><code class="docutils literal notranslate"><span class="pre">FP8E5M2PerGroupSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Float16Spec"><code class="docutils literal notranslate"><span class="pre">Float16Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.Bfloat16Spec"><code class="docutils literal notranslate"><span class="pre">Bfloat16Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.MXSpec"><code class="docutils literal notranslate"><span class="pre">MXSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.MX6Spec"><code class="docutils literal notranslate"><span class="pre">MX6Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.MX9Spec"><code class="docutils literal notranslate"><span class="pre">MX9Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.BFP16Spec"><code class="docutils literal notranslate"><span class="pre">BFP16Spec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.QuantizationSpec"><code class="docutils literal notranslate"><span class="pre">QuantizationSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.TQTSpec"><code class="docutils literal notranslate"><span class="pre">TQTSpec</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.load_pre_optimization_config_from_file"><code class="docutils literal notranslate"><span class="pre">load_pre_optimization_config_from_file()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.load_quant_algo_config_from_file"><code class="docutils literal notranslate"><span class="pre">load_quant_algo_config_from_file()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.AlgoConfigBase"><code class="docutils literal notranslate"><span class="pre">AlgoConfigBase</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.PreQuantOptConfig"><code class="docutils literal notranslate"><span class="pre">PreQuantOptConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.AlgoConfig"><code class="docutils literal notranslate"><span class="pre">AlgoConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.SmoothQuantConfig"><code class="docutils literal notranslate"><span class="pre">SmoothQuantConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.RotationConfig"><code class="docutils literal notranslate"><span class="pre">RotationConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.QuaRotConfig"><code class="docutils literal notranslate"><span class="pre">QuaRotConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.AutoSmoothQuantConfig"><code class="docutils literal notranslate"><span class="pre">AutoSmoothQuantConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.AWQConfig"><code class="docutils literal notranslate"><span class="pre">AWQConfig</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quark.torch.quantization.config.config.GPTQConfig"><code class="docutils literal notranslate"><span class="pre">GPTQConfig</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

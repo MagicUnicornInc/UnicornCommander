@@ -1,0 +1,17 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=KDE AI Interface
+Comment=AI assistant for KDE Plasma
+Exec=/home/ucadmin/GIT-Projects/KDE AI Interface/app_root/main.py
+Icon=system-search
+Categories=Utility;Qt;KDE;
+Keywords=AI;Assistant;Chat;
+StartupNotify=true
+Terminal=false
+X-DBUS-StartupType=Unique
+X-KDE-StartupNotify=true
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+X-KDE-WindowiconName=system-search
+X-KDE-DBUS-Restricted-Interfaces=org.kde.kwin.Screenshot

@@ -1,0 +1,48 @@
+Settings Dialog:
+
++------------------------------------------------------------------+
+|  Settings                                                 [X]    |
++------------------------------------------------------------------+
+|                                                                  |
+| [General] [Model] [Appearance] [Shortcuts]                       |
+|                                                                  |
+| +--------------------------------------------------------------+ |
+| |                                                              | |
+| | Server URL: [https://api.example.com/v1                    ] | |
+| |                                                              | |
+| | API Key:    [*************************                      ] | |
+| |                                                              | |
+| | Model:      [Default Model                      ▼]           | |
+| |                                                              | |
+| | Temperature: [0.7                               ]            | |
+| |                                                              | |
+| | [Test Connection]                                            | |
+| |                                                              | |
+| +--------------------------------------------------------------+ |
+|                                                                  |
+|                              [Cancel]    [OK]                    |
++------------------------------------------------------------------+
+
+The settings dialog has multiple tabs:
+
+1. General
+   - Startup options
+   - History settings
+   - Behavior preferences
+
+2. Model (shown above)
+   - MCP server configuration
+   - API key management
+   - Model selection
+   - Generation parameters (temperature, etc.)
+
+3. Appearance
+   - Theme settings (system theme or dark mode)
+   - Font size
+   - UI customization options
+
+4. Shortcuts
+   - Configure keyboard shortcuts
+   - Global shortcut for activating the interface
+
+The API key is stored securely using the system keyring service.
