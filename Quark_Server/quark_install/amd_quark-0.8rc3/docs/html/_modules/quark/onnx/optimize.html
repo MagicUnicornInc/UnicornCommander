@@ -1,0 +1,1661 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.onnx.optimize &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/onnx/optimize';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.onnx.optimize</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.onnx.optimize</h1><div class="highlight"><pre>
+<span></span>#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+from quark.shares.utils.log import ScreenLogger
+import numpy as np
+from math import sqrt
+import copy
+import onnx
+from onnxruntime.quantization.onnx_model import ONNXModel
+from onnxruntime.transformers.onnx_model import OnnxModel
+from onnxruntime.transformers.fusion_layernorm import FusionLayerNormalization
+from onnxruntime.transformers.fusion_gelu import FusionGelu
+from .quant_utils import QUANT_OP_TYPES, DEQUANT_OP_TYPES, get_clip_min_max, get_opset_version
+from typing import Tuple, List, Optional, Union
+from numpy.typing import NDArray
+from onnx import ModelProto, NodeProto
+
+logger = ScreenLogger(__name__)
+
+
+<div class="viewcode-block" id="Optimize">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize">[docs]</a>
+class Optimize(object):
+    &quot;&quot;&quot;
+    A class for optimizations to be applied to onnx model before quantization.
+
+    Args:
+        model (onnx.ModelProto): The ONNX model to be optimized.
+        op_types_to_quantize (list): A list of operation types to be quantized.
+        nodes_to_quantize (list): A list of node names to be quantized.
+        nodes_to_exclude (list): A list of node names to be excluded from quantization.
+
+    &quot;&quot;&quot;
+
+    def __init__(self, model: ModelProto, op_types_to_quantize: List[str], nodes_to_quantize: Optional[List[str]],
+                 nodes_to_exclude: Optional[List[str]]) -&gt; None:
+        self.model = model
+        self.op_types_to_quantize = op_types_to_quantize
+        self.nodes_to_quantize = nodes_to_quantize
+        self.nodes_to_exclude = nodes_to_exclude
+
+    def should_quantize_node(self, node: NodeProto) -&gt; bool:
+        if (self.nodes_to_quantize is not None and len(self.nodes_to_quantize) != 0
+                and node.name not in self.nodes_to_quantize):
+            return False
+
+        if node.op_type not in self.op_types_to_quantize:
+            return False
+
+        if self.nodes_to_exclude is not None and node.name in self.nodes_to_exclude:
+            return False
+
+        return True
+
+    def replace_node_with(self, node: NodeProto, replaced_type: str) -&gt; NodeProto:
+        new_node = onnx.helper.make_node(replaced_type, inputs=node.input, outputs=node.output, name=node.name)
+
+        self.model.graph.node.append(new_node)
+        return new_node
+
+<div class="viewcode-block" id="Optimize.convert_bn_to_conv">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize.convert_bn_to_conv">[docs]</a>
+    def convert_bn_to_conv(self) -&gt; None:
+        &quot;&quot;&quot;Convert BatchNormalization to Conv.
+        &quot;&quot;&quot;
+
+        def _get_folded_conv_weights(bn_gamma: NDArray[np.float32], bn_beta: NDArray[np.float32],
+                                     bn_mm: NDArray[np.float32], bn_mv: NDArray[np.float32],
+                                     bn_epsilon: float) -&gt; Tuple[NDArray[np.float32], NDArray[np.float32]]:
+            if bn_gamma is not None:
+                multiplier = bn_gamma / np.sqrt(bn_mv + bn_epsilon)
+            else:
+                multiplier = 1 / np.sqrt(bn_mv + bn_epsilon)
+
+            folded_conv_kernel = multiplier
+            folded_conv_bias = bn_beta + (-bn_mm) * multiplier
+            return folded_conv_kernel, folded_conv_bias
+
+        self.op_types_to_quantize.append(&quot;BatchNormalization&quot;)
+        nodes_to_remove: List[NodeProto] = []
+        init_to_remove: List[str] = []
+        onnx_model = ONNXModel(self.model)
+        for node in onnx_model.model.graph.node:
+
+            if node.op_type == &#39;BatchNormalization&#39; and self.should_quantize_node(node):
+                input_name = node.input[0]
+                input_shape: List[str] = []
+                for input_info in onnx_model.model.graph.value_info:
+                    if input_info.name == input_name:
+                        input_shape = [dim.dim_value for dim in input_info.type.tensor_type.shape.dim]
+                if len(node.input) == 5 and len(input_shape) == 4:
+                    bn_epsilon = next((attr.f for attr in node.attribute if attr.name == &#39;epsilon&#39;), 1e-10)
+                    for init in onnx_model.model.graph.initializer:
+                        if init.name == node.input[1]:
+                            bn_gamma = onnx.numpy_helper.to_array(init)
+                        elif init.name == node.input[2]:
+                            bn_beta = onnx.numpy_helper.to_array(init)
+                        elif init.name == node.input[3]:
+                            bn_mm = onnx.numpy_helper.to_array(init)
+                        elif init.name == node.input[4]:
+                            bn_mv = onnx.numpy_helper.to_array(init)
+                    try:
+                        weights, bias = _get_folded_conv_weights(bn_gamma, bn_beta, bn_mm, bn_mv, bn_epsilon)
+                        num_channel = bn_mm.shape[0]
+                        weights = weights.reshape([num_channel, 1, 1, 1])
+                        weights_tensor = onnx.numpy_helper.from_array(weights, name=node.output[0] + &quot;weights&quot;)
+                        bias_tensor = onnx.numpy_helper.from_array(bias, name=node.output[0] + &quot;bias&quot;)
+                        onnx_model.model.graph.initializer.extend([weights_tensor, bias_tensor])
+                        new_node = onnx.helper.make_node(
+                            &quot;Conv&quot;,
+                            inputs=[node.input[0], node.output[0] + &quot;weights&quot;, node.output[0] + &quot;bias&quot;],
+                            outputs=[node.output[0]],
+                            group=num_channel,
+                            kernel_shape=[1, 1],
+                            strides=[1, 1],
+                            name=node.name)
+
+                        nodes_to_remove.append(node)
+                        init_to_remove.extend([node.input[1], node.input[2], node.input[3], node.input[4]])
+                        onnx_model.model.graph.node.append(new_node)
+                        logger.info(f&quot;Found BatchNormalization node {node.name}. &quot;
+                                    f&quot;Replacing with Conv.&quot;)
+                    except Exception as e:
+                        logger.warning(
+                            f&quot;Fail to generate conv&#39;s weights and bias beacuse of {e}, skip converting bn to conv&quot;)
+                else:
+                    logger.warning(
+                        f&quot;Fail to convert bn {node.name} to conv beacuse BatchNormalization&#39;s input or shape does not meet the requirements&quot;
+                    )
+        onnx_model.remove_nodes(nodes_to_remove)
+        onnx_model.remove_initializers(init_to_remove)
+        onnx_model.clean_initializers()
+        onnx_model.topological_sort()
+        self.model = onnx_model.model</div>
+
+
+<div class="viewcode-block" id="Optimize.convert_reduce_mean_to_global_avg_pool">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize.convert_reduce_mean_to_global_avg_pool">[docs]</a>
+    def convert_reduce_mean_to_global_avg_pool(self) -&gt; None:
+        &quot;&quot;&quot;Convert ReduceMean to GlobalAveragePool.
+        &quot;&quot;&quot;
+
+        from .quant_utils import check_reduce_mean_condition
+        nodes_to_remove = []
+        onnx_model = ONNXModel(self.model)
+        for node in onnx_model.model.graph.node:
+
+            if node.op_type == &#39;ReduceMean&#39; and check_reduce_mean_condition(onnx_model.model,
+                                                                            node) and self.should_quantize_node(node):
+                if len(node.input) == 1:
+                    new_node = self.replace_node_with(node, &#39;GlobalAveragePool&#39;)
+                    nodes_to_remove.append(node)
+                    logger.info(f&quot;Found ReduceMean node {node.name} with axes=[2, 3]. &quot;
+                                f&quot;Replacing with GlobalAveragePool.&quot;)
+                # Handling opset &gt;= 18 for Reduce Mean
+                elif len(node.input) == 2:
+                    new_node = onnx.helper.make_node(&#39;GlobalAveragePool&#39;,
+                                                     inputs=[node.input[0]],
+                                                     outputs=node.output,
+                                                     name=node.name)
+
+                    nodes_to_remove.append(node)
+                    onnx_model.model.graph.node.append(new_node)
+                    logger.info(f&quot;Found ReduceMean node {node.name} with axes=[2, 3]. &quot;
+                                f&quot;Replacing with GlobalAveragePool.&quot;)
+        onnx_model.remove_nodes(nodes_to_remove)
+        onnx_model.clean_initializers()
+        onnx_model.topological_sort()
+        self.model = onnx_model.model</div>
+
+
+<div class="viewcode-block" id="Optimize.split_large_kernel_pool">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize.split_large_kernel_pool">[docs]</a>
+    def split_large_kernel_pool(self) -&gt; None:
+        &quot;&quot;&quot;
+        For pooling with an excessively large kernel size in the onnx model,
+        split it into multiple smaller poolings.
+        &quot;&quot;&quot;
+
+        def _get_factors(num: int) -&gt; Tuple[int, int]:
+            factor_1 = int(sqrt(num))
+            while (factor_1 &gt; 1):
+                if (num % (factor_1) == 0):
+                    factor_2 = num / factor_1
+                    return int(factor_1), int(factor_2)
+                factor_1 = factor_1 - 1
+            factor_2 = num
+            return int(factor_1), int(factor_2)
+
+        onnx_model = ONNXModel(self.model)
+        for node in onnx_model.model.graph.node:
+            if node.op_type == &quot;GlobalAveragePool&quot; and self.should_quantize_node(node):
+                input_name = node.input[0]
+                kw = None
+                kh = None
+                for input_info in onnx_model.model.graph.value_info:
+                    if input_info.name == input_name:
+                        input_shape = [dim.dim_value for dim in input_info.type.tensor_type.shape.dim]
+                        if len(input_shape) == 4:
+                            shape_to_check = True
+                            kh = input_shape[2]
+                            kw = input_shape[3]
+                        break
+                if not kw or not kh:
+                    logger.warning(&#39;Failed to get the input shape, skip optimizing for GlobalAveragePool {}.&#39;.format(
+                        node.name))
+                    continue
+                # Only one split is supported.
+                # TODO: Support multiple split operations
+                elif kw * kh &gt; 512:
+                    kh1, kh2 = _get_factors(kh)
+                    kw1, kw2 = _get_factors(kw)
+                    if kh1 * kw1 &gt; 512 or kh2 * kw2 &gt; 512:
+                        logger.warning(&quot;After split, the kernel size is still too large.&quot;
+                                       &quot;Currently, only one split is supported. Skip optimization.&quot;)
+                    else:
+                        split_tensor = node.input[0] + &quot;_Split&quot;
+                        pool_node = onnx.helper.make_node(&quot;AveragePool&quot;,
+                                                          inputs=[node.input[0]],
+                                                          outputs=[split_tensor],
+                                                          kernel_shape=[kh1, kw1],
+                                                          strides=[kh1, kw1],
+                                                          name=split_tensor)
+                        if not node.name:
+                            node.name = node.output[0]
+                        node.input[0] = split_tensor
+                        onnx_model.model.graph.node.extend([pool_node])
+                        logger.info(f&quot;Found GlobalAveragePool node {node.name} with large kernel size. &quot;
+                                    f&quot;Split it into multiple AveragePools.&quot;)
+        onnx_model.clean_initializers()
+        onnx_model.topological_sort()
+        self.model = onnx_model.model</div>
+
+
+<div class="viewcode-block" id="Optimize.convert_split_to_slice">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize.convert_split_to_slice">[docs]</a>
+    def convert_split_to_slice(self) -&gt; None:
+        &quot;&quot;&quot;Convert Split to Slice.
+        &quot;&quot;&quot;
+        nodes_to_remove: List[NodeProto] = []
+        init_to_remove: List[str] = []
+        onnx_model = ONNXModel(self.model)
+        for node in onnx_model.model.graph.node:
+            if node.op_type == &#39;Split&#39; and self.should_quantize_node(node):
+                num_input = len(node.input)
+                axis_attr = next((attr for attr in node.attribute if attr.name == &#39;axis&#39;), None)
+                assert (axis_attr is not None), &quot;No axis attribute founded in Split node&quot;
+                axis = axis_attr.i  # if axis_attr is not None else 0
+                input_name = node.input[0]
+                output_names = node.output
+                if num_input == 2:
+                    splits = None
+                    for init in onnx_model.model.graph.initializer:
+                        if init.name == node.input[1]:
+                            splits = onnx.numpy_helper.to_array(init).tolist()
+                    if splits is None:
+                        logger.warning(f&quot;No split detected of {node.name}, &quot;
+                                       &quot;failed to convert split to slice, please check the input model.&quot;)
+                        break
+                elif num_input == 1:
+                    split_attr = next((attr for attr in node.attribute if attr.name == &#39;split&#39;), None)
+                    if split_attr is None:
+                        logger.warning(f&quot;No split detected of {node.name}, &quot;
+                                       &quot;failed to convert split to slice, please check the input model.&quot;)
+                        break
+                    splits = split_attr.ints
+                else:
+                    logger.warning(f&quot;Failed to convert split of {node.name} to slice, &quot;
+                                   &quot;the number of input nodes is not supported.&quot;)
+                    break
+                starts = [sum(splits[:i]) for i in range(len(splits))]
+                ends = [sum(splits[:i + 1]) for i in range(len(splits))]
+                for i in range(len(output_names)):
+                    starts_node = onnx.helper.make_node(&#39;Constant&#39;,
+                                                        inputs=[],
+                                                        outputs=[output_names[i] + &#39;_starts_&#39; + str(i)],
+                                                        value=onnx.helper.make_tensor(name=output_names[i] +
+                                                                                      &#39;_starts_&#39; + str(i),
+                                                                                      data_type=onnx.TensorProto.INT64,
+                                                                                      dims=[1],
+                                                                                      vals=[starts[i]]))
+                    ends_node = onnx.helper.make_node(&#39;Constant&#39;,
+                                                      inputs=[],
+                                                      outputs=[output_names[i] + &#39;_ends_&#39; + str(i)],
+                                                      value=onnx.helper.make_tensor(name=output_names[i] + &#39;_ends_&#39; +
+                                                                                    str(i),
+                                                                                    data_type=onnx.TensorProto.INT64,
+                                                                                    dims=[1],
+                                                                                    vals=[ends[i]]))
+                    axes_node = onnx.helper.make_node(&#39;Constant&#39;,
+                                                      inputs=[],
+                                                      outputs=[output_names[i] + &#39;_axes_&#39; + str(i)],
+                                                      value=onnx.helper.make_tensor(name=output_names[i] + &#39;_axes_&#39; +
+                                                                                    str(i),
+                                                                                    data_type=onnx.TensorProto.INT64,
+                                                                                    dims=[1],
+                                                                                    vals=[axis]))
+                    steps_node = onnx.helper.make_node(&#39;Constant&#39;,
+                                                       inputs=[],
+                                                       outputs=[output_names[i] + &#39;_steps_&#39; + str(i)],
+                                                       value=onnx.helper.make_tensor(name=output_names[i] + &#39;_steps_&#39; +
+                                                                                     str(i),
+                                                                                     data_type=onnx.TensorProto.INT64,
+                                                                                     dims=[1],
+                                                                                     vals=[1]))
+                    slice_node = onnx.helper.make_node(&quot;Slice&quot;,
+                                                       inputs=[
+                                                           input_name, output_names[i] + &#39;_starts_&#39; + str(i),
+                                                           output_names[i] + &#39;_ends_&#39; + str(i),
+                                                           output_names[i] + &#39;_axes_&#39; + str(i),
+                                                           output_names[i] + &#39;_steps_&#39; + str(i)
+                                                       ],
+                                                       outputs=[output_names[i]],
+                                                       name=output_names[i] + &#39;_&#39; + str(i))
+                    onnx_model.model.graph.node.extend([slice_node, starts_node, ends_node, axes_node, steps_node])
+                nodes_to_remove.append(node)
+                if len(node.input) &gt; 1:
+                    init_to_remove.append(node.input[1])
+                logger.info(f&quot;Found Split node {node.name}. &quot;
+                            f&quot;Replacing with Slice.&quot;)
+        onnx_model.remove_nodes(nodes_to_remove)
+        onnx_model.remove_initializers(init_to_remove)
+        onnx_model.clean_initializers()
+        onnx_model.topological_sort()
+        self.model = onnx_model.model</div>
+
+
+<div class="viewcode-block" id="Optimize.fuse_instance_norm">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize.fuse_instance_norm">[docs]</a>
+    def fuse_instance_norm(self) -&gt; None:
+        &#39;&#39;&#39;
+        The split instance norm operation will be fused to InstanceNorm operation
+        &#39;&#39;&#39;
+        onnx_model = ONNXModel(self.model)
+        tensor_to_producer_dict = {}
+        remove_nodes: List[NodeProto] = []
+        remove_inits: List[onnx.TensorProto] = []
+        for node in onnx_model.model.graph.node:
+            for output in node.output:
+                tensor_to_producer_dict[output] = node
+        for init in onnx_model.model.graph.initializer:
+            tensor_to_producer_dict[init.name] = init
+        for node in onnx_model.model.graph.node:
+            if node.op_type == &quot;Add&quot;:
+                try:
+                    add0_i0 = node.input[0]
+                    add0_i1 = node.input[1]
+                    add0_i0_node = tensor_to_producer_dict[add0_i0]
+                    add0_i1_node = tensor_to_producer_dict[add0_i1]
+                    # TODO: Use different dictionaries to distinguish between node and init.
+                    if add0_i0_node.op_type == &quot;Mul&quot; and add0_i1_node.op_type == &quot;Sub&quot;:
+                        sub0_node = add0_i1_node
+                        sub0_i0 = sub0_node.input[0]
+                        sub0_i1 = sub0_node.input[1]
+                        sub0_i1_node = tensor_to_producer_dict[sub0_i1]
+                        if sub0_i1_node.op_type == &quot;Mul&quot;:
+                            mul0_node = sub0_i1_node
+                            mul0_i0 = mul0_node.input[0]
+                            mul0_i1 = mul0_node.input[1]
+                            mul0_i0_node = tensor_to_producer_dict[mul0_i0]
+                            mul0_i1_node = tensor_to_producer_dict[mul0_i1]
+                            if mul0_i0_node.op_type == &quot;GlobalAveragePool&quot; and mul0_i1_node.op_type == &quot;Mul&quot;:
+                                mul1_node = mul0_i1_node
+                                mul1_i0 = mul1_node.input[0]
+                                mul1_i1 = mul1_node.input[1]
+                                mul1_i0_node = tensor_to_producer_dict[mul1_i0]
+                                mul1_i1_node = tensor_to_producer_dict[mul1_i1]
+                                if mul1_i0_node.op_type == &quot;Reciprocal&quot;:
+                                    rec0_node = mul1_i0_node
+                                    rec0_i0 = rec0_node.input[0]
+                                    rec0_i0_node = tensor_to_producer_dict[rec0_i0]
+                                    if rec0_i0_node.op_type == &quot;Sqrt&quot;:
+                                        sqr0_node = rec0_i0_node
+                                        sqr0_i0 = sqr0_node.input[0]
+                                        sqr0_i0_node = tensor_to_producer_dict[sqr0_i0]
+                                        if sqr0_i0_node.op_type == &quot;Add&quot;:
+                                            add1_node = sqr0_i0_node
+                                            add1_i0 = add1_node.input[0]
+                                            add1_i1 = add1_node.input[1]
+                                            add1_i0_node = tensor_to_producer_dict[add1_i0]
+                                            if add1_i0_node.op_type == &quot;GlobalAveragePool&quot;:
+                                                gap0_node = add1_i0_node
+                                                gap0_i0 = gap0_node.input[0]
+                                                gap0_i0_node = tensor_to_producer_dict[gap0_i0]
+                                                if gap0_i0_node.op_type == &quot;Mul&quot;:
+                                                    mul2_node = gap0_i0_node
+                                                    mul2_i0 = mul2_node.input[0]
+                                                    mul2_i0_node = tensor_to_producer_dict[mul2_i0]
+                                                    if mul2_i0_node.op_type == &quot;Sub&quot;:
+                                                        sub1_node = mul2_i0_node
+                                                        sub1_i0 = sub1_node.input[0]
+                                                        sub1_i1 = sub1_node.input[1]
+                                                        sub1_i0_node = tensor_to_producer_dict[sub1_i0]
+                                                        sub1_i1_node = tensor_to_producer_dict[sub1_i1]
+                                                        if sub1_i1_node.op_type == &quot;GlobalAveragePool&quot;:
+
+                                                            # Remove nodes
+                                                            remove_node_list = [
+                                                                node,
+                                                                add0_i0_node,
+                                                                add0_i1_node,
+                                                                sub0_i1_node,
+                                                                mul0_i0_node,
+                                                                mul0_i1_node,
+                                                                mul1_i0_node,
+                                                                rec0_i0_node,
+                                                                sqr0_i0_node,
+                                                                add1_i0_node,
+                                                                gap0_i0_node,
+                                                                mul2_i0_node,
+                                                            ]
+
+                                                            # Add InstanceNormalization
+                                                            bias_init = onnx_model.get_initializer(sub0_i0)
+                                                            bias_init.dims[:] = [bias_init.dims[1]]
+                                                            weight_init = onnx_model.get_initializer(mul1_i1)
+                                                            weight_init.dims[:] = [weight_init.dims[1]]
+                                                            eps_init = onnx_model.get_initializer(add1_i1)
+
+                                                            instance_norm_node = onnx.helper.make_node(
+                                                                &quot;InstanceNormalization&quot;, [sub1_i0, mul1_i1, sub0_i0],
+                                                                node.output,
+                                                                node.name,
+                                                                epsilon=onnx.numpy_helper.to_array(eps_init).item())
+                                                            logger.info(
+                                                                f&quot;Matched Instance Normalization, fuse it into InstanceNormalization {node.name}&quot;
+                                                            )
+                                                            onnx_model.add_node(instance_norm_node)
+
+                                                            remove_nodes.extend(remove_node_list)
+                                                            remove_inits.append(eps_init)
+                except Exception as e:
+                    logger.debug(
+                        f&quot;FuseInstanceNorm is enabled, but {node.name} does not meet the matching rules:{e}, skipping this node&quot;
+                    )
+        onnx_model.remove_nodes(remove_nodes)
+        onnx_model.remove_initializers(remove_inits)
+        onnx_model.clean_initializers()
+        onnx_model.topological_sort()
+        self.model = onnx_model.model</div>
+
+
+<div class="viewcode-block" id="Optimize.fuse_l2_norm">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize.fuse_l2_norm">[docs]</a>
+    def fuse_l2_norm(self) -&gt; None:
+        &quot;&quot;&quot;
+        convert L2norm ops to LpNormalization
+        &quot;&quot;&quot;
+        onnx_model = ONNXModel(self.model)
+        tensor_to_producer_dict = {}
+        remove_nodes: List[NodeProto] = []
+        remove_inits: List[onnx.TensorProto] = []
+        for node in onnx_model.model.graph.node:
+            for output in node.output:
+                tensor_to_producer_dict[output] = node
+        for init in onnx_model.model.graph.initializer:
+            tensor_to_producer_dict[init.name] = init
+        for node in onnx_model.model.graph.node:
+            if node.op_type == &quot;Mul&quot;:
+                try:
+                    inp_0 = node.input[0]
+                    inp_1 = node.input[1]
+                    inp_0_node = tensor_to_producer_dict[inp_0]
+                    inp_1_node = tensor_to_producer_dict[inp_1]
+                    if inp_0_node.op_type == &quot;Unsqueeze&quot; and inp_1_node.op_type == &quot;Reciprocal&quot;:
+                        rec_node = inp_1_node
+                        rec_inp_0 = rec_node.input[0]
+                        rec_inp_0_node = tensor_to_producer_dict[rec_inp_0]
+                        if rec_inp_0_node.op_type == &quot;Sqrt&quot;:
+                            sqrt_node = rec_inp_0_node
+                            sqrt_inp_0 = sqrt_node.input[0]
+                            sqrt_inp_0_node = tensor_to_producer_dict[sqrt_inp_0]
+                            if sqrt_inp_0_node.op_type == &quot;Max&quot;:
+                                max_node = sqrt_inp_0_node
+                                max_inp_0 = max_node.input[0]
+                                max_inp_1 = max_node.input[1]
+                                max_inp_0_node = tensor_to_producer_dict[max_inp_0]
+                                if max_inp_0_node.op_type == &quot;ReduceSum&quot;:
+                                    red_node = max_inp_0_node
+                                    red_inp_0 = red_node.input[0]
+                                    red_inp_0_node = tensor_to_producer_dict[red_inp_0]
+                                if red_inp_0_node.op_type == &quot;Mul&quot;:
+                                    mul_node = red_inp_0_node
+                                    mul_inp_0 = mul_node.input[0]
+                                    mul_inp_0_node = tensor_to_producer_dict[mul_inp_0]
+                                    if mul_inp_0_node.op_type == &quot;Unsqueeze&quot;:
+                                        uns_node = mul_inp_0_node
+                                        # Remove nodes
+                                        logger.info(f&quot;Found L2norm ops from {node.name}.&quot;)
+                                        nodes_to_remove_list = [
+                                            node,
+                                            rec_node,
+                                            sqrt_node,
+                                            max_node,
+                                            red_node,
+                                            mul_node,
+                                        ]
+                                        remove_nodes.extend(nodes_to_remove_list)
+                                        eps_init = onnx_model.get_initializer(max_inp_1)
+                                        remove_inits.append(eps_init)
+                                        # Add LpNormalization
+                                        inp = uns_node.output[0]
+                                        out = node.output[0]
+                                        l2norm_node = onnx.helper.make_node(&quot;LpNormalization&quot;, [inp], [out],
+                                                                            node.name,
+                                                                            p=2)
+                                        onnx_model.add_node(l2norm_node)
+                                        logger.info(&quot;Converted L2norm ops from {node.name} to LpNormalization.&quot;)
+                except Exception as e:
+                    logger.debug(
+                        f&quot;FuseL2Norm is enabled, but {node.name} does not meet the matching rules:{e}, skipping this node&quot;
+                    )
+        onnx_model.remove_nodes(remove_nodes)
+        onnx_model.remove_initializers(remove_inits)
+        onnx_model.clean_initializers()
+        onnx_model.topological_sort()
+        self.model = onnx_model.model</div>
+
+
+<div class="viewcode-block" id="Optimize.fold_batch_norm">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize.fold_batch_norm">[docs]</a>
+    def fold_batch_norm(self) -&gt; None:
+        &quot;&quot;&quot;
+        fold BatchNormalization to target operations
+        &quot;&quot;&quot;
+
+        def _get_folded_weight_bias(target_type: str, target_weight: NDArray[np.float32],
+                                    target_bias: Union[NDArray[np.float32], NDArray[np.float64]],
+                                    bn_gamma: Optional[NDArray[np.float32]], bn_beta: Optional[NDArray[np.float32]],
+                                    bn_mean: NDArray[np.float32], bn_var: NDArray[np.float32],
+                                    bn_epsilon: float) -&gt; Tuple[NDArray[np.float32], NDArray[np.float32]]:
+            if bn_gamma is not None:
+                multiplier = bn_gamma / np.sqrt(bn_var + bn_epsilon)
+            else:
+                multiplier = 1 / np.sqrt(bn_var + bn_epsilon)
+
+            if target_type == &quot;Gemm&quot;:
+                bn_weight = np.diag(multiplier)
+            elif target_type == &quot;ConvTranspose&quot;:
+                bn_weight = multiplier.reshape(1, len(multiplier), 1, 1)
+
+            if bn_beta is not None:
+                bn_bias = bn_beta + (-bn_mean) * multiplier
+            else:
+                bn_bias = (-bn_mean) * multiplier
+
+            if target_type == &quot;Gemm&quot;:
+                folded_weight = np.dot(bn_weight, target_weight)
+                folded_bias = np.dot(bn_weight, target_bias) + bn_bias
+            elif target_type == &quot;ConvTranspose&quot;:
+                folded_weight = bn_weight * target_weight
+                folded_bias = bn_weight.reshape(1, -1) * target_bias + bn_bias
+                folded_bias = folded_bias.reshape(-1)
+
+            return folded_weight, folded_bias
+
+        onnx_model = ONNXModel(self.model)
+
+        TARGET_OPS = (&#39;ConvTranspose&#39;, &#39;Gemm&#39;)
+
+        remove_nodes = []
+
+        for node in onnx_model.model.graph.node:
+            if node.op_type != &#39;BatchNormalization&#39; or self.should_quantize_node(node):
+                continue
+
+            if len(node.input) != 5:
+                logger.warning(f&quot;BatchNorm {node.name} with {len(node.input)} inputs cannot be folded.&quot;)
+                continue
+
+            target_node = onnx_model.get_parent(node, 0)
+            if target_node is None:
+                logger.warning(f&quot;BatchNorm {node.name} that is isolated node cannot be folded.&quot;)
+                continue
+
+            if target_node.op_type not in TARGET_OPS:
+                logger.debug(f&quot;BatchNorm {node.name} after node {target_node.name} cannot be folded.&quot;)
+                continue
+
+            bn_gamma_init = onnx_model.get_initializer(node.input[1])
+            bn_gamma = None if bn_gamma_init is None else onnx.numpy_helper.to_array(bn_gamma_init)
+            bn_beta_init = onnx_model.get_initializer(node.input[2])
+            bn_beta = None if bn_beta_init is None else onnx.numpy_helper.to_array(bn_beta_init)
+            bn_mean_init = onnx_model.get_initializer(node.input[3])
+            bn_mean = None if bn_mean_init is None else onnx.numpy_helper.to_array(bn_mean_init)
+            bn_var_init = onnx_model.get_initializer(node.input[4])
+            bn_var = None if bn_var_init is None else onnx.numpy_helper.to_array(bn_var_init)
+            bn_epsilon = next((attr.f for attr in node.attribute if attr.name == &#39;epsilon&#39;), 1e-10)
+
+            if bn_mean is None or bn_var is None:
+                logger.warning(f&quot;BatchNorm {node.name} that is missing mean or variance cannot be folded.&quot;)
+                continue
+
+            target_weight_init = onnx_model.get_initializer(target_node.input[1])
+            target_weight = None if target_weight_init is None else onnx.numpy_helper.to_array(target_weight_init)
+
+            target_bias_init = onnx_model.get_initializer(target_node.input[2]) if len(target_node.input) &gt; 2 else None
+            target_bias = None if target_bias_init is None else onnx.numpy_helper.to_array(target_bias_init)
+
+            if target_weight is None:
+                logger.warning(f&quot;BatchNorm {node.name}&#39;s target node f{target_node.name} is not foldable.&quot;)
+                continue
+
+            target_type = target_node.op_type
+            if target_type == &quot;Gemm&quot;:
+                transB = next((attr.i for attr in target_node.attribute if attr.name == &#39;transB&#39;), 0)
+                # TODO: Support transB is 0
+                if transB == 0:
+                    logger.debug(f&quot;Target node f{target_node.name}&#39;s transB=0 is not supported.&quot;)
+                    continue
+            if target_type == &quot;ConvTranspose&quot;:
+                group = next((attr.i for attr in target_node.attribute if attr.name == &#39;group&#39;), 1)
+                # TODO: Support ConvTranspose group != 1
+                if group != 1:
+                    logger.debug(f&quot;Target node f{target_node.name}&#39;s group !=1 is not supported.&quot;)
+                    continue
+
+            if target_bias is None:
+                if target_type == &quot;Gemm&quot;:
+                    target_bias = np.zeros(target_weight.shape[0])
+                else:  # target_type == &quot;ConvTranspose&quot;:
+                    target_bias = np.zeros(target_weight.shape[1])
+
+                target_bias_name = target_node.name + &quot;_bias_4bn&quot;
+                target_bias_init = onnx.numpy_helper.from_array(target_bias.astype(np.float32), name=target_bias_name)
+                onnx_model.add_initializer(target_bias_init)
+                target_node.input.append(target_bias_name)
+
+            # Calculate the weight and bias after folded
+            folded_weight, folded_bias = _get_folded_weight_bias(target_type, target_weight, target_bias, bn_gamma,
+                                                                 bn_beta, bn_mean, bn_var, bn_epsilon)
+
+            # Update target node&#39;s weight and bias
+            folded_weight_init = onnx.numpy_helper.from_array(folded_weight.astype(np.float32),
+                                                              name=target_weight_init.name)
+            target_weight_init.CopyFrom(folded_weight_init)
+            folded_bias_init = onnx.numpy_helper.from_array(folded_bias.astype(np.float32), name=target_bias_init.name)
+            target_bias_init = onnx_model.get_initializer(target_node.input[2])
+            target_bias_init.CopyFrom(folded_bias_init)
+
+            # Deal with the tensor name
+            children = onnx_model.get_children(target_node)
+
+            for child in children:
+                if child is node:  # this node will be removed
+                    continue
+
+                for input_index, input_name in enumerate(child.input):
+                    if input_name == target_node.output[0]:
+                        child.input[input_index] = node.output[0]
+
+            target_node.output[0] = node.output[0]
+
+            # TODO: has shared initializers?
+            remove_nodes.append(node)
+
+            logger.info(f&quot;Folded {node.op_type} {node.name} to {target_node.op_type} {target_node.name}.&quot;)
+
+        onnx_model.remove_nodes(remove_nodes)
+        onnx_model.clean_initializers()
+        onnx_model.topological_sort()
+        self.model = onnx_model.model</div>
+
+
+<div class="viewcode-block" id="Optimize.convert_clip_to_relu">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize.convert_clip_to_relu">[docs]</a>
+    def convert_clip_to_relu(self) -&gt; None:
+        &#39;&#39;&#39;
+        Convert Clip to Relu.
+        &#39;&#39;&#39;
+        nodes_to_remove = []
+        init_to_remove = []
+        onnx_model = ONNXModel(self.model)
+
+        for node in onnx_model.model.graph.node:
+            if node.op_type == &#39;Clip&#39; and self.should_quantize_node(node):
+                min_value, max_value, para_type = get_clip_min_max(onnx_model.model, node)
+
+                if min_value is None or min_value &lt; 0:
+                    continue  # could not be replaced with Relu
+
+                if para_type == 1:
+                    # This Clip node&#39;s min and max come from initializers
+                    for init in onnx_model.model.graph.initializer:
+                        if len(node.input) &gt; 1 and init.name == node.input[1]:
+                            init_to_remove.append(init)
+                        if len(node.input) &gt; 2 and init.name == node.input[2]:
+                            init_to_remove.append(init)
+
+                elif para_type == 2:
+                    # This Clip node&#39;s min and max come from other nodes
+                    for nd in onnx_model.model.graph.node:
+                        if ((len(node.input) &gt; 1 and node.input[1] in nd.output)
+                                or (len(node.input) &gt; 2 and node.input[2] in nd.output)) is False:
+                            continue
+
+                        if nd.op_type == &#39;Identity&#39;:
+                            for init in onnx_model.model.graph.initializer:
+                                if len(nd.input) &gt; 1 and init.name == nd.input[1]:
+                                    init_to_remove.append(init)
+                                if len(nd.input) &gt; 2 and init.name == nd.input[2]:
+                                    init_to_remove.append(init)
+                            nodes_to_remove.append(nd)
+
+                        elif nd.op_type == &#39;Constant&#39;:
+                            nodes_to_remove.append(nd)
+
+                logger.info(f&quot;Convert Clip node {node.name} to Relu, &quot;
+                            f&quot;its min is {min_value}, max is {max_value} and type is {para_type}&quot;)
+                relu_node = onnx.helper.make_node(&quot;Relu&quot;, [node.input[0]], node.output, node.name)
+                onnx_model.model.graph.node.extend([relu_node])  # insert a Relu node
+                nodes_to_remove.append(node)  # to remove this Clip node
+
+        onnx_model.remove_nodes(nodes_to_remove)
+        onnx_model.remove_initializers(init_to_remove)
+        onnx_model.clean_initializers()
+        onnx_model.topological_sort()
+        self.model = onnx_model.model</div>
+
+
+<div class="viewcode-block" id="Optimize.fold_batch_norm_after_concat">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.Optimize.fold_batch_norm_after_concat">[docs]</a>
+    def fold_batch_norm_after_concat(self) -&gt; None:
+        &quot;&quot;&quot;
+        fold BatchNormalization (after concat) to target operations
+        &quot;&quot;&quot;
+
+        def _get_folded_weight_bias(target_type: str, target_weight: NDArray[np.float32],
+                                    target_bias: Union[NDArray[np.float32],
+                                                       NDArray[np.float64]], bn_gamma: Union[NDArray[np.float32], None],
+                                    bn_beta: Union[NDArray[np.float32], None], bn_mean: NDArray[np.float32],
+                                    bn_var: NDArray[np.float32], bn_epsilon: float, start: int,
+                                    end: int) -&gt; Tuple[NDArray[np.float32], NDArray[np.float32]]:
+            if bn_gamma is not None:
+                multiplier = bn_gamma[start:end] / np.sqrt(bn_var[start:end] + bn_epsilon)
+            else:
+                multiplier = 1 / np.sqrt(bn_var[start:end] + bn_epsilon)
+
+            if target_type == &quot;Gemm&quot;:
+                bn_weight = np.diag(multiplier)
+            elif target_type == &quot;ConvTranspose&quot;:
+                bn_weight = multiplier.reshape(1, len(multiplier), 1, 1)
+            elif target_type == &quot;Conv&quot;:
+                bn_weight = multiplier.reshape(len(multiplier), 1, 1, 1)
+
+            if bn_beta is not None:
+                bn_bias = bn_beta[start:end] + (-bn_mean[start:end]) * multiplier
+            else:
+                bn_bias = (-bn_mean[start:end]) * multiplier
+
+            if target_type == &quot;Gemm&quot;:
+                folded_weight = np.dot(bn_weight, target_weight)
+                folded_bias = np.dot(bn_weight, target_bias) + bn_bias
+            elif target_type == &quot;ConvTranspose&quot;:
+                folded_weight = bn_weight * target_weight
+                folded_bias = bn_weight.reshape(1, -1) * target_bias + bn_bias
+                folded_bias = folded_bias.reshape(-1)
+            elif target_type == &quot;Conv&quot;:
+                folded_weight = bn_weight * target_weight
+                folded_bias = bn_weight.reshape(-1) * target_bias + bn_bias
+
+            return folded_weight, folded_bias
+
+        onnx_model = ONNXModel(self.model)
+
+        TARGET_OPS = (&#39;ConvTranspose&#39;, &#39;Gemm&#39;, &#39;Conv&#39;)
+
+        remove_nodes = []
+
+        for node in onnx_model.model.graph.node:
+
+            if node.op_type != &#39;BatchNormalization&#39; or self.should_quantize_node(node):
+                continue
+
+            if len(node.input) != 5:
+                logger.warning(f&quot;BatchNorm {node.name} with {len(node.input)} inputs cannot be folded.&quot;)
+                continue
+
+            # find potential target nodes
+            parent_node = onnx_model.get_parent(node, 0)
+            if parent_node is None:
+                logger.warning(f&quot;BatchNorm {node.name} that is isolated node cannot be folded.&quot;)
+                continue
+
+            if parent_node.op_type == &#39;Concat&#39;:
+                grandparent_nodes = onnx_model.get_parents(parent_node)
+            else:
+                continue
+
+            # check if all target nodes satisfy the requirements to be folded
+            is_foldable = True
+            for target_node in grandparent_nodes:
+
+                target_type = target_node.op_type
+                if target_type not in TARGET_OPS:
+                    logger.debug(
+                        f&quot;Not all parent nodes of Concat are in [&#39;ConvTranspose&#39;, &#39;Gemm&#39;, &#39;Conv&#39;], so BatchNorm {node.name} after Concat node cannot be folded.&quot;
+                    )
+                    is_foldable = False
+                    break
+                if target_type == &quot;Gemm&quot;:
+                    transB = next((attr.i for attr in target_node.attribute if attr.name == &#39;transB&#39;), 0)
+                    # TODO: Support transB is 0
+                    if transB == 0:
+                        logger.debug(f&quot;Target node f{target_node.name}&#39;s transB=0 is not supported.&quot;)
+                        is_foldable = False
+                        break
+                if target_type == &quot;ConvTranspose&quot;:
+                    group = next((attr.i for attr in target_node.attribute if attr.name == &#39;group&#39;), 1)
+                    # TODO: Support ConvTranspose group != 1
+                    if group != 1:
+                        logger.debug(f&quot;Target node f{target_node.name}&#39;s group !=1 is not supported.&quot;)
+                        is_foldable = False
+                        break
+
+                target_weight_init = onnx_model.get_initializer(target_node.input[1])
+                target_weight = None if target_weight_init is None else onnx.numpy_helper.to_array(target_weight_init)
+                if target_weight is None:
+                    logger.warning(f&quot;BatchNorm {node.name}&#39;s target node f{target_node.name} is not foldable.&quot;)
+                    is_foldable = False
+                    break
+
+            if is_foldable is False:
+                continue
+
+            bn_gamma_init = onnx_model.get_initializer(node.input[1])
+            bn_gamma = None if bn_gamma_init is None else onnx.numpy_helper.to_array(bn_gamma_init)
+            bn_beta_init = onnx_model.get_initializer(node.input[2])
+            bn_beta = None if bn_beta_init is None else onnx.numpy_helper.to_array(bn_beta_init)
+            bn_mean_init = onnx_model.get_initializer(node.input[3])
+            bn_mean = None if bn_mean_init is None else onnx.numpy_helper.to_array(bn_mean_init)
+            bn_var_init = onnx_model.get_initializer(node.input[4])
+            bn_var = None if bn_var_init is None else onnx.numpy_helper.to_array(bn_var_init)
+            bn_epsilon = next((attr.f for attr in node.attribute if attr.name == &#39;epsilon&#39;), 1e-10)
+
+            if bn_mean is None or bn_var is None:
+                logger.warning(f&quot;BatchNorm {node.name} that is missing mean or variance cannot be folded.&quot;)
+                continue
+
+            # fold batchnorm to target nodes
+            start_idx, end_idx = 0, 0
+            for i in range(len(grandparent_nodes)):
+                target_node = grandparent_nodes[i]
+
+                target_weight_init = onnx_model.get_initializer(target_node.input[1])
+                target_weight = onnx.numpy_helper.to_array(target_weight_init)
+
+                target_bias_init = onnx_model.get_initializer(target_node.input[2]) if len(
+                    target_node.input) &gt; 2 else None
+                target_bias = None if target_bias_init is None else onnx.numpy_helper.to_array(target_bias_init)
+
+                if target_bias is None:
+                    if target_type == &quot;Conv&quot;:
+                        target_bias = np.zeros(target_weight.shape[0])
+                    if target_type == &quot;Gemm&quot;:
+                        target_bias = np.zeros(target_weight.shape[0])
+                    else:  # if target_type == &quot;ConvTranspose&quot;:
+                        target_bias = np.zeros(target_weight.shape[1])
+
+                    target_bias_name = target_node.name + &quot;_bias_4bn&quot;
+                    target_bias_init = onnx.numpy_helper.from_array(target_bias.astype(np.float32),
+                                                                    name=target_bias_name)
+                    onnx_model.add_initializer(target_bias_init)
+                    target_node.input.append(target_bias_name)
+
+                end_idx += target_bias.shape[0]
+
+                # Calculate the weight and bias after folded
+                folded_weight, folded_bias = _get_folded_weight_bias(target_type, target_weight, target_bias, bn_gamma,
+                                                                     bn_beta, bn_mean, bn_var, bn_epsilon, start_idx,
+                                                                     end_idx)
+
+                start_idx += target_bias.shape[0]
+
+                # Update target node&#39;s weight and bias
+                folded_weight_init = onnx.numpy_helper.from_array(folded_weight.astype(np.float32),
+                                                                  name=target_weight_init.name)
+                target_weight_init.CopyFrom(folded_weight_init)
+                folded_bias_init = onnx.numpy_helper.from_array(folded_bias.astype(np.float32),
+                                                                name=target_bias_init.name)
+                target_bias_init = onnx_model.get_initializer(target_node.input[2])
+                target_bias_init.CopyFrom(folded_bias_init)
+
+            # Deal with the tensor name
+            children = onnx_model.get_children(parent_node)
+
+            for child in children:
+                if child is node:  # this node will be removed
+                    continue
+
+                for input_index, input_name in enumerate(child.input):
+                    if input_name == parent_node.output[0]:
+                        child.input[input_index] = node.output[0]
+
+            parent_node.output[0] = node.output[0]
+
+            # TODO: has shared initializers?
+            remove_nodes.append(node)
+
+            logger.info(f&quot;Folded {node.op_type} {node.name} to {target_node.op_type} {target_node.name}.&quot;)
+
+        onnx_model.remove_nodes(remove_nodes)
+        onnx_model.clean_initializers()
+        onnx_model.topological_sort()
+        self.model = onnx_model.model</div>
+
+
+    def dedicate_dq_node(self) -&gt; None:
+        onnx_model = ONNXModel(self.model)
+        output_name_to_node = onnx_model.output_name_to_node()
+        input_name_to_nodes = onnx_model.input_name_to_nodes()
+
+        nodes_to_add = []
+
+        for node in onnx_model.model.graph.node:
+            if node.op_type not in DEQUANT_OP_TYPES:
+                continue
+
+            # Deal with the implicit condition of multiple consumers
+            consumers = []
+            if onnx_model.is_graph_output(node.output[0]):
+                consumers = [node]  # Just to occupy the position
+
+            if node.output[0] not in input_name_to_nodes:
+                continue
+            children = input_name_to_nodes[node.output[0]]
+            if len(children) + len(consumers) &lt; 2:
+                continue
+
+            consumers = consumers + children
+
+            if node.input[0] not in output_name_to_node:
+                continue
+            parent = output_name_to_node[node.input[0]]
+            if parent.op_type not in QUANT_OP_TYPES:
+                continue
+
+            # If this is a shared weight, copy Q as well
+            if onnx_model.get_initializer(parent.input[0]) is not None:
+                copy_q = True
+            else:
+                copy_q = False
+
+            for index, consumer in enumerate(consumers):
+                if index == 0:
+                    continue
+
+                postfix = f&quot;_{index}&quot;
+
+                if copy_q:  # Copy a new QuantizedLinear node
+                    parent_new = copy.deepcopy(parent)
+                    parent_new.name = parent_new.name + postfix
+                    parent_new.output[0] = parent_new.output[0] + postfix
+                    nodes_to_add.append(parent_new)
+
+                    output_info = next(
+                        (info for info in onnx_model.model.graph.value_info if info.name == parent.output[0]), None)
+                    output_info_new = next(
+                        (info for info in onnx_model.model.graph.value_info if info.name == parent_new.output[0]), None)
+                    if output_info is not None and output_info_new is None:
+                        output_info_new = copy.deepcopy(output_info)
+                        output_info_new.name = parent_new.output[0]
+                        onnx_model.model.graph.value_info.extend([output_info_new])
+
+                # Copy a new DequantizeLinear node
+                node_new = copy.deepcopy(node)
+                node_new.name = node.name + postfix
+                node_new.output[0] = node.output[0] + postfix
+                if copy_q:  # Should Connect with the new q
+                    node_new.input[0] = parent_new.output[0]
+                nodes_to_add.append(node_new)
+
+                # Copy shape info
+                output_info = next((info for info in onnx_model.model.graph.value_info if info.name == node.output[0]),
+                                   None)
+                output_info_new = next(
+                    (info for info in onnx_model.model.graph.value_info if info.name == node_new.output[0]), None)
+                if output_info is not None and output_info_new is None:
+                    output_info_new = copy.deepcopy(output_info)
+                    output_info_new.name = node_new.output[0]
+                    onnx_model.model.graph.value_info.extend([output_info_new])
+
+                onnx_model.replace_node_input(consumer, node.output[0], node_new.output[0])
+
+        if len(nodes_to_add):
+            logger.info(f&quot;Dedicate {len(nodes_to_add)} DQs in post-processing.&quot;)
+            onnx_model.add_nodes(nodes_to_add)
+            onnx_model.topological_sort()
+            self.model = onnx_model.model</div>
+
+
+
+<div class="viewcode-block" id="optimize">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/optimize/index.html#quark.onnx.optimize.optimize">[docs]</a>
+def optimize(model: ModelProto,
+             op_types_to_quantize: List[str],
+             nodes_to_quantize: Optional[List[str]],
+             nodes_to_exclude: Optional[List[str]],
+             convert_bn_to_conv: bool = True,
+             convert_reduce_mean_to_global_avg_pool: bool = True,
+             split_large_kernel_pool: bool = True,
+             convert_split_to_slice: bool = True,
+             fuse_instance_norm: bool = True,
+             fuse_l2_norm: bool = True,
+             fuse_gelu: bool = True,
+             fuse_layer_norm: bool = True,
+             fold_batch_norm: bool = True,
+             convert_clip_to_relu: bool = True,
+             fold_batch_norm_after_concat: bool = True,
+             dedicate_dq_node: bool = False) -&gt; ModelProto:
+    &quot;&quot;&quot;
+    Optimize an ONNX model to meet specific constraints and requirements for deployment on an CPU/NPU.
+
+    This function applies various optimization techniques to the provided ONNX model based on the specified parameters. The optimizations include fusing operations, converting specific layers, and folding batch normalization layers, among others.
+
+    :param model: The ONNX model to be optimized.
+    :type model: ModelProto
+    :param op_types_to_quantize: List of operation types to be quantized.
+    :type op_types_to_quantize: List[str]
+    :param nodes_to_quantize: List of node names to explicitly quantize. If `None`, quantization is applied based on the operation types.
+    :type nodes_to_quantize: Optional[List[str]]
+    :param nodes_to_exclude: List of node names to exclude from quantization.
+    :type nodes_to_exclude: Optional[List[str]]
+    :param convert_bn_to_conv: Flag indicating whether to convert BatchNorm layers to Conv layers.
+    :type convert_bn_to_conv: bool
+    :param convert_reduce_mean_to_global_avg_pool: Flag indicating whether to convert ReduceMean layers to GlobalAveragePool layers.
+    :type convert_reduce_mean_to_global_avg_pool: bool
+    :param split_large_kernel_pool: Flag indicating whether to split large kernel pooling operations.
+    :type split_large_kernel_pool: bool
+    :param convert_split_to_slice: Flag indicating whether to convert Split layers to Slice layers.
+    :type convert_split_to_slice: bool
+    :param fuse_instance_norm: Flag indicating whether to fuse InstanceNorm layers.
+    :type fuse_instance_norm: bool
+    :param fuse_l2_norm: Flag indicating whether to fuse L2Norm layers.
+    :type fuse_l2_norm: bool
+    :param fuse_gelu: Flag indicating whether to fuse Gelu layers.
+    :type fuse_gelu: bool
+    :param fuse_layer_norm: Flag indicating whether to fuse LayerNorm layers.
+    :type fuse_layer_norm: bool
+    :param fold_batch_norm: Flag indicating whether to fold BatchNorm layers into preceding Conv layers.
+    :type fold_batch_norm: bool
+    :param convert_clip_to_relu: Flag indicating whether to convert Clip layers to ReLU layers.
+    :type convert_clip_to_relu: bool
+    :param fold_batch_norm_after_concat: Flag indicating whether to fold BatchNorm layers after concatenation operations.
+    :type fold_batch_norm_after_concat: bool
+
+    :return: The optimized ONNX model.
+    :rtype: ModelProto
+
+    Notes:
+        - The `Optimize` class is used to apply the optimizations based on the provided flags.
+        - The function returns the optimized model with the applied transformations.
+    &quot;&quot;&quot;
+    onnx_model = OnnxModel(model)
+    opset_version = get_opset_version(onnx_model.model)
+
+    optimizer = Optimize(
+        model,
+        op_types_to_quantize,
+        nodes_to_quantize,
+        nodes_to_exclude,
+    )
+
+    if fuse_instance_norm:
+        optimizer.fuse_instance_norm()
+
+    if convert_reduce_mean_to_global_avg_pool:
+        optimizer.convert_reduce_mean_to_global_avg_pool()
+
+    if split_large_kernel_pool:
+        optimizer.split_large_kernel_pool()
+
+    if convert_split_to_slice:
+        optimizer.convert_split_to_slice()
+
+    if fuse_l2_norm:
+        optimizer.fuse_l2_norm()
+
+    if fuse_layer_norm:
+        if opset_version &lt; 17:
+            logger.warning(f&quot;The opset version is {opset_version} &lt; 17. Skipping fusing layer normalization.&quot;)
+        else:
+            fusion_layernorm = FusionLayerNormalization(onnx_model)
+            fusion_layernorm.apply()
+
+    if fuse_gelu:
+        if opset_version &lt; 20:
+            logger.warning(f&quot;The opset version is {opset_version} &lt; 20. Skipping fusing Gelu.&quot;)
+        else:
+            fusion_gelu = FusionGelu(onnx_model)
+            fusion_gelu.apply()
+
+    if fold_batch_norm:
+        optimizer.fold_batch_norm()
+
+    if convert_clip_to_relu:
+        optimizer.convert_clip_to_relu()
+
+    if fold_batch_norm_after_concat:
+        optimizer.fold_batch_norm_after_concat()
+
+    if convert_bn_to_conv:
+        optimizer.convert_bn_to_conv()
+
+    # Only for quantization post-processing
+    if dedicate_dq_node:
+        optimizer.dedicate_dq_node()
+
+    return optimizer.model</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

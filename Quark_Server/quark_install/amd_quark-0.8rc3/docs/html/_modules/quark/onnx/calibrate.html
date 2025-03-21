@@ -1,0 +1,1162 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.onnx.calibrate &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/onnx/calibrate';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.onnx.calibrate</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.onnx.calibrate</h1><div class="highlight"><pre>
+<span></span>#!/usr/bin/env python
+# coding: utf-8
+#
+# Modifications copyright(c) 2023 Advanced Micro Devices,Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+# -------------------------------------------------------------------------
+# Copyright (c) Microsoft, Intel Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for
+# license information.
+# --------------------------------------------------------------------------
+from quark.shares.utils.log import ScreenLogger, log_errors
+from tqdm import tqdm
+
+import numpy as np
+import onnx
+from pathlib import Path
+from onnxruntime.quantization.calibrate import (CalibraterBase, CalibrationDataCollector, CalibrationDataReader,
+                                                CalibrationMethod, MinMaxCalibrater as OrtMinMaxCalibrater,
+                                                EntropyCalibrater as OrtEntropyCalibrater, PercentileCalibrater as
+                                                OrtPercentileCalibrater)
+from onnxruntime.quantization.quant_utils import QuantType
+from .quant_utils import (PowerOfTwoMethod, get_tensor_type_from_qType, quantize_data_pof2s, VitisQuantType)
+from typing import List, Dict, Any, Union, Optional, Sequence
+
+logger = ScreenLogger(__name__)
+calib_quant_type = [
+    QuantType.QInt8,
+    QuantType.QUInt8,
+    VitisQuantType.QInt16,
+    VitisQuantType.QUInt16,
+    VitisQuantType.QInt32,
+    VitisQuantType.QUInt32,
+]
+
+
+<div class="viewcode-block" id="MinMaxCalibrater">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/calibrate/index.html#quark.onnx.calibrate.MinMaxCalibrater">[docs]</a>
+class MinMaxCalibrater(OrtMinMaxCalibrater):  # type: ignore
+    &quot;&quot;&quot;
+    This method obtains the quantization parameters based on the minimum and maximum values of each tensor.
+
+    :param model_path: Path to the ONNX model to calibrate.
+    :param op_types_to_calibrate: List of operator types to calibrate. By default, calibrates all the float32/float16 tensors.
+    :param augmented_model_path: Path to save the augmented model. Default is &quot;augmented_model.onnx&quot;.
+    :param symmetric: Whether to make the range of tensor symmetric (central point is 0). Default is False.
+    :param use_external_data_format: Whether to use external data format to store model which size is &gt;= 2GB. Default is False.
+    :param moving_average: Whether to compute the moving average of the minimum and maximum values instead of the global minimum and maximum. Default is False.
+    :param averaging_constant: Constant smoothing factor to use when computing the moving average. Default is 0.01. Should be between 0 and 1.
+    :raises ValueError: If averaging_constant is not between 0 and 1 when moving_average is True.
+    &quot;&quot;&quot;
+
+    def __init__(
+        self,
+        model_path: Path,
+        op_types_to_calibrate: Union[List[str], None],
+        augmented_model_path: str = &quot;augmented_model.onnx&quot;,
+        symmetric: bool = False,
+        use_external_data_format: bool = False,
+        moving_average: bool = False,
+        averaging_constant: float = 0.01,
+    ) -&gt; None:
+        super().__init__(
+            model_path,
+            op_types_to_calibrate=op_types_to_calibrate,
+            augmented_model_path=augmented_model_path,
+            symmetric=symmetric,
+            use_external_data_format=use_external_data_format,
+            moving_average=moving_average,
+            averaging_constant=averaging_constant,
+        )
+        self.intermediate_outputs: List[str] = []
+        self.calibrate_tensors_range = None
+        self.num_model_outputs = len(self.model.graph.output)
+        self.model_original_outputs = {output.name for output in self.model.graph.output}
+        self.moving_average = moving_average
+        if moving_average and (averaging_constant &lt; 0 or averaging_constant &gt; 1):
+            raise ValueError(&quot;Invalid averaging constant, which should not be &lt; 0 or &gt; 1.&quot;)
+        self.averaging_constant = averaging_constant</div>
+
+
+
+<div class="viewcode-block" id="EntropyCalibrater">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/calibrate/index.html#quark.onnx.calibrate.EntropyCalibrater">[docs]</a>
+class EntropyCalibrater(OrtEntropyCalibrater):  # type: ignore
+    &quot;&quot;&quot;
+    This method determines the quantization parameters by considering the entropy algorithm of each tensor&#39;s distribution.
+
+    :param model_path: Path to the ONNX model to calibrate.
+    :param op_types_to_calibrate: List of operator types to calibrate. By default, calibrates all the float32/float16 tensors.
+    :param augmented_model_path: Path to save the augmented model. Default is &quot;augmented_model.onnx&quot;.
+    :param use_external_data_format: Whether to use external data format to store model which size is &gt;= 2GB. Default is False.
+    :param method: Method for calibration. One of [&#39;entropy&#39;, &#39;percentile&#39;, &#39;distribution&#39;]. Default is &quot;entropy&quot;.
+    :param symmetric: Whether to make the range of tensor symmetric (central point is 0). Default is False.
+    :param num_bins: Number of bins to create a new histogram for collecting tensor values. Default is 128.
+    :param num_quantized_bins: Number of quantized bins. Default is 128.
+    &quot;&quot;&quot;
+
+    def __init__(
+        self,
+        model_path: Path,
+        op_types_to_calibrate: Union[List[str], None],
+        augmented_model_path: str = &quot;augmented_model.onnx&quot;,
+        use_external_data_format: bool = False,
+        method: str = &quot;entropy&quot;,
+        symmetric: bool = False,
+        num_bins: int = 128,
+        num_quantized_bins: int = 128,
+    ) -&gt; None:
+        &quot;&quot;&quot;
+        :param model_path: ONNX model to calibrate. It is a model path
+        :param op_types_to_calibrate: operator types to calibrate. By default, calibrate all the float32/float16 tensors.
+        :param augmented_model_path: save augmented model to this path.
+        :param use_external_data_format: use external data format to store model which size is &gt;= 2Gb
+        :param method: A string. One of [&#39;entropy&#39;, &#39;percentile&#39;, &#39;distribution&#39;].
+        :param symmetric: make range of tensor symmetric (central point is 0).
+        :param num_bins: number of bins to create a new histogram for collecting tensor values.
+        :param num_quantized_bins: number of quantized bins. Default 128.
+        &quot;&quot;&quot;
+        super().__init__(
+            model_path,
+            op_types_to_calibrate=op_types_to_calibrate,
+            augmented_model_path=augmented_model_path,
+            use_external_data_format=use_external_data_format,
+            method=method,
+            symmetric=symmetric,
+            num_bins=num_bins,
+            num_quantized_bins=num_quantized_bins,
+        )</div>
+
+
+
+<div class="viewcode-block" id="PercentileCalibrater">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/calibrate/index.html#quark.onnx.calibrate.PercentileCalibrater">[docs]</a>
+class PercentileCalibrater(OrtPercentileCalibrater):  # type: ignore
+    &quot;&quot;&quot;
+    This method calculates quantization parameters using percentiles of the tensor values.
+
+    :param model_path: Path to the ONNX model to calibrate.
+    :param op_types_to_calibrate: List of operator types to calibrate. By default, calibrates all the float32/float16 tensors.
+    :param augmented_model_path: Path to save the augmented model. Default is &quot;augmented_model.onnx&quot;.
+    :param use_external_data_format: Whether to use external data format to store model which size is &gt;= 2GB. Default is False.
+    :param method: Method for calibration. One of [&#39;entropy&#39;, &#39;percentile&#39;, &#39;distribution&#39;]. Default is &quot;percentile&quot;.
+    :param symmetric: Whether to make the range of tensor symmetric (central point is 0). Default is False.
+    :param num_bins: Number of bins to create a new histogram for collecting tensor values. Default is 2048.
+    :param percentile: Percentile value for calibration, a float between [0, 100]. Default is 99.999.
+    &quot;&quot;&quot;
+
+    def __init__(
+        self,
+        model_path: Path,
+        op_types_to_calibrate: Union[List[str], None],
+        augmented_model_path: str = &quot;augmented_model.onnx&quot;,
+        use_external_data_format: bool = False,
+        method: str = &quot;percentile&quot;,
+        symmetric: bool = False,
+        num_bins: int = 2048,
+        percentile: float = 99.999,
+    ):
+        &quot;&quot;&quot;
+        :param model_path: ONNX model to calibrate. It is a model path
+        :param op_types_to_calibrate: operator types to calibrate. By default, calibrate all the float32/float16 tensors.
+        :param augmented_model_path: save augmented model to this path.
+        :param use_external_data_format: use external data format to store model which size is &gt;= 2Gb
+        :param method: A string. One of [&#39;entropy&#39;, &#39;percentile&#39;, &#39;distribution&#39;].
+        :param symmetric: make range of tensor symmetric (central point is 0).
+        :param num_quantized_bins: number of quantized bins. Default 128.
+        :param percentile: A float number between [0, 100]. Default 99.99.
+        &quot;&quot;&quot;
+        super().__init__(
+            model_path,
+            op_types_to_calibrate=op_types_to_calibrate,
+            augmented_model_path=augmented_model_path,
+            use_external_data_format=use_external_data_format,
+            method=method,
+            symmetric=symmetric,
+            num_bins=num_bins,
+            percentile=percentile,
+        )</div>
+
+
+
+<div class="viewcode-block" id="PowOfTwoCalibrater">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/calibrate/index.html#quark.onnx.calibrate.PowOfTwoCalibrater">[docs]</a>
+class PowOfTwoCalibrater(CalibraterBase):  # type: ignore
+    &quot;&quot;&quot;
+    This method get the power-of-two quantize parameters for each tensor to minimize the mean-square-loss of quantized values and float values. This takes longer time but usually gets better accuracy.
+
+    :param model: Path to the ONNX model to calibrate.
+    :param op_types_to_calibrate: List of operator types to calibrate. By default, calibrates all the float32/float16 tensors.
+    :param augmented_model_path: Path to save the augmented model. Default is &quot;augmented_model.onnx&quot;.
+    :param use_external_data_format: Whether to use external data format to store model which size is &gt;= 2GB. Default is False.
+    :param activation_type: Type of quantization for activations. Default is QuantType.QInt8.
+    :param method: Calibration method. Default is PowerOfTwoMethod.MinMSE.
+    :param symmetric: Whether to make the range of tensor symmetric (central point is 0). Default is True.
+    :param minmse_mode: Mode for the MinMSE method. Default is &quot;All&quot;.
+    :param percentile: Percentile value for calibration, a float between 0 and 100. Default is 99.999.
+    :param quantized_tensor_type: Dictionary specifying the quantized tensor type. Default is an empty dictionary.
+    &quot;&quot;&quot;
+
+    def __init__(
+        self,
+        model: Path,
+        op_types_to_calibrate: Optional[Sequence[str]],
+        augmented_model_path: str = &quot;augmented_model.onnx&quot;,
+        use_external_data_format: bool = False,
+        activation_type: Union[QuantType, VitisQuantType] = QuantType.QInt8,
+        method: PowerOfTwoMethod = PowerOfTwoMethod.MinMSE,
+        symmetric: bool = True,
+        minmse_mode: str = &quot;All&quot;,
+        percentile: float = 99.999,
+        quantized_tensor_type: Dict[Any, Any] = {},
+    ) -&gt; None:
+
+        super(PowOfTwoCalibrater, self).__init__(model, op_types_to_calibrate, augmented_model_path, symmetric,
+                                                 use_external_data_format)
+        self.intermediate_outputs: List[str] = []
+        self.calibrate_tensors_range = None
+        self.num_model_outputs = len(self.model.graph.output)
+        self.model_original_outputs = set(output.name for output in self.model.graph.output)
+        self.collector: Optional[PowOfTwoCollector] = None
+        self.method = method
+        self.symmetric = symmetric
+        self.tensors_to_calibrate = None
+        self.activation_type = activation_type
+        self.use_external_data_format = use_external_data_format
+        self.minmse_mode = minmse_mode
+        self.percentile = percentile
+        self.quantized_tensor_type = quantized_tensor_type
+
+<div class="viewcode-block" id="PowOfTwoCalibrater.augment_graph">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/calibrate/index.html#quark.onnx.calibrate.PowOfTwoCalibrater.augment_graph">[docs]</a>
+    def augment_graph(self) -&gt; None:
+        &quot;&quot;&quot;
+        make all quantization_candidates op type nodes as part of the graph output.
+        :return: augmented ONNX model
+        &quot;&quot;&quot;
+        model = self.model
+
+        self.tensors_to_calibrate, value_infos = self.select_tensors_to_calibrate(model)
+        if self.tensors_to_calibrate is not None:
+            for tensor in self.tensors_to_calibrate:
+                if tensor not in self.model_original_outputs:
+                    model.graph.output.append(value_infos[tensor])
+        onnx.save(
+            model,
+            self.augmented_model_path,
+            save_as_external_data=self.use_external_data_format,
+        )
+        self.augment_model = model</div>
+
+
+    def clear_collected_data(self) -&gt; None:
+        self.intermediate_outputs = []
+
+    def collect_data(self, data_reader: CalibrationDataReader) -&gt; None:
+        while True:
+            inputs = data_reader.get_next()
+            if not inputs:
+                break
+            self.intermediate_outputs.append(self.infer_session.run(None, inputs))
+
+        if len(self.intermediate_outputs) == 0:
+            raise ValueError(&quot;No data is collected.&quot;)
+
+        output_names = [self.infer_session.get_outputs()[i].name for i in range(len(self.intermediate_outputs[0]))]
+        output_dicts_list = [
+            dict(zip(output_names, intermediate_output)) for intermediate_output in self.intermediate_outputs
+        ]
+
+        merged_dict: Dict[Any, Any] = {}
+        for d in output_dicts_list:
+            for k, v in d.items():
+                merged_dict.setdefault(k, []).append(v)
+        if self.tensors_to_calibrate is not None:
+            clean_merged_dict: Dict[Any, Any] = dict(
+                (i, merged_dict[i]) for i in merged_dict if i in self.tensors_to_calibrate)
+
+        if self.collector is None:
+            self.collector = PowOfTwoCollector(activation_type=self.activation_type,
+                                               method=self.method,
+                                               symmetric=self.symmetric,
+                                               minmse_mode=self.minmse_mode,
+                                               percentile=self.percentile,
+                                               quantized_tensor_type=self.quantized_tensor_type)
+        if self.collector is not None:
+            self.collector.collect(clean_merged_dict)
+
+        self.clear_collected_data()
+
+<div class="viewcode-block" id="PowOfTwoCalibrater.compute_range">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/calibrate/index.html#quark.onnx.calibrate.PowOfTwoCalibrater.compute_range">[docs]</a>
+    def compute_range(self) -&gt; Any:
+        &quot;&quot;&quot;
+        Compute the min-max range of tensor
+        :return: dictionary mapping: {tensor name: (min value, max value)}
+        &quot;&quot;&quot;
+        if not self.collector:
+            raise ValueError(&quot;No collector created and can&#39;t generate calibration data.&quot;)
+
+        return self.collector.compute_collection_result()</div>
+</div>
+
+
+
+<div class="viewcode-block" id="PowOfTwoCollector">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/calibrate/index.html#quark.onnx.calibrate.PowOfTwoCollector">[docs]</a>
+class PowOfTwoCollector(CalibrationDataCollector):  # type: ignore
+    &quot;&quot;&quot;
+    Collecting PowOfTwoCollector quantize for each tensor. Support MinMSE method.
+
+    :param activation_type: Type of quantization for activations. Default is QuantType.QInt8.
+    :param method: Calibration method. Default is PowerOfTwoMethod.MinMSE.
+    :param symmetric: Whether to make the range of tensor symmetric (central point is 0). Default is True.
+    :param minmse_mode: Mode for the MinMSE method. Default is &quot;All&quot;.
+    :param percentile: Percentile value for calibration, a float between 0 and 100. Default is 99.999.
+    :param quantized_tensor_type: Dictionary specifying the quantized tensor type. Default is an empty dictionary.
+
+    &quot;&quot;&quot;
+
+    def __init__(self,
+                 activation_type: Union[QuantType, VitisQuantType] = QuantType.QInt8,
+                 method: PowerOfTwoMethod = PowerOfTwoMethod.MinMSE,
+                 symmetric: bool = True,
+                 minmse_mode: str = &quot;All&quot;,
+                 percentile: float = 99.999,
+                 quantized_tensor_type: Dict[Any, Any] = {}):
+        self.name_to_arr: Dict[Any, Any] = {}
+        self.method = method
+        self.symmetric = symmetric
+        self.minmse_mode = minmse_mode
+        self.activation_qType = get_tensor_type_from_qType(activation_type)
+        self.percentile = percentile
+        self.quantized_tensor_type = quantized_tensor_type
+
+    def check_uniform_length(self, lst: List[Any]) -&gt; bool:
+        if isinstance(lst, list) and len(lst) &gt; 2:
+            reference_length = len(lst[0])
+
+            for element in lst[1:]:
+                if len(element) != reference_length:
+                    return False
+
+        return True
+
+    def collect(self, name_to_arr: Dict[Any, Any]) -&gt; None:
+
+        self.name_to_arr = name_to_arr
+
+        return
+
+    def compute_collection_result(self) -&gt; Any:
+        if not self.name_to_arr or len(self.name_to_arr) == 0:
+            raise ValueError(&quot;PowerOfTwoMethod has not been collected. Please run collect() first.&quot;)
+        logger.info(&quot;Finding optimal threshold for each tensor using {} algorithm ...&quot;.format(self.method))
+
+        if self.method == PowerOfTwoMethod.MinMSE:
+            return self.compute_minmse_range()
+        else:
+            raise ValueError(&quot;Only &#39;MinMSE&#39; method are supported&quot;)
+
+    @log_errors
+    def compute_minmse_range(self) -&gt; Dict[Any, Any]:
+        thresholds_dict = {}
+        if self.minmse_mode == &quot;MostCommon&quot; and self.symmetric:
+            logger.info(&quot;Use the most common min mse from each batch&quot;)
+            for tensor, data_arr in tqdm(self.name_to_arr.items(), desc=&quot;Computing range&quot;, unit=&quot;tensor&quot;):
+                act_type = self.activation_qType
+                method = self.method
+                if tensor in self.quantized_tensor_type and self.quantized_tensor_type[tensor] in calib_quant_type:
+                    logger.info(
+                        f&quot;The type of tensor {tensor} is {self.quantized_tensor_type[tensor]}: using specific tensor precision&quot;
+                    )
+                    act_type = get_tensor_type_from_qType(self.quantized_tensor_type[tensor])
+                scale_list = []
+                scale2threshold = {}
+                for d in data_arr:
+                    rmin_mse, rmax_mse, zp_mse, scale_mse, quantized_data_mse = quantize_data_pof2s(d,
+                                                                                                    act_type,
+                                                                                                    self.symmetric,
+                                                                                                    method=method)
+                    scale2threshold[float(scale_mse)] = (rmin_mse, rmax_mse)
+                    scale_list.append(scale_mse)
+                # get most common pos
+                u, indices = np.unique(scale_list, return_inverse=True)
+                scale = u[np.argmax(np.bincount(indices))]
+                thresholds_dict[tensor] = scale2threshold[scale]
+
+        elif self.minmse_mode == &quot;Percentile&quot;:
+            logger.info(&quot;Use the percentile to calculate min mse, &quot;
+                        f&quot;CalibTensorRangeSymmetric: {self.symmetric}, Percentile: {self.percentile}&quot;)
+            for _, data_arr in (self.name_to_arr.items()):
+                if not self.check_uniform_length(data_arr):
+                    raise ValueError(&quot;The batch size cannot be evenly divided by all data, &quot;
+                                     f&quot;Under {self.method} settings, it must be divisible by the total number of data. &quot;
+                                     &quot;Please check the batch size configuration.&quot;)
+                    break
+                else:
+                    break
+
+            for tensor, data_arr in tqdm(self.name_to_arr.items(), desc=&quot;Computing range&quot;, unit=&quot;tensor&quot;):
+                act_type = self.activation_qType
+                method = self.method
+                if tensor in self.quantized_tensor_type and self.quantized_tensor_type[tensor] in calib_quant_type:
+                    logger.info(
+                        f&quot;The type of tensor {tensor} is {self.quantized_tensor_type[tensor]}: using specific tensor precision&quot;
+                    )
+                    act_type = get_tensor_type_from_qType(self.quantized_tensor_type[tensor])
+                d = np.array(data_arr).flatten()
+                if self.symmetric:
+                    lower_limit = -np.percentile(np.abs(d), self.percentile)
+                    upper_limit = np.percentile(np.abs(d), self.percentile)
+                else:
+                    lower_limit = np.percentile(d, (100 - self.percentile) / 2)
+                    upper_limit = np.percentile(d, 100 - (100 - self.percentile) / 2)
+
+                d = d[(d &gt;= lower_limit) &amp; (d &lt;= upper_limit)]
+
+                rmin_mse, rmax_mse, _, _, _ = quantize_data_pof2s(d, act_type, self.symmetric, method=method)
+                thresholds_dict[tensor] = (rmin_mse, rmax_mse)
+
+        else:
+            if self.minmse_mode == &quot;MostCommon&quot;:
+                logger.warning(&quot;Activation asymmetric does not support using &#39;most common&#39; to calculate min mse&quot;)
+            if self.minmse_mode != &quot;All&quot;:
+                logger.warning(&quot;Currently MinMSEMode only supports &#39;All&#39; and &#39;MostCommon&#39;.&quot;
+                               f&quot;Does not support {self.minmse_mode}&quot;)
+            logger.info(&quot;Use all calibration data to calculate min mse&quot;)
+            for _, data_arr in (self.name_to_arr.items()):
+                if not self.check_uniform_length(data_arr):
+                    raise ValueError(&quot;The batch size cannot be evenly divided by all data,&quot;
+                                     f&quot;under {self.method} settings, it must be divisible by the total number of data.&quot;
+                                     &quot;Please check the batch size configuration.&quot;)
+                    break
+                else:
+                    break
+            for tensor, data_arr in tqdm(self.name_to_arr.items(), desc=&quot;Computing range&quot;, unit=&quot;tensor&quot;):
+                act_type = self.activation_qType
+                method = self.method
+                if tensor in self.quantized_tensor_type and self.quantized_tensor_type[tensor] in calib_quant_type:
+                    logger.info(
+                        f&quot;The type of tensor {tensor} is {self.quantized_tensor_type[tensor]}: using specific tensor precision&quot;
+                    )
+                    act_type = get_tensor_type_from_qType(self.quantized_tensor_type[tensor])
+                d = np.array(data_arr).flatten()
+                rmin_mse, rmax_mse, _, _, _ = quantize_data_pof2s(d, act_type, self.symmetric, method=method)
+                thresholds_dict[tensor] = (rmin_mse, rmax_mse)
+        return thresholds_dict</div>
+
+
+
+<div class="viewcode-block" id="create_calibrator_power_of_two">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/calibrate/index.html#quark.onnx.calibrate.create_calibrator_power_of_two">[docs]</a>
+def create_calibrator_power_of_two(
+    model: Path,
+    op_types_to_calibrate: List[str],
+    augmented_model_path: str = &quot;augmented_model.onnx&quot;,
+    activation_type: Union[VitisQuantType, QuantType] = QuantType.QInt8,
+    method: PowerOfTwoMethod = PowerOfTwoMethod.NonOverflow,
+    use_external_data_format: bool = False,
+    execution_providers: Union[List[str], None] = [&#39;CPUExecutionProvider&#39;],
+    quantized_tensor_type: Dict[Any, Any] = {},
+    extra_options: Dict[str, Any] = {},
+) -&gt; Any:
+    &quot;&quot;&quot;
+    Create a calibrator for power-of-two quantization.
+
+    :param model: Path to the ONNX model to calibrate.
+    :param op_types_to_calibrate: List of operator types to calibrate.
+    :param augmented_model_path: Path to save the augmented ONNX model.
+    :param activation_type: Type of quantization for activations.
+    :param method: Calibration method to use.
+    :param use_external_data_format: Whether to use external data format for large models.
+    :param execution_providers: List of execution providers for ONNX Runtime.
+    :param quantized_tensor_type: Dictionary specifying the quantized tensor type.
+    :param extra_options: Additional options for calibrator configuration.
+    :return: Initialized calibrator object.
+    &quot;&quot;&quot;
+    calibrator = None
+
+    # default settings for min-max algorithm
+    method = method
+    symmetric = True if &quot;symmetric&quot; not in extra_options else extra_options[&quot;symmetric&quot;]
+    moving_average = False if &quot;moving_average&quot; not in extra_options else extra_options[&quot;moving_average&quot;]
+    averaging_constant = 0.01 if &quot;averaging_constant&quot; not in extra_options else extra_options[&quot;averaging_constant&quot;]
+    minmse_mode = &#39;All&#39; if &quot;minmse_mode&quot; not in extra_options else extra_options[&quot;minmse_mode&quot;]
+    percentile = 99.999 if &quot;percentile&quot; not in extra_options else extra_options[&quot;percentile&quot;]
+
+    activation_type = QuantType.QInt8 if activation_type not in calib_quant_type else activation_type
+    if method == PowerOfTwoMethod.NonOverflow:
+        calibrator = MinMaxCalibrater(
+            model,
+            op_types_to_calibrate,
+            augmented_model_path,
+            use_external_data_format=use_external_data_format,
+            symmetric=symmetric,
+            moving_average=moving_average,
+            averaging_constant=averaging_constant,
+        )
+    elif method == PowerOfTwoMethod.MinMSE:
+        calibrator = PowOfTwoCalibrater(
+            model,
+            op_types_to_calibrate,
+            augmented_model_path,
+            use_external_data_format=use_external_data_format,
+            activation_type=activation_type,
+            method=method,
+            symmetric=symmetric,
+            minmse_mode=minmse_mode,
+            percentile=percentile,
+            quantized_tensor_type=quantized_tensor_type,
+        )
+
+    if calibrator:
+        calibrator.augment_graph()
+        calibrator.execution_providers = execution_providers
+        calibrator.create_inference_session()
+        return calibrator</div>
+
+
+
+@log_errors
+<div class="viewcode-block" id="create_calibrator_float_scale">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/calibrate/index.html#quark.onnx.calibrate.create_calibrator_float_scale">[docs]</a>
+def create_calibrator_float_scale(
+        model: Path,
+        op_types_to_calibrate: Union[List[str], None],
+        augmented_model_path: str = &quot;augmented_model.onnx&quot;,
+        calibrate_method: CalibrationMethod = CalibrationMethod.MinMax,
+        use_external_data_format: bool = False,
+        execution_providers: Union[List[str], None] = [&#39;CPUExecutionProvider&#39;],
+        extra_options: Dict[str, Any] = {},  # noqa: B006
+) -&gt; Any:
+    &quot;&quot;&quot;
+    Create a calibrator for floating-point scale quantization.
+
+    :param model: Path to the ONNX model to calibrate.
+    :param op_types_to_calibrate: List of operator types to calibrate. If None, all float32/float16 tensors are calibrated.
+    :param augmented_model_path: Path to save the augmented ONNX model.
+    :param calibrate_method: Calibration method to use (MinMax, Entropy, Percentile, or Distribution).
+    :param use_external_data_format: Whether to use external data format for large models.
+    :param execution_providers: List of execution providers for ONNX Runtime.
+    :param extra_options: Additional options for calibrator configuration.
+    :return: Initialized calibrator object.
+    &quot;&quot;&quot;
+    calibrator = None
+    if calibrate_method == CalibrationMethod.MinMax:
+        # default settings for min-max algorithm
+        symmetric = False if &quot;symmetric&quot; not in extra_options else extra_options[&quot;symmetric&quot;]
+        moving_average = False if &quot;moving_average&quot; not in extra_options else extra_options[&quot;moving_average&quot;]
+        averaging_constant = 0.01 if &quot;averaging_constant&quot; not in extra_options else extra_options[&quot;averaging_constant&quot;]
+        calibrator = MinMaxCalibrater(
+            model,
+            op_types_to_calibrate,
+            augmented_model_path,
+            use_external_data_format=use_external_data_format,
+            symmetric=symmetric,
+            moving_average=moving_average,
+            averaging_constant=averaging_constant,
+        )
+    elif calibrate_method == CalibrationMethod.Entropy:
+        # default settings for entropy algorithm
+        num_bins = 128 if &quot;num_bins&quot; not in extra_options else extra_options[&quot;num_bins&quot;]
+        num_quantized_bins = 128 if &quot;num_quantized_bins&quot; not in extra_options else extra_options[&quot;num_quantized_bins&quot;]
+        symmetric = False if &quot;symmetric&quot; not in extra_options else extra_options[&quot;symmetric&quot;]
+        calibrator = EntropyCalibrater(
+            model,
+            op_types_to_calibrate,
+            augmented_model_path,
+            use_external_data_format=use_external_data_format,
+            symmetric=symmetric,
+            num_bins=num_bins,
+            num_quantized_bins=num_quantized_bins,
+        )
+    elif calibrate_method == CalibrationMethod.Percentile:
+        # default settings for percentile algorithm
+        num_bins = 2048 if &quot;num_bins&quot; not in extra_options else extra_options[&quot;num_bins&quot;]
+        percentile = 99.999 if &quot;percentile&quot; not in extra_options else extra_options[&quot;percentile&quot;]
+        symmetric = True if &quot;symmetric&quot; not in extra_options else extra_options[&quot;symmetric&quot;]
+        calibrator = PercentileCalibrater(
+            model,
+            op_types_to_calibrate,
+            augmented_model_path,
+            use_external_data_format=use_external_data_format,
+            symmetric=symmetric,
+            num_bins=num_bins,
+            percentile=percentile,
+        )
+
+    elif calibrate_method == CalibrationMethod.Distribution:
+        # default settings for percentile algorithm
+        num_bins = 2048 if &quot;num_bins&quot; not in extra_options else extra_options[&quot;num_bins&quot;]
+        scenario = &quot;same&quot; if &quot;scenario&quot; not in extra_options else extra_options[&quot;scenario&quot;]
+
+        from onnxruntime.quantization.calibrate import DistributionCalibrater
+        calibrator = DistributionCalibrater(
+            model,
+            op_types_to_calibrate,
+            augmented_model_path,
+            use_external_data_format=use_external_data_format,
+            num_bins=num_bins,
+            scenario=scenario,
+        )
+
+    if calibrator:
+        calibrator.augment_graph()
+        calibrator.execution_providers = execution_providers
+        calibrator.create_inference_session()
+        return calibrator
+
+    raise ValueError(f&quot;Unsupported calibration method {calibrate_method}&quot;)</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

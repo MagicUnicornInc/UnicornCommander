@@ -1,0 +1,1132 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.onnx.graph_transformations.model_transformer &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/onnx/graph_transformations/model_transformer';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.onnx.graph_transformations.model_transformer</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.onnx.graph_transformations.model_transformer</h1><div class="highlight"><pre>
+<span></span>#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+&quot;&quot;&quot;Apply graph transformations to a onnx model.&quot;&quot;&quot;
+
+import copy
+import re
+from quark.shares.utils.log import ScreenLogger
+
+import onnx
+import enum
+
+from quark.onnx.graph_transformations import transforms as transforms_mod
+
+from typing import Any, Dict, List, Optional, Union, Tuple
+from onnx import ModelProto, NodeProto, TensorProto, ValueInfoProto
+
+logger = ScreenLogger(__name__)
+
+NodeTree = transforms_mod.NodeTree
+
+
+<div class="viewcode-block" id="ModelTransformer">
+<a class="viewcode-back" href="../../../../autoapi/quark/onnx/graph_transformations/model_transformer/index.html#quark.onnx.graph_transformations.model_transformer.ModelTransformer">[docs]</a>
+class ModelTransformer(object):
+    &quot;&quot;&quot;Matches patterns to apply transforms in a tf.keras model graph.&quot;&quot;&quot;
+
+    def __init__(self,
+                 model: ModelProto,
+                 transforms: List[Any],
+                 candidate_nodes: Optional[Dict[str, Any]] = None,
+                 node_metadata: Optional[Dict[str, Any]] = None) -&gt; None:
+        &quot;&quot;&quot;Construct ModelTransformer.
+
+    Args:
+      model: Onnx model to be transformed.
+      transforms: List of transforms to be applied to the model.
+      candidate_nodes: Names of nodes which may be transformed. Only nodes
+        whose names are in candidate_nodes are matched against patterns. The
+        default is that all nodes may be transformed.
+      node_metadata: Dictionary of metadata associated with each node in the
+        model. The keys are node names.
+    &quot;&quot;&quot;
+        if not isinstance(model, onnx.ModelProto):
+            raise ValueError(&#39;Only onnx models can be transformed.&#39;)
+
+        if node_metadata is None:
+            node_metadata = {}
+
+        self.model: ModelProto = model
+        self.transformed_model: ModelProto = copy.deepcopy(self.model)
+        self.transforms: List[transforms_mod.Transform] = transforms
+        self.candidate_nodes: Dict[str, Any] = {}
+        assert (node_metadata is not None), &quot;node_metadata is None&quot;
+        self.node_metadata: Dict[str, Any] = node_metadata
+
+        self._update_status()
+
+<div class="viewcode-block" id="ModelTransformer.NodeType">
+<a class="viewcode-back" href="../../../../autoapi/quark/onnx/graph_transformations/model_transformer/index.html#quark.onnx.graph_transformations.model_transformer.ModelTransformer.NodeType">[docs]</a>
+    class NodeType(enum.Enum):
+        NODE = 1
+        INITIALIZER = 2
+        INPUT = 3</div>
+
+
+    def _update_status(self) -&gt; None:
+        &quot;&quot;&quot;Update internal status.&quot;&quot;&quot;
+
+        self.name_to_node_map = self._map_name_to_node(self.transformed_model)
+        self.name_to_init_map = self._map_name_to_init(self.transformed_model)
+        self.name_to_input_map = self._map_name_to_input(self.transformed_model)
+        self.tensor_to_producer_map = self._map_tensor_to_producer(self.transformed_model)
+        self.tensor_to_consumer_map = self._map_tensor_to_consumer(self.transformed_model)
+
+    @staticmethod
+    def _name(obj: object) -&gt; str:
+        return obj.__class__.__name__
+
+    @staticmethod
+    def _map_name_to_node(model: ModelProto) -&gt; Dict[str, NodeProto]:
+        &quot;&quot;&quot;Returns a dict of name to node.
+
+        Returns:
+            {node.name: node}
+        &quot;&quot;&quot;
+        name_to_node_map: Dict[str, NodeProto] = {}
+        for node in model.graph.node:
+            name_to_node_map[ModelTransformer._get_node_name(node)] = node
+        return name_to_node_map
+
+    @staticmethod
+    def _map_name_to_init(model: ModelProto) -&gt; Dict[str, TensorProto]:
+        &quot;&quot;&quot;Returns a dict of name to initializer.
+
+        Returns:
+            {initializer.name: initializer}
+        &quot;&quot;&quot;
+        name_to_init_map: Dict[str, TensorProto] = {}
+        for init in model.graph.initializer:
+            name_to_init_map[init.name] = init
+        return name_to_init_map
+
+    @staticmethod
+    def _map_name_to_input(model: ModelProto) -&gt; Dict[str, ValueInfoProto]:
+        &quot;&quot;&quot;Returns a dict of name to input.
+
+        Returns:
+            {initializer.name: initializer}
+        &quot;&quot;&quot;
+        name_to_input_map: Dict[str, ValueInfoProto] = {}
+        for inp in model.graph.input:
+            name_to_input_map[inp.name] = inp
+        return name_to_input_map
+
+    @staticmethod
+    def _map_tensor_to_producer(model: ModelProto) -&gt; Dict[str, NodeProto]:
+        &quot;&quot;&quot;Returns a dict of tensor to its producer node.
+
+        Returns:
+            {tensor.name: producer_node}
+        &quot;&quot;&quot;
+        tensor_to_producer_map: Dict[str, NodeProto] = {}
+        for node in model.graph.node:
+            for output_tensor in node.output:
+                tensor_to_producer_map[output_tensor] = node
+        return tensor_to_producer_map
+
+    @staticmethod
+    def _map_tensor_to_consumer(model: ModelProto) -&gt; Dict[str, List[NodeProto]]:
+        &quot;&quot;&quot;Returns a dict of tensor to its consumer nodes.
+
+        Returns:
+            {tensor.name: [consumer_nodes]}
+        &quot;&quot;&quot;
+        tensor_to_consumer_map: Dict[str, List[NodeProto]] = {}
+        for node in model.graph.node:
+            for input_tensor in node.input:
+                if input_tensor not in tensor_to_consumer_map:
+                    tensor_to_consumer_map[input_tensor] = [node]
+                else:
+                    tensor_to_consumer_map[input_tensor].append(node)
+        return tensor_to_consumer_map
+
+    def _get_node_metadata(self, node_name: str) -&gt; Any:
+        return self._node_metadata_map.get(node_name, {})
+
+    def _get_consuming_nodes(self, check_node: Union[NodeProto, TensorProto, ValueInfoProto]) -&gt; Dict[int, List[str]]:
+        &quot;&quot;&quot;Returns all the nodes which are out nodes from the node.
+
+        Returns:
+          {output_index: [consumer_node_name]}
+          {0: [nodes]} for initializers
+        &quot;&quot;&quot;
+        consuming_nodes: Dict[int, List[str]] = {}
+        if self._node_type(check_node) == ModelTransformer.NodeType.NODE:
+            for index, output_tensor in enumerate(check_node.output):
+                if output_tensor in self.tensor_to_consumer_map:
+                    consuming_nodes[index] = [
+                        self._get_node_name(node) for node in self.tensor_to_consumer_map[output_tensor]
+                    ]
+        elif self._node_type(check_node) == ModelTransformer.NodeType.INITIALIZER:
+            consuming_nodes[0] = [
+                self._get_node_name(node) for node in self.tensor_to_consumer_map[self._get_node_name(check_node)]
+            ]
+        elif self._node_type(check_node) == ModelTransformer.NodeType.INPUT:
+            consuming_nodes[0] = [
+                self._get_node_name(node) for node in self.tensor_to_consumer_map[self._get_node_name(check_node)]
+            ]
+        else:
+            raise ValueError(&#39;Invalid node type for node: {}&#39;.format(check_node))
+
+        return consuming_nodes
+
+    def _get_output_consumers(self, check_node: Union[NodeProto, TensorProto,
+                                                      ValueInfoProto]) -&gt; Dict[int, ValueInfoProto]:
+        &quot;&quot;&quot;Returns if any tensors from the node are outputs of the model.
+
+        Returns:
+          {output_index: output_name} for nodes
+        &quot;&quot;&quot;
+        output_consumers: Dict[int, ValueInfoProto] = {}
+        if self._node_type(check_node) == ModelTransformer.NodeType.NODE:
+            output_tensors = check_node.output
+            for output in self.transformed_model.graph.output:
+                for index, out in enumerate(output_tensors):
+                    if output.name == out:
+                        output_consumers[index] = output
+
+        # Typcially, intializers and inputs are not outputs of the model
+
+        return output_consumers
+
+    @staticmethod
+    def _get_node_name(node: Union[NodeProto, TensorProto, ValueInfoProto]) -&gt; str:
+        return node.name
+
+    @staticmethod
+    def _node_type(node: Union[NodeProto, TensorProto, ValueInfoProto, None]) -&gt; NodeType:
+        &quot;&quot;&quot;Returns whether the node is a node or initializer.&quot;&quot;&quot;
+        if isinstance(node, onnx.NodeProto):
+            return ModelTransformer.NodeType.NODE
+        elif isinstance(node, onnx.TensorProto):
+            return ModelTransformer.NodeType.INITIALIZER
+        elif isinstance(node, onnx.ValueInfoProto):
+            return ModelTransformer.NodeType.INPUT
+        else:
+            raise ValueError(&#39;Unknown node type for node: {}&#39;.format(node))
+
+    def _get_matched_nodes(self, transform: transforms_mod.Transform) -&gt; List[str]:
+        return self._transform_matched_nodes_map.get(self._name(transform), [])
+
+    def _match_pattern(self, target: str, pattern: str) -&gt; bool:
+        for p in pattern.split(&#39;|&#39;):
+            if re.match(&#39;^&#39; + p + &#39;$&#39;, target) is not None:
+                return True
+        return False
+
+    def _match_node(self, node: Union[NodeProto, TensorProto, ValueInfoProto],
+                    pattern: transforms_mod.OpTypePattern) -&gt; bool:
+        &quot;&quot;&quot;Check if any specific node or initializer matches the pattern.&quot;&quot;&quot;
+
+        if self.candidate_nodes and self._get_node_name(node) not in self.candidate_nodes:
+            return False
+
+        node_type = self._node_type(node)
+
+        node_matched = False
+        if node_type == ModelTransformer.NodeType.NODE and self._match_pattern(node.op_type, pattern.op_type):
+            node_matched = True
+
+        init_matched = False
+        match_init = pattern.op_type in [&#39;initializer&#39;, &#39;.*&#39;]
+        if match_init and node_type == ModelTransformer.NodeType.INITIALIZER and self._get_node_name(
+                node) in self.name_to_init_map:
+            init_matched = True
+
+        input_matched = False
+        match_input = pattern.op_type in [&#39;input&#39;, &#39;.*&#39;]
+        if match_input and node_type == ModelTransformer.NodeType.INPUT and self._get_node_name(
+                node) in self.name_to_input_map:
+            input_matched = True
+
+        # TODO: match config
+
+        return node_matched or init_matched or input_matched
+
+    def _is_match_supported(self, node: NodeProto, is_head_node: bool, allow_multi_consumers: bool) -&gt; bool:
+        &quot;&quot;&quot;Check if ModelTransformer supports transformations given number of inputs and outputs at a node.
+
+        Args:
+          node: node for pattern matching.
+          is_head_node: whether this is the head node (e.g. in A -&gt; B , B is the
+            head node).
+          allow_multi_consumers: whether to allow matching for intermediate nodes
+            with multiple consumers. Since replacing intermedieate nodes with multiple
+            consumers may lead to dangling nodes, this is disabled by default. It is
+            useful to match some complicated patterns.
+
+        Returns:
+          whether match is supported.
+        &quot;&quot;&quot;
+        consuming_nodes: Dict[int, List[str]] = self._get_consuming_nodes(node)
+        consuming_nodes_list: List[str] = []
+        for L in consuming_nodes.values():
+            consuming_nodes_list.extend(L)
+        if len(consuming_nodes_list) &gt; 1:
+            if not is_head_node and not allow_multi_consumers:
+                return False
+
+        output_nodes = self._get_output_consumers(node)
+        if len(output_nodes) &gt;= 1:
+            if not is_head_node:
+                return False
+
+        return True
+
+    def _get_input_node_init_names(self, node: NodeProto) -&gt; List[str]:
+        &quot;&quot;&quot;Get the names of a node&#39;s input nodes or initializers.&quot;&quot;&quot;
+        input_node_init_names: List[str] = []
+        # Keep the order during matching
+        if self._node_type(node) == ModelTransformer.NodeType.NODE:
+            for input_tensor in node.input:
+                if input_tensor in self.tensor_to_producer_map:
+                    input_node_init_names.append(self.tensor_to_producer_map[input_tensor].name)
+                elif input_tensor in self.name_to_init_map:
+                    input_node_init_names.append(self.name_to_init_map[input_tensor].name)
+                elif input_tensor in self.name_to_input_map:
+                    input_node_init_names.append(self.name_to_input_map[input_tensor].name)
+                else:
+                    raise ValueError(&#39;Cannot find producer of tensor: {}&#39;.format(input_tensor))
+            return input_node_init_names
+
+        # Initializers and inputs have no inputs
+        return []
+
+    def _get_nodes_inits(self, node_names: List[str]) -&gt; List[Any]:
+        &quot;&quot;&quot;Returns nodes or initializers with given names, keep the order.&quot;&quot;&quot;
+        nodes_inits = []
+        for name in node_names:
+            if name in self.name_to_node_map:
+                nodes_inits.append(self.name_to_node_map[name])
+            elif name in self.name_to_init_map:
+                nodes_inits.append(self.name_to_init_map[name])
+            elif name in self.name_to_input_map:
+                nodes_inits.append(self.name_to_input_map[name])
+            else:
+                raise ValueError(&#39;Cannot find node or initializer `{}` in the model.&#39;.format(name))
+        return nodes_inits
+
+    def _match_node_with_inputs(self, node: NodeProto, pattern: transforms_mod.OpTypePattern, is_head_node: bool,
+                                allow_multi_consumers: bool) -&gt; Optional[NodeTree]:
+        &quot;&quot;&quot;Match pattern at this node, and continue to match at its inputs.&quot;&quot;&quot;
+
+        if not self._match_node(node, pattern):
+            return None
+
+        if not self._is_match_supported(node, is_head_node, allow_multi_consumers):
+            return None
+
+        if len(pattern.inputs) == 0:
+            # Leaf node in pattern.
+            return NodeTree(node, [], [], self._get_node_metadata(self._get_node_name(node)))
+
+        input_node_init_names = self._get_input_node_init_names(node)
+        input_nodes_inits = self._get_nodes_inits(input_node_init_names)
+
+        if len(input_nodes_inits) != len(pattern.inputs):
+            return None
+
+        input_match_node_matches = []
+        for input_node_init, pattern_ in zip(input_nodes_inits, pattern.inputs):
+            match_node = self._match_node_with_inputs(input_node_init,
+                                                      pattern_,
+                                                      is_head_node=False,
+                                                      allow_multi_consumers=allow_multi_consumers)
+            if not match_node:
+                return None
+            input_match_node_matches.append(match_node)
+
+        return NodeTree(node, [], input_match_node_matches, self._get_node_metadata(self._get_node_name(node)))
+
+    def _find_pattern(self,
+                      pattern: transforms_mod.OpTypePattern,
+                      matched_nodes: Optional[List[str]] = None,
+                      allow_multi_consumers: bool = False) -&gt; Optional[NodeTree]:
+        for node in self.transformed_model.graph.node:
+            if matched_nodes and node.name in matched_nodes:
+                continue
+
+            match_node = self._match_node_with_inputs(node,
+                                                      pattern,
+                                                      is_head_node=True,
+                                                      allow_multi_consumers=allow_multi_consumers)
+
+            if match_node:
+                return match_node
+
+        return None
+
+    def _store_successful_match(self, transform: object, node_tree: NodeTree) -&gt; None:
+        &quot;&quot;&quot;Store matched results to avoid duplicated matching.&quot;&quot;&quot;
+        if self._name(transform) not in self._transform_matched_nodes_map:
+            self._transform_matched_nodes_map[self._name(transform)] = []
+
+        assert (node_tree.node is not None), &quot;node_tree.node is None&quot;
+        self._transform_matched_nodes_map[self._name(transform)].append(self._get_node_name(node_tree.node))
+
+    @staticmethod
+    def _get_node_names(node_tree: NodeTree) -&gt; List[str]:
+        &quot;&quot;&quot;Returns the list of node names in the node tree.&quot;&quot;&quot;
+        assert (node_tree.node is not None), &quot;node_tree.node is None&quot;
+        result = [ModelTransformer._get_node_name(node_tree.node)]
+        for input_node in node_tree.input_nodes:
+            result.extend(ModelTransformer._get_node_names(input_node))
+        return result
+
+    @staticmethod
+    def _remove_nodes_inits(model: ModelProto, node_names: List[str]) -&gt; None:
+        &quot;&quot;&quot;Remove the nodes and initializers/inputs from model.&quot;&quot;&quot;
+        left = set(node_names)
+
+        nodes_to_remove = []
+        for node in model.graph.node:
+            if node.name in left:
+                nodes_to_remove.append(node)
+                left.remove(node.name)
+        for node in nodes_to_remove:
+            model.graph.node.remove(node)
+
+        inits_to_remove = []
+        for init in model.graph.initializer:
+            if init.name in left:
+                inits_to_remove.append(init)
+                left.remove(init.name)
+        for init in inits_to_remove:
+            model.graph.initializer.remove(init)
+
+        inputs_to_remove = []
+        for inp in model.graph.input:
+            if inp.name in left:
+                inputs_to_remove.append(inp)
+                left.remove(inp.name)
+        for inp in inputs_to_remove:
+            model.graph.input.remove(inp)
+
+        if left:
+            logger.warning(&#39;Cannot find nodes, initializers or inputs in model: {}&#39;.format(left))
+
+    @staticmethod
+    def _add_node_init(model: ModelProto, node_init_to_add: Union[NodeProto, TensorProto, ValueInfoProto,
+                                                                  None]) -&gt; None:
+        &quot;&quot;&quot;Add the node or initializer/input to the model.&quot;&quot;&quot;
+        assert (node_init_to_add is not None), &quot;node_init_to_add is None&quot;
+        if ModelTransformer._node_type(node_init_to_add) == ModelTransformer.NodeType.NODE:
+            for node in model.graph.node:
+                if node.name == node_init_to_add.name:
+                    logger.info(&#39;Node `{}` is already in model, skip adding it.&#39;.format(node.name))
+                    return
+            new_node = model.graph.node.add()
+            new_node.CopyFrom(node_init_to_add)
+        elif ModelTransformer._node_type(node_init_to_add) == ModelTransformer.NodeType.INITIALIZER:
+            for init in model.graph.initializer:
+                if init.name == node_init_to_add.name:
+                    logger.info(&#39;Initializer `{}` is already in model, skip adding it.&#39;.format(init.name))
+                    return
+            new_init = model.graph.initializer.add()
+            new_init.CopyFrom(node_init_to_add)
+        elif ModelTransformer._node_type(node_init_to_add) == ModelTransformer.NodeType.INPUT:
+            for inp in model.graph.input:
+                if inp.name == node_init_to_add.name:
+                    logger.info(&#39;Input `{}` is already in model, skip adding it.&#39;.format(inp.name))
+                    return
+            new_input = model.graph.input.add()
+            new_input.CopyFrom(node_init_to_add)
+
+    def _get_leaf_nodes(self, node_tree: NodeTree) -&gt; List[Union[NodeProto, TensorProto, ValueInfoProto, None]]:
+        &quot;&quot;&quot;Return leaf nodes from the node tree.&quot;&quot;&quot;
+        # Initializers will not be treated as leaf nodes.
+        if not node_tree.input_nodes and self._node_type(node_tree.node) == ModelTransformer.NodeType.NODE:
+            return [node_tree.node]
+
+        leaf_nodes = []
+        for inp in node_tree.input_nodes:
+            leaf_nodes.extend(self._get_leaf_nodes(inp))
+
+        # Remove duplicate leaf nodes in case of:
+        # 1) Two different nodes point to the same leaf node
+        # 2) One node uses the same leaf node multiple times
+
+        uniq_leaf_nodes = []
+        for node in leaf_nodes:
+            if node not in uniq_leaf_nodes:
+                uniq_leaf_nodes.append(node)
+
+        return uniq_leaf_nodes
+
+    @staticmethod
+    def _get_input_index(node: NodeProto, input_tensor: Union[TensorProto, ValueInfoProto]) -&gt; int:
+        &quot;&quot;&quot;Get the index of input tensor.&quot;&quot;&quot;
+        return list(node.input).index(input_tensor)
+
+    def _replace(self, matched_node_tree: NodeTree, replacement_node_tree: NodeTree) -&gt; None:
+        &quot;&quot;&quot;Replace the matched node tree with replacement node tree.&quot;&quot;&quot;
+
+        # 1. Point all consumers of the head of the matching sub-tree to the head
+        # replacement node.
+
+        assert (matched_node_tree.node is not None), &quot;matched_node_tree.node is None&quot;
+        matched_head_node = matched_node_tree.node
+        assert (replacement_node_tree.node is not None), &quot;replacement_node_tree.node is None&quot;
+        replacement_head_node = replacement_node_tree.node
+
+        consuming_nodes = self._get_consuming_nodes(matched_node_tree.node)
+        for output_index, consumers in consuming_nodes.items():
+            for consumer in consumers:
+                consumer_node = self.name_to_node_map[consumer]
+                input_index = self._get_input_index(consumer_node, matched_head_node.output[0])
+                consumer_node.input[input_index] = replacement_head_node.output[0]
+
+        # 2. Update the graph outputs
+
+        output_consumers = self._get_output_consumers(matched_node_tree.node)
+        for index, consumer in output_consumers.items():
+            consumer.name = replacement_node_tree.node.output[index]
+
+        # 3. Create input tensors for the replacement leaf nodes, connect the nodes
+        # to the original graph.
+
+        original_leaf_nodes = self._get_leaf_nodes(matched_node_tree)
+        replacement_leaf_nodes = self._get_leaf_nodes(replacement_node_tree)
+
+        if len(original_leaf_nodes) != len(replacement_leaf_nodes):
+            raise RuntimeError(&#39;Difference size of leaf layers not supported yet({} vs {})&#39;.format(
+                len(original_leaf_nodes), len(replacement_leaf_nodes)))
+
+        for original_leaf_node, replacement_leaf_node in zip(original_leaf_nodes, replacement_leaf_nodes):
+            assert (original_leaf_node is not None), &quot;original_leaf_node.node is None&quot;
+            assert (replacement_leaf_node is not None), &quot;replacement_leaf_node.node is None&quot;
+            replacement_leaf_node.ClearField(&#39;input&#39;)
+            for input_tensor in original_leaf_node.input:
+                replacement_leaf_node.input.append(input_tensor)
+
+        # 4. Remove the original matched nodes
+
+        nodes_inits_to_remove = self._get_node_names(matched_node_tree)
+        self._remove_nodes_inits(self.transformed_model, nodes_inits_to_remove)
+
+        # 5. Add the new nodes to the original graph
+
+        def _add_replacement_node(node_tree: NodeTree) -&gt; None:
+            &quot;&quot;&quot;Recursively add new nodes&quot;&quot;&quot;
+            for input_node in node_tree.input_nodes:
+                _add_replacement_node(input_node)
+
+            self._add_node_init(self.transformed_model, node_tree.node)
+
+        _add_replacement_node(replacement_node_tree)
+
+        # 6. Update status
+        self._update_status()
+
+        # TODO
+        # remove unused nodes and initializers
+        # remove duplicated nodes and intializers
+        # topological sort
+        # validate the transformed model
+        return
+
+<div class="viewcode-block" id="ModelTransformer.transform">
+<a class="viewcode-back" href="../../../../autoapi/quark/onnx/graph_transformations/model_transformer/index.html#quark.onnx.graph_transformations.model_transformer.ModelTransformer.transform">[docs]</a>
+    def transform(self) -&gt; Tuple[ModelProto, Dict[str, Any]]:
+        &quot;&quot;&quot;Transforms the Onnx model by applying all the specified transforms.
+
+        This is the main entry point function used to apply the transformations to
+        the Onnx model.
+
+        Not suitable for multi-threaded use. Creates and manipulates internal state.
+
+        Returns:
+          (Onnx model after transformation, Updated node metadata map)
+        &quot;&quot;&quot;
+
+        # Stores map of Transform -&gt; List of nodes names matched by transform.
+        # Same transform should not match+replace the same node more than once
+        # to prevent infinite loops.
+        self._transform_matched_nodes_map: Dict[str, List[str]] = {}
+
+        # Maintains a current mutable copy of the metadata through transformation.
+        self._node_metadata_map = copy.deepcopy(self.node_metadata)
+
+        # We run an infinite loop and keep applying transformations as long as
+        # patterns are found. This allows recursive pattern matching where a
+        # modification by one transform may lead to another match.
+        while True:
+            match_found = False
+            for transform in self.transforms:
+                # A transform may find multiple instances of a pattern in the model.
+                # Keep finding and replacing till done.
+                while True:
+                    matched_node_tree = self._find_pattern(transform.pattern(), self._get_matched_nodes(transform),
+                                                           transform.allow_multi_consumers)
+
+                    if not matched_node_tree:
+                        break
+
+                    self._store_successful_match(transform, matched_node_tree)
+
+                    # Copying the match_node ensures the replacement code can
+                    # freely modify the match.
+                    replacement_node_tree = transform.replacement(copy.deepcopy(matched_node_tree))
+
+                    match_found = True
+                    self._replace(matched_node_tree, replacement_node_tree)
+
+            if not match_found:
+                break
+
+        return self.transformed_model, self._node_metadata_map</div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

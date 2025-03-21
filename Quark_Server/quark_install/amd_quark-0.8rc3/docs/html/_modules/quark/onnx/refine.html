@@ -1,0 +1,1538 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.onnx.refine &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/onnx/refine';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.onnx.refine</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.onnx.refine</h1><div class="highlight"><pre>
+<span></span>#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+import numpy as np
+from quark.shares.utils.log import ScreenLogger
+import onnx
+import onnx.numpy_helper
+
+from onnx import NodeProto, ModelProto, TensorProto
+from typing import Any, List
+from .quant_utils import (pos2scale, scale2pos, is_node_needs_annotated, annotate_op_type, avg_pool_op_type,
+                          check_hard_sigmoid_condition, ONNXQuantizedModel, FIX_OP_NAME, QUANT_OP_TYPES,
+                          DEQUANT_OP_TYPES)
+
+refine_pos_op_type = [FIX_OP_NAME]
+refine_scale_op_type = QUANT_OP_TYPES + DEQUANT_OP_TYPES
+
+postfix = &quot;_Output&quot;
+
+logger = ScreenLogger(__name__)
+
+
+class QuantPosManager(object):
+
+    def __init__(self, model: ONNXQuantizedModel) -&gt; None:
+        self.model = model
+        self.has_change = True
+        self.adjust_loop_count = 0
+
+    def get_scale(self, node: NodeProto) -&gt; Any:
+        for i in self.model.model.graph.initializer:
+            if i.name == node.input[1]:
+                if i.float_data:
+                    return i.float_data[0]
+                elif i.raw_data:
+                    return np.frombuffer(i.raw_data, dtype=np.float32).tolist()[0]
+        raise ValueError(&quot;DequantizeLinear and QuantizeLinear do not have scale.&quot;)
+
+    def set_scale(self, node: NodeProto, new_scale: float) -&gt; None:
+        for i in self.model.model.graph.initializer:
+            if i.name == node.input[1]:
+                if i.float_data:
+                    if i.float_data[0] != new_scale:
+                        i.float_data[0] = new_scale
+                elif i.raw_data:
+                    if np.frombuffer(i.raw_data, dtype=np.float32).tolist()[0] != new_scale:
+                        np.frombuffer(i.raw_data, dtype=np.float32).tolist()[0] = new_scale
+
+    def get_pos(self, node: NodeProto) -&gt; Any:
+        if node.op_type in refine_pos_op_type:
+            for attr in node.attribute:
+                if attr.name == &quot;pos&quot;:
+                    return attr.s
+        if node.op_type in refine_scale_op_type:
+            return scale2pos(self.get_scale(node))
+        return None
+
+    def set_pos(self, node: NodeProto, new_pos: int) -&gt; None:
+        if node.op_type in refine_pos_op_type:
+            for attr in node.attribute:
+                if attr.name == &quot;pos&quot;:
+                    attr.s = str(new_pos).encode()
+
+        elif node.op_type in QUANT_OP_TYPES:
+            new_scale = pos2scale(new_pos)
+            self.set_scale(node, new_scale)
+            if node.output:
+                for n in self.model.model.graph.node:
+                    if n.name == node.output[0].strip(postfix) and n.op_type in DEQUANT_OP_TYPES:
+                        self.set_scale(node, new_scale)
+
+        elif node.op_type in DEQUANT_OP_TYPES:
+            new_scale = pos2scale(new_pos)
+            self.set_scale(node, new_scale)
+            for n in self.model.model.graph.node:
+                if n.name == node.input[0].strip(postfix) and n.op_type in QUANT_OP_TYPES:
+                    self.set_scale(node, new_scale)
+
+    def find_node_name(self, name: str) -&gt; Any:
+        for node in self.model.model.graph.node:
+            if len(node.output
+                   ) &gt; 0 and node.output[0] == name and node.op_type in refine_pos_op_type + refine_scale_op_type:
+                return node.name
+        return None
+
+    def get_ipos_name(self, node: NodeProto) -&gt; Any:
+        if len(node.input) &gt; 0:
+            i_name = node.input[0]
+            ipos_name = self.find_node_name(i_name)
+            if ipos_name:
+                return ipos_name
+            op_type = node.op_type
+            for n in self.model.model.graph.node:
+                if len(n.output) &gt;= 1 and n.output[0] == i_name and op_type in avg_pool_op_type:
+                    i_name = n.input[0]
+                    ipos_name = self.find_node_name(i_name)
+                    if ipos_name:
+                        return ipos_name
+        else:
+            return None
+
+    def get_ipos_name_by_id(self, node: NodeProto, input_id: int = 0) -&gt; Any:
+        if len(node.input) &gt; input_id:
+            i_name = node.input[input_id]
+            return self.find_node_name(i_name)
+        else:
+            return None
+
+    def get_node_by_name(self, node_name: str) -&gt; Any:
+        for node in self.model.model.graph.node:
+            if node.name == node_name:
+                return node
+        return None
+
+    def get_pos_by_name(self, name: str) -&gt; Any:
+        for node in self.model.model.graph.node:
+            if node.op_type in refine_pos_op_type and node.name == name:
+                for attr in node.attribute:
+                    if attr.name == &quot;pos&quot;:
+                        return int(attr.s), node
+            elif node.op_type in refine_scale_op_type and node.name == name:
+                return self.get_pos(node), node
+
+        return None, None
+
+    def find_o_name(self, o_name: str) -&gt; Any:
+        for node in self.model.model.graph.node:
+            if (len(node.input) &gt;= 1 and node.input[0] == o_name
+                    and node.op_type in refine_pos_op_type + refine_scale_op_type):
+                return node.name
+        return None
+
+    def get_opos_name(self, node: NodeProto) -&gt; Any:
+
+        def is_node_connected(pre_node_type: str, node: NodeProto) -&gt; bool:
+            if pre_node_type in avg_pool_op_type + [&quot;HardSigmoid&quot;] and node.op_type == &quot;Mul&quot;:
+                return True
+            elif pre_node_type in annotate_op_type and is_node_needs_annotated(self.model.model, node):
+                return True
+            return False
+
+        o_name = node.output[0]
+        opos_name = self.find_o_name(o_name)
+        if opos_name:
+            return opos_name
+        pre_node_type = node.op_type
+        for n in self.model.model.graph.node:
+            if (len(n.input) &gt;= 1 and n.input[0] == o_name) and is_node_connected(pre_node_type, n):
+                o_name = n.output[0]
+                opos_name = self.find_o_name(o_name)
+                if opos_name:
+                    return opos_name
+        return None
+
+    def get_wpos_name(self, node: NodeProto) -&gt; Any:
+        if len(node.input) &gt; 1:
+            w_name = node.input[1]
+            return self.find_node_name(w_name)
+        else:
+            return None
+
+    def get_bpos_name(self, node: NodeProto) -&gt; Any:
+        if len(node.input) &gt; 2:
+            b_name = node.input[2]
+            return self.find_node_name(b_name)
+        else:
+            return None
+
+    def adjust_shift_cut(self) -&gt; None:
+        &quot;&quot;&quot;Adjust the shift cut of nodes.
+
+        shift_cut = wpos + ipos - opos
+
+        DPU compiler constraints of shift_cut:
+        1. 0 &lt;= shift_cut &lt;= 16
+        &quot;&quot;&quot;
+        for i, node in enumerate(self.model.model.graph.node):
+            if node.op_type not in [&quot;Conv&quot;, &quot;Gemm&quot;]:
+                continue
+            ipos_name = self.get_ipos_name(node)
+            ipos, _ = self.get_pos_by_name(ipos_name)
+
+            opos_name = self.get_opos_name(node)
+            opos, _ = self.get_pos_by_name(opos_name)
+            wpos_name = self.get_wpos_name(node)
+            wpos, wpos_node = self.get_pos_by_name(wpos_name)
+
+            # Adjust shift_cut
+            min_sc = 0
+            max_sc = 16
+            if wpos is None or ipos is None or opos is None:
+                logger.debug(&quot;Found a pos that is None. Shift cut of layer {} has not taken effect.&quot;.format(node.name))
+                continue
+            sc = wpos + ipos - opos
+            new_sc = None
+            if sc &lt; min_sc:
+                new_sc = min_sc
+            elif sc &gt; max_sc:
+                new_sc = max_sc
+
+            if new_sc is not None:
+                self.has_change = True
+                new_wpos = new_sc + opos - ipos
+                self.set_pos(wpos_node, new_wpos)
+                logger.info(&quot;Shift cut of layer {} is {}. It exceeds range [{}, {}]. &quot;
+                            &quot;Modify wpos from {} to {}.&quot;.format(node.input[1], int(sc), int(min_sc), int(max_sc),
+                                                                int(wpos), int(new_wpos)))
+
+    def adjust_shift_bias(self) -&gt; None:
+        &quot;&quot;&quot;Adjust the shift bias of node.
+
+        shift_bias = wpos + ipos - bpos
+
+        DPU compiler constraints of shift_bias:
+        1. min(0, -(24 - (8 + shift_cut))) &lt;= shift_bias &lt;= 15
+        &quot;&quot;&quot;
+        for i, node in enumerate(self.model.model.graph.node):
+            if node.op_type not in [&quot;Conv&quot;, &quot;Gemm&quot;]:
+                continue
+
+            ipos_name = self.get_ipos_name(node)
+            ipos, _ = self.get_pos_by_name(ipos_name)
+
+            opos_name = self.get_opos_name(node)
+            opos, _ = self.get_pos_by_name(opos_name)
+            wpos_name = self.get_wpos_name(node)
+            wpos, wpos_node = self.get_pos_by_name(wpos_name)
+            bpos_name = self.get_bpos_name(node)
+            if bpos_name:
+                bpos, bpos_node = self.get_pos_by_name(bpos_name)
+                # Adjust shift_bias
+                if wpos is None or ipos is None or opos is None or bpos is None:
+                    logger.debug(&quot;Found a pos that is None. Shift bias of layer {} has not taken effect.&quot;.format(
+                        node.name))
+                    continue
+                shift_cut = wpos + ipos - opos
+
+                min_sb = min(0, -(24 - (8 + shift_cut)))
+                # TODO: Optimize code structure
+                for n in self.model.model.graph.node:
+                    if n.op_type == &quot;LeakyRelu&quot; and n.input[0] == node.output[0]:
+                        min_sb = 0
+                max_sb = 15
+                shift_bias = wpos + ipos - bpos
+
+                new_sb = None
+                if shift_bias &lt; min_sb:
+                    new_sb = min_sb
+                elif shift_bias &gt; max_sb:
+                    new_sb = max_sb
+
+                if new_sb is not None:
+                    self.has_change = True
+                    new_bpos = wpos + ipos - new_sb
+                    self.set_pos(self.get_node_by_name(bpos_name), new_bpos)
+                    logger.info(&quot;Shift bias of layer {} is {}. It exceeds range [{}, {}]. &quot;
+                                &quot;Modify bpos from {} to {}.&quot;.format(node.input[2], int(shift_bias), int(min_sb),
+                                                                    int(max_sb), int(bpos), int(new_bpos)))
+
+    def adjust_shift_swish(self) -&gt; None:
+        &quot;&quot;&quot;Adjust the shift of Swish layer&#39;s Multiply op.
+        shift_swish = &#39;input 0 pos&#39; + &#39;input 1 pos&#39; - &#39;output pos&#39;
+        DPU compiler constraints of shift_swish:
+          1. 0 &lt;= shift_swish &lt;= 15
+        &quot;&quot;&quot;
+
+        def _is_sigmoid_layer(node_input: str) -&gt; bool:
+            &#39;&#39;&#39;
+            it&#39;s a swish&#39;s sigmoid layer or not
+            &#39;&#39;&#39;
+            for node in self.model.model.graph.node:
+                if check_hard_sigmoid_condition(node) and node.input[0] == node_input:
+                    return True
+            return False
+
+        def _belong_to_swish(node0: NodeProto, node1: NodeProto) -&gt; bool:
+            &#39;&#39;&#39;
+            swish = mul(x, sigmoid(x))
+            so one is sigmoid and another is x
+            &#39;&#39;&#39;
+            if _is_sigmoid_layer(node0) or _is_sigmoid_layer(node1):
+                return True
+            return False
+
+        for i, node in enumerate(self.model.model.graph.node):
+            if node.op_type not in [&quot;Mul&quot;]:
+                continue
+
+            if len(node.input) != 2:
+                continue
+
+            # Comfirm it&#39;s a swish&#39;s mul layer or not
+            if not _belong_to_swish(node.input[0], node.input[1]):
+                continue
+
+            opos_name = self.get_opos_name(node)
+            opos, _ = self.get_pos_by_name(opos_name)
+
+            if opos is not None:
+
+                ipos0_name = self.get_ipos_name_by_id(node, 0)
+                ipos0, _ = self.get_pos_by_name(ipos0_name)
+
+                ipos1_name = self.get_ipos_name_by_id(node, 1)
+                ipos1, _ = self.get_pos_by_name(ipos1_name)
+
+                if (ipos1 is None or ipos0 is None):
+                    logger.warning(&#39;Fail to get quantized position for layer {} input, &#39;
+                                   &#39;skip adjust_shift_swish for it.&#39;.format(node.name))
+                    continue
+
+                min_sh, max_sh = 0, 15
+
+                shift_swish = ipos0 + ipos1 - opos
+
+                new_opos = opos
+                if (shift_swish &lt; min_sh):
+                    new_opos = ipos0 + ipos1 - min_sh
+                elif (shift_swish &gt; max_sh):
+                    new_opos = ipos0 + ipos1 - max_sh
+
+                if new_opos != opos:
+                    self.has_change = True
+                    self.set_pos(self.get_node_by_name(opos_name), new_opos)
+                    logger.info(&#39;Shift Swish of layer {} is {}({}+{}-{}). It exceeds range [{}, {}]. &#39;
+                                &#39;Modify opos from {} to {}.&#39;.format(node.name, int(shift_swish), int(ipos0), int(ipos1),
+                                                                    int(opos), int(min_sh), int(max_sh), int(opos),
+                                                                    int(new_opos)))
+            else:
+                logger.debug(&quot;Fail to get quantized position for layer {}(output:0), &quot;
+                             &quot;skip adjust shift swish for it.&quot;.format(node.name))
+
+    def adjust_hard_sigmoid(self) -&gt; None:
+        &quot;&quot;&quot;Adjust quantize info of HardSigmoid nodes.
+
+        DPU compiler constraints for HardSigmoid:
+        1. input pos of HardSigmoid &gt;= 0 &amp;&amp; &lt;= 15
+        2. output pos of HardSigmoid &gt;= 7
+        3. shift_sigmoid &gt;= 0 &amp;&amp; shift_sigmoid &lt;= 31 where
+            shift_sigmoid = 14 + &#39;input pos&#39; - &#39; output pos&#39;
+        &quot;&quot;&quot;
+        for i, node in enumerate(self.model.model.graph.node):
+
+            if node.op_type not in [&quot;HardSigmoid&quot;]:
+                continue
+            if not check_hard_sigmoid_condition(node):
+                continue
+            ipos_name = self.get_ipos_name(node)
+            ipos, _ = self.get_pos_by_name(ipos_name)
+
+            opos_name = self.get_opos_name(node)
+            opos, _ = self.get_pos_by_name(opos_name)
+
+            if ipos is None or opos is None:
+                logger.debug(&quot;Found a pos that is None. Adjust quantize info of HardSigmoid &quot;
+                             &quot;nodes of layer {} has not taken effect.&quot;.format(node.name))
+                continue
+
+            new_ipos = ipos if ipos &gt; 0 else 0
+            new_ipos = new_ipos if new_ipos &lt;= 15 else 15
+
+            new_opos = opos if opos &gt; 7 else 7
+            shift_sigmoid = 14 + new_ipos - new_opos  # will not bigger than 31 now
+            new_opos = new_opos if shift_sigmoid &gt; 0 else 14 + new_ipos
+
+            if new_ipos != ipos:
+                self.has_change = True
+                self.set_pos(self.get_node_by_name(ipos_name), new_ipos)
+                logger.info(&quot;Input quantize pos of HardSigmoid layer {} is {}, modify it to {} &quot;
+                            &quot;to meet the DPU constraints.&quot;.format(node.input[0], int(ipos), int(new_ipos)))
+
+            if new_opos != opos:
+                self.has_change = True
+                self.set_pos(self.get_node_by_name(opos_name), new_opos)
+                logger.info(&quot;Output quantize pos of HardSigmoid layer {} is {}, modify it to {} &quot;
+                            &quot;to meet the DPU constraints.&quot;.format(node.output[0], int(opos), int(new_opos)))
+
+    def adjust_shift_read(self) -&gt; None:
+        &quot;&quot;&quot;Adjust the shift read of node.
+
+        shift_read = max(ipos) - min(ipos)
+
+        NPU compiler constraints of shift_read:
+        1. 0 &lt;= shift_read &lt;= 7
+        &quot;&quot;&quot;
+        for i, node in enumerate(self.model.model.graph.node):
+
+            if node.op_type not in [&quot;Add&quot;, &quot;Sub&quot;]:
+                continue
+            ipos_layers = []
+            iposes = []
+            skip = False
+
+            for i in range(len(node.input)):
+                ipos_name = self.get_ipos_name_by_id(node, i)
+                if ipos_name is None:
+                    logger.debug(&quot;Fail to get input quantized position for layer {}, &quot;
+                                 &quot;please check it.&quot;.format(node.name))
+                    skip = True
+                    break
+                ipos_layers.append(ipos_name)
+
+            for name in ipos_layers:
+                ipos, _ = self.get_pos_by_name(name)
+                if ipos is None:
+                    logger.debug(&quot;Fail to get quantized position for layer {}, &quot;
+                                 &quot;skip adjust_shift_read for it.&quot;.format(name))
+                    skip = True
+                    break
+                iposes.append(ipos)
+            if skip:
+                continue
+            id_max = np.argmax(iposes)
+            id_min = np.argmin(iposes)
+            sr = iposes[id_max] - iposes[id_min]
+            min_sr, max_sr = 0, 7
+
+            new_sr = None
+            if sr &gt; max_sr:
+                new_sr = max_sr
+
+            if new_sr is not None:
+                self.has_change = True
+                new_ipos_max = iposes[id_min] + new_sr
+                self.set_pos(self.get_node_by_name(ipos_layers[id_max]), new_ipos_max)
+                logger.info(&quot;Shift read of layer {} is {}({}-{}). It exceeds range [{}, {}]. &quot;
+                            &quot;Modify ipos from {} to {}.&quot;.format(
+                                node.name,
+                                int(sr),
+                                int(iposes[id_max]),
+                                int(iposes[id_min]),
+                                int(min_sr),
+                                int(max_sr),
+                                int(iposes[id_max]),
+                                int(new_ipos_max),
+                            ))
+
+    def adjust_shift_write(self) -&gt; None:
+        &quot;&quot;&quot;Adjust the shift write of node.
+
+        For Add:
+        shift_write = min(ipos) - opos
+
+        NPU compiler constraints of shift_write:
+        1. -7 &lt;= shift_write &lt;= 25
+
+        For Mul:
+        shift_write = sum(ipos) - opos
+
+        NPU compiler constraints of shift_write:
+        1. 0 &lt;= shift_write &lt;= 32
+        &quot;&quot;&quot;
+        for i, node in enumerate(self.model.model.graph.node):
+
+            if node.op_type not in [&quot;Add&quot;, &quot;Mul&quot;]:
+                continue
+            if node.op_type == &quot;Add&quot;:
+                ipos_layers = []
+                iposes = []
+                skip = False
+
+                for i in range(len(node.input)):
+                    ipos_name = self.get_ipos_name_by_id(node, i)
+                    if ipos_name is None:
+                        logger.debug(&quot;Fail to get input quantized position for layer {}, &quot;
+                                     &quot;please check it.&quot;.format(node.name))
+                        skip = True
+                        break
+                    ipos_layers.append(ipos_name)
+
+                for name in ipos_layers:
+                    ipos, _ = self.get_pos_by_name(name)
+                    if ipos is None:
+                        logger.debug(&quot;Fail to get quantized position for layer {}, &quot;
+                                     &quot;skip adjust_shift_read for it.&quot;.format(name))
+                        skip = True
+                        break
+                    iposes.append(ipos)
+                if skip:
+                    continue
+
+                opos_name = self.get_opos_name(node)
+                opos, _ = self.get_pos_by_name(opos_name)
+                if opos is None:
+                    logger.debug(&quot;Fail to get quantized position for layer {}(output:0), &quot;
+                                 &quot;skip adjust_shift_write for it.&quot;.format(node.name))
+                    continue
+
+                id_min = np.argmin(iposes)
+                sw = iposes[id_min] - opos
+                min_sw, max_sw = -7, 25
+
+                new_sw = None
+                if sw &gt; max_sw:
+                    new_sw = max_sw
+                elif sw &lt; min_sw:
+                    new_sw = min_sw
+
+                if new_sw is not None:
+                    self.has_change = True
+                    new_opos = iposes[id_min] - new_sw
+                    self.set_pos(self.get_node_by_name(opos_name), new_opos)
+                    logger.info(&quot;Shift write of layer {} is {}({}-{}). It exceeds range [{}, {}]. &quot;
+                                &quot;Modify opos from {} to {}.&quot;.format(
+                                    node.name,
+                                    int(sw),
+                                    int(iposes[id_min]),
+                                    int(opos),
+                                    int(min_sw),
+                                    int(max_sw),
+                                    int(opos),
+                                    int(new_opos),
+                                ))
+            elif node.op_type == &quot;Mul&quot;:
+                ipos_layers = []
+                iposes = []
+                skip = False
+
+                for i in range(len(node.input)):
+                    ipos_name = self.get_ipos_name_by_id(node, i)
+                    if ipos_name is None:
+                        logger.debug(&quot;Fail to get input quantized position for layer {}, &quot;
+                                     &quot;please check it.&quot;.format(node.name))
+                        skip = True
+                        break
+                    ipos_layers.append(ipos_name)
+                for name in ipos_layers:
+                    ipos, _ = self.get_pos_by_name(name)
+                    if ipos is None:
+                        logger.debug(&quot;Fail to get quantized position for layer {}, &quot;
+                                     &quot;skip adjust_shift_read for it.&quot;.format(name))
+                        skip = True
+                        break
+                    iposes.append(ipos)
+                if skip:
+                    continue
+                opos_name = self.get_opos_name(node)
+                opos, _ = self.get_pos_by_name(opos_name)
+                if opos is None:
+                    logger.debug(&quot;Fail to get quantized position for layer {}(output:0), &quot;
+                                 &quot;skip adjust_shift_write for it.&quot;.format(node.name))
+                    continue
+
+                sw = sum(iposes) - opos
+                min_sw, max_sw = 0, 32
+
+                new_sw = None
+                if sw &gt; max_sw:
+                    new_sw = max_sw
+                elif sw &lt; min_sw:
+                    new_sw = min_sw
+
+                if new_sw is not None:
+                    new_opos = sum(iposes) - new_sw
+                    self.set_pos(self.get_node_by_name(opos_name), new_opos)
+                    logger.info(&quot;Shift write of layer {} is {}({}-{}). It exceeds range [{}, {}]. &quot;
+                                &quot;Modify opos from {} to {}.&quot;.format(
+                                    node.name,
+                                    int(sw),
+                                    int(sum(iposes)),
+                                    int(opos),
+                                    int(min_sw),
+                                    int(max_sw),
+                                    int(opos),
+                                    int(new_opos),
+                                ))
+
+    def align_concat(self) -&gt; None:
+        &quot;&quot;&quot;Align concat op&#39;s inputs and output pos.&quot;&quot;&quot;
+        for i, node in enumerate(self.model.model.graph.node):
+            if node.op_type not in [&quot;Concat&quot;]:
+                continue
+            input_node_num = len(node.input)
+            opos_name = self.get_opos_name(node)
+            opos, _ = self.get_pos_by_name(opos_name)
+            if opos is not None:
+                min_pos = opos
+                ipos_layers = []
+
+                for i in range(input_node_num):
+                    ipos_name = self.get_ipos_name_by_id(node, i)
+                    ipos_layers.append(ipos_name)
+                for name in ipos_layers:
+                    ipos, _ = self.get_pos_by_name(name)
+                    if ipos is not None:
+                        min_pos = min(ipos, min_pos)
+                if opos != min_pos:
+                    self.has_change = True
+                    self.set_pos(self.get_node_by_name(opos_name), min_pos)
+                    logger.info((&quot;Output pos of concat node {} is {}, min_pos is {}. &quot;
+                                 &quot;Modify opos from {} to {}.&quot;.format(node.name, int(opos), int(min_pos), int(opos),
+                                                                     int(min_pos))))
+                for name in ipos_layers:
+                    ipos, ipos_node = self.get_pos_by_name(name)
+                    if ipos is not None and ipos != min_pos:
+                        self.has_change = True
+                        self.set_pos(ipos_node, min_pos)
+                        logger.info(&quot;Input pos of concat node {} is {}, min_pos is {}. &quot;
+                                    &quot;Modify ipos from {} to {}.&quot;.format(node.name, int(ipos), int(min_pos), int(ipos),
+                                                                        int(min_pos)))
+            else:
+                logger.debug(&quot;Fail to get quantized position for layer {}(output:0), &quot;
+                             &quot;skip align concat for it.&quot;.format(node.name))
+
+    def align_pool(self) -&gt; None:
+        &quot;&quot;&quot;Align max/avg pooling input and output pos.&quot;&quot;&quot;
+        for i, node in enumerate(self.model.model.graph.node):
+            if node.op_type not in [&quot;MaxPool&quot;, &quot;AveragePool&quot;, &quot;GlobalAveragePool&quot;]:
+                continue
+            ipos_name = self.get_ipos_name(node)
+            ipos, ipos_layer = self.get_pos_by_name(ipos_name)
+
+            opos_name = self.get_opos_name(node)
+            opos, opos_layer = self.get_pos_by_name(opos_name)
+            if ipos is None or opos is None:
+                logger.debug(&quot;Found a pos that is None. Align pool of layer {} has not taken effect.&quot;.format(node.name))
+                continue
+            if ipos is not None and opos is not None and opos &gt; ipos:
+                self.has_change = True
+                self.set_pos(opos_layer, ipos)
+                logger.info(&quot;Input pos of pooling layer {} is {}. Output pos of pooling layer {} is {}.&quot;
+                            &quot;Modify opos from {} to {}.&quot;.format(node.name, int(ipos), node.name, int(opos), int(opos),
+                                                                int(ipos)))
+            elif ipos is not None and opos is not None and opos &lt; ipos:
+                self.has_change = True
+                self.set_pos(ipos_layer, opos)
+                logger.info(&quot;Input pos of pooling layer {} is {}. Output pos of pooling layer {} is {}.&quot;
+                            &quot;Modify ipos from {} to {}.&quot;.format(node.name, int(ipos), node.name, int(opos), int(ipos),
+                                                                int(opos)))
+
+    def align_pad(self) -&gt; None:
+        &quot;&quot;&quot;Align pad input and output pos.&quot;&quot;&quot;
+        for i, node in enumerate(self.model.model.graph.node):
+            if node.op_type != &quot;Pad&quot;:
+                continue
+            ipos_name = self.get_ipos_name(node)
+            ipos, ipos_layer = self.get_pos_by_name(ipos_name)
+
+            opos_name = self.get_opos_name(node)
+            opos, opos_layer = self.get_pos_by_name(opos_name)
+            if ipos is None or opos is None:
+                logger.debug(&quot;Found a pos that is None. Align pad of layer {} has not taken effect.&quot;.format(node.name))
+                continue
+            if ipos is not None and opos is not None and opos &gt; ipos:
+                self.has_change = True
+                self.set_pos(opos_layer, ipos)
+                logger.info(&quot;Input pos of pad layer {} is {}. Output pos of pad layer {} is {}.&quot;
+                            &quot;Modify opos from {} to {}.&quot;.format(node.name, int(ipos), node.name, int(opos), int(opos),
+                                                                int(ipos)))
+            elif ipos is not None and opos is not None and opos &lt; ipos:
+                self.has_change = True
+                self.set_pos(ipos_layer, opos)
+                logger.info(&quot;Input pos of pad layer {} is {}. Output pos of pooling layer {} is {}.&quot;
+                            &quot;Modify ipos from {} to {}.&quot;.format(node.name, int(ipos), node.name, int(opos), int(ipos),
+                                                                int(opos)))
+
+    def align_slice(self) -&gt; None:
+        &quot;&quot;&quot;Align slice input and output pos.&quot;&quot;&quot;
+        for i, node in enumerate(self.model.model.graph.node):
+            if node.op_type not in [&quot;Slice&quot;]:
+                continue
+            ipos_name = self.get_ipos_name(node)
+            ipos, ipos_layer = self.get_pos_by_name(ipos_name)
+
+            opos_name = self.get_opos_name(node)
+            opos, opos_layer = self.get_pos_by_name(opos_name)
+            if ipos is None or opos is None:
+                logger.debug(&quot;Found a pos that is None. Align Slice of layer {} has not taken effect.&quot;.format(
+                    node.name))
+                continue
+            if ipos is not None and opos is not None and opos &gt; ipos:
+                self.has_change = True
+                self.set_pos(opos_layer, ipos)
+                logger.info(&quot;Input pos of Slice layer {} is {}. Output pos of Slice layer {} is {}.&quot;
+                            &quot;Modify opos from {} to {}.&quot;.format(node.name, int(ipos), node.name, int(opos), int(opos),
+                                                                int(ipos)))
+            elif ipos is not None and opos is not None and opos &lt; ipos:
+                self.has_change = True
+                self.set_pos(ipos_layer, opos)
+                logger.info(&quot;Input pos of Slice layer {} is {}. Output pos of Slice layer {} is {}.&quot;
+                            &quot;Modify ipos from {} to {}.&quot;.format(node.name, int(ipos), node.name, int(opos), int(ipos),
+                                                                int(opos)))
+
+
+<div class="viewcode-block" id="adjust_quantize_info">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/refine/index.html#quark.onnx.refine.adjust_quantize_info">[docs]</a>
+def adjust_quantize_info(model: ModelProto,
+                         max_loop_num: int = 5,
+                         adjust_shift_cut: bool = True,
+                         adjust_shift_bias: bool = True,
+                         adjust_shift_read: bool = True,
+                         adjust_shift_write: bool = True,
+                         adjust_hard_sigmoid: bool = True,
+                         adjust_shift_swish: bool = True,
+                         align_concat: bool = True,
+                         align_pool: bool = True,
+                         align_pad: bool = True,
+                         align_slice: bool = True) -&gt; ONNXQuantizedModel:
+    &quot;&quot;&quot;Adjust the quantize info to meet the compiler constraints.&quot;&quot;&quot;
+
+    manager = QuantPosManager(model)
+
+    while manager.has_change and (manager.adjust_loop_count &lt; max_loop_num):
+        manager.adjust_loop_count += 1
+        if manager.adjust_loop_count == max_loop_num:
+            logger.warning(&#39;The number of adjustments has reached the limit. &#39;
+                           &#39;Please check the model&#39;)
+        manager.has_change = False
+        logger.info(&#39;Adjust the quantize info to meet the compiler constraints&#39;)
+
+        # First do the alignment, then make adjustments to ensure all adjustments are effective
+        if align_concat:
+            manager.align_concat()
+
+        if align_pool:
+            manager.align_pool()
+
+        if align_pad:
+            manager.align_pad()
+
+        if align_slice:
+            manager.align_slice()
+
+        if adjust_shift_read:
+            manager.adjust_shift_read()
+
+        if adjust_shift_write:
+            manager.adjust_shift_write()
+
+        if adjust_shift_cut:
+            manager.adjust_shift_cut()
+
+        if adjust_shift_bias:
+            manager.adjust_shift_bias()
+
+        if adjust_hard_sigmoid:
+            manager.adjust_hard_sigmoid()
+
+        if adjust_shift_swish:
+            manager.adjust_shift_swish()
+
+    return manager.model</div>
+
+
+
+class QuantInfoManager(object):
+
+    def __init__(self, model: ModelProto) -&gt; None:
+        self.model = model
+        self.has_change = True
+        self.adjust_loop_count = 0
+
+        # Note that the model is a ONNXModel instance
+        self.parser = ONNXQuantizedModel(self.model.model)
+
+    def get_quant_info(self, node: NodeProto) -&gt; List[TensorProto]:
+        assert node.op_type in refine_scale_op_type
+
+        quant_info = [
+            self.model.get_initializer(node.input[1]),
+            self.model.get_initializer(node.input[2]),
+        ]
+
+        return quant_info
+
+    def set_quant_info(self, node: NodeProto, quant_info: List[TensorProto]) -&gt; None:
+        assert node.op_type in refine_scale_op_type
+
+        scale = self.model.get_initializer(node.input[1])
+        scale.CopyFrom(quant_info[0])
+        scale.name = node.input[1]
+
+        zero_point = self.model.get_initializer(node.input[2])
+        zero_point.CopyFrom(quant_info[1])
+        zero_point.name = node.input[2]
+
+    def quant_info_equal(self, quant_info_a: List[TensorProto], quant_info_b: List[TensorProto]) -&gt; Any:
+        scale_a = onnx.numpy_helper.to_array(quant_info_a[0])
+        scale_b = onnx.numpy_helper.to_array(quant_info_b[0])
+        zero_point_a = onnx.numpy_helper.to_array(quant_info_a[1])
+        zero_point_b = onnx.numpy_helper.to_array(quant_info_b[1])
+        return np.array_equal(scale_a, scale_b) and np.array_equal(zero_point_a, zero_point_b)
+
+    def copy_output_qinfo_to_inputs(self, op_types: List[str]) -&gt; None:
+        &quot;&quot;&quot;Copy output tensor&#39;s quant info to input tensor.&quot;&quot;&quot;
+        for node in self.model.model.graph.node:
+            if node.op_type not in op_types:
+                continue
+
+            node_struct = self.parser.find_target_node_qdqs(node)
+            if not (len(node_struct[&#39;input_qdqs&#39;]) and len(node_struct[&#39;output_qdqs&#39;])):
+                continue
+
+            output_q, output_dq = node_struct[&#39;output_qdqs&#39;][0]
+            if output_q is None or output_dq is None:
+                continue
+
+            quant_info = self.get_quant_info(output_q)
+
+            has_change = False
+
+            for input_dq, input_q in node_struct[&#39;input_qdqs&#39;]:
+                if input_dq is None or input_q is None:
+                    continue
+
+                if self.quant_info_equal(quant_info, self.get_quant_info(input_dq)):
+                    continue
+
+                self.set_quant_info(input_dq, quant_info)
+
+                # Q always shares the same scale and zp with DQ
+                if (input_q.input[1] != input_dq.input[1]) or (input_q.input[2] != input_dq.input[2]):
+                    self.set_quant_info(input_q, quant_info)
+
+                has_change = True
+
+            if has_change:
+                self.has_change = True
+                logger.info(f&quot;Have aligned {node.op_type} node {node.name} inputs&quot;)
+
+    def copy_input_qinfo_to_outputs(self, op_types: List[str]) -&gt; None:
+        &quot;&quot;&quot;Copy input tensor&#39;s quant info to output tensor.&quot;&quot;&quot;
+        for node in self.model.model.graph.node:
+            if node.op_type not in op_types:
+                continue
+
+            node_struct = self.parser.find_target_node_qdqs(node)
+            if not (len(node_struct[&#39;input_qdqs&#39;]) and len(node_struct[&#39;output_qdqs&#39;])):
+                continue
+
+            input_dq, input_q = node_struct[&#39;input_qdqs&#39;][0]
+            if input_dq is None or input_q is None:
+                continue
+
+            quant_info = self.get_quant_info(input_dq)
+
+            has_change = False
+
+            for output_q, output_dq in node_struct[&#39;output_qdqs&#39;]:
+                if output_q is None or output_dq is None:
+                    continue
+
+                if self.quant_info_equal(quant_info, self.get_quant_info(output_q)):
+                    continue
+
+                self.set_quant_info(output_q, quant_info)
+
+                # DQ always shares the same scale and zp with Q
+                if (output_q.input[1] != output_dq.input[1]) or (output_q.input[2] != output_dq.input[2]):
+                    self.set_quant_info(output_dq, quant_info)
+
+                has_change = True
+
+            if has_change:
+                self.has_change = True
+                logger.info(f&quot;Have aligned {node.op_type} node {node.name} outputs&quot;)
+
+    def align_concat(self) -&gt; None:
+        &quot;&quot;&quot;Align concat input and output quant info.&quot;&quot;&quot;
+        self.copy_output_qinfo_to_inputs([&quot;Concat&quot;])
+
+    def align_pool(self) -&gt; None:
+        &quot;&quot;&quot;Align pool input and output quant info.&quot;&quot;&quot;
+        self.copy_input_qinfo_to_outputs([&quot;MaxPool&quot;, &quot;AveragePool&quot;, &quot;GlobalAveragePool&quot;])
+
+    def align_pad(self) -&gt; None:
+        &quot;&quot;&quot;Align pad input and output quant info.&quot;&quot;&quot;
+        self.copy_output_qinfo_to_inputs([&quot;Pad&quot;])
+
+    def align_slice(self) -&gt; None:
+        &quot;&quot;&quot;Align slice input and output quant info.
+           Note that Slice may have multiple outputs
+        &quot;&quot;&quot;
+        self.copy_input_qinfo_to_outputs([&quot;Slice&quot;])
+
+    def align_transpose(self) -&gt; None:
+        &quot;&quot;&quot;Align transpose input and output quant info.&quot;&quot;&quot;
+        self.copy_output_qinfo_to_inputs([&quot;Transpose&quot;])
+
+    def align_reshape(self) -&gt; None:
+        &quot;&quot;&quot;Align reshape input and output quant info.&quot;&quot;&quot;
+        self.copy_output_qinfo_to_inputs([&quot;Reshape&quot;])
+
+    def adjust_bias_scale(self) -&gt; None:
+        &quot;&quot;&quot; Make sure that bias scale = activation scale * weights scale. &quot;&quot;&quot;
+        scale_values = {}
+        output2node = {}
+
+        for node in self.model.model.graph.node:
+            if node.op_type in [&#39;DequantizeLinear&#39;, &#39;VitisDequantizeLinear&#39;]:
+                scale_input_name = node.input[1]
+                scale_initializer = next(
+                    (init for init in self.model.model.graph.initializer if init.name == scale_input_name), None)
+                if scale_initializer:
+                    scale_value = onnx.numpy_helper.to_array(scale_initializer)
+                    scale_values[node.output[0]] = scale_value
+                    output2node[node.output[0]] = node
+
+        for node in self.model.model.graph.node:
+            if node.op_type in [&#39;Conv&#39;, &#39;Gemm&#39;, &#39;ConvTranpose&#39;]:
+                if len(node.input) == 3 and node.input[0] in scale_values and node.input[
+                        1] in scale_values and node.input[2] in scale_values:
+                    act_scale = scale_values[node.input[0]]
+                    weights_scale = scale_values[node.input[1]]
+                    bias_scale = scale_values[node.input[2]]
+                    bias_node = output2node[node.input[2]]
+
+                    if act_scale * weights_scale != bias_scale:
+                        new_bias_scale = act_scale * weights_scale
+                        for initializer in self.model.model.graph.initializer:
+                            if initializer.name == bias_node.input[2]:
+                                data_type = onnx.mapping.TENSOR_TYPE_TO_NP_TYPE[initializer.data_type]
+                                if data_type != np.int32:
+                                    logger.warning(
+                                        &quot;The bias scale != activation scale * weights scale in QDQ of {} because the bias qdq is not int32. Please check it.&quot;
+                                        .format(node.name))
+                                    continue
+                                else:
+                                    for initializer in self.model.model.graph.initializer:
+                                        if initializer.name == bias_node.input[0]:
+                                            array = onnx.numpy_helper.to_array(initializer)
+                                            new_array = array / (act_scale * weights_scale / bias_scale)
+                                            new_array = new_array.astype(np.int32)
+                                            new_initializer = onnx.numpy_helper.from_array(new_array,
+                                                                                           name=bias_node.input[0])
+                                            initializer.CopyFrom(new_initializer)
+                                        if initializer.name == bias_node.input[1]:
+                                            array = onnx.numpy_helper.to_array(initializer)
+                                            new_array = act_scale * weights_scale
+                                            new_initializer = onnx.numpy_helper.from_array(new_array,
+                                                                                           name=bias_node.input[1])
+                                            initializer.CopyFrom(new_initializer)
+                                    logger.info(
+                                        &quot;Have adjusted bias scale == activation scale * weights scale in QDQ of {}.&quot;.
+                                        format(node.name))
+
+
+<div class="viewcode-block" id="align_quantize_info">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/refine/index.html#quark.onnx.refine.align_quantize_info">[docs]</a>
+def align_quantize_info(
+    model: ModelProto,
+    max_loop_num: int = 5,
+    align_concat: bool = True,
+    align_pool: bool = True,
+    align_pad: bool = True,
+    align_slice: bool = True,
+    align_transpose: bool = True,
+    align_reshape: bool = True,
+    adjust_bias_scale: bool = True,
+) -&gt; Any:
+    &quot;&quot;&quot;Align the quantize info to meet the compiler constraints.
+       This function supports pof2 scale and float scale both
+    &quot;&quot;&quot;
+
+    manager = QuantInfoManager(model)
+
+    while manager.has_change and (manager.adjust_loop_count &lt; max_loop_num):
+        manager.adjust_loop_count += 1
+        if manager.adjust_loop_count == max_loop_num:
+            logger.warning(&#39;The number of adjustments has reached the limit. &#39;
+                           &#39;Please check the model&#39;)
+        manager.has_change = False
+        logger.info(&#39;Adjust the quantize info to meet the compiler constraints&#39;)
+
+        if align_concat:
+            manager.align_concat()
+
+        if align_pool:
+            manager.align_pool()
+
+        if align_pad:
+            manager.align_pad()
+
+        if align_slice:
+            manager.align_slice()
+
+        if align_transpose:
+            manager.align_transpose()
+
+        if align_reshape:
+            manager.align_reshape()
+
+        if adjust_bias_scale:
+            manager.adjust_bias_scale()
+
+    return manager.model</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

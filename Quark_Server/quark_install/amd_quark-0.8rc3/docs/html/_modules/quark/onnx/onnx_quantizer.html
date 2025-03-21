@@ -1,0 +1,1523 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.onnx.onnx_quantizer &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/onnx/onnx_quantizer';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.onnx.onnx_quantizer</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.onnx.onnx_quantizer</h1><div class="highlight"><pre>
+<span></span>#
+# Modifications copyright(c) 2023 Advanced Micro Devices,Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+# -------------------------------------------------------------------------
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License.txt in the project root for
+# license information.
+# --------------------------------------------------------------------------
+from quark.shares.utils.log import ScreenLogger
+import numpy as np
+import onnx
+import onnx.numpy_helper
+from onnx import ModelProto, NodeProto
+from onnx import onnx_pb as onnx_proto
+from typing import Any, List, Dict, Optional, Tuple
+
+try:
+    from onnx.reference.op_run import to_array_extended
+except ImportError:
+    # old version of onnx.
+    to_array_extended = None  # type: ignore
+
+from onnxruntime.quantization.onnx_quantizer import ONNXQuantizer as OrtONNXQuantizer
+from onnxruntime.quantization.onnx_model import ONNXModel
+from onnxruntime.quantization.quant_utils import (
+    TENSOR_NAME_QUANT_SUFFIX,
+    QuantizationMode,
+    QuantizedValue,
+    QuantizedValueType,
+    QuantType,
+    find_by_name,
+    model_has_infer_metadata,
+    tensor_proto_to_array,
+)
+from onnxruntime.quantization.registry import CreateOpQuantizer
+
+from .quant_utils import (__producer__, __version__, VitisQuantType, ONNX_WBIT_QTYPES_LIST, ONNX_FP_QTYPES_LIST,
+                          ONNX_BFP_QTYPES_LIST, get_tensor_type_from_qType, get_qmin_qmax_for_qType, compute_scale_zp,
+                          compute_scale_zp_fp, quantize_data_pof2s, ONNX_TYPE_TO_NP_TYPE, check_relu_like_node)
+
+logger = ScreenLogger(__name__)
+
+
+<div class="viewcode-block" id="ONNXQuantizer">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html#quark.onnx.onnx_quantizer.ONNXQuantizer">[docs]</a>
+class ONNXQuantizer(OrtONNXQuantizer):  # type: ignore
+    &quot;&quot;&quot;
+    A class to perform quantization on an ONNX model.
+
+    Args:
+        model (ModelProto): The ONNX model to be quantized.
+        per_channel (bool): Whether to perform per-channel quantization.
+        reduce_range (bool): Whether to reduce the quantization range.
+        mode (QuantizationMode.QLinearOps): The quantization mode to be used.
+        static (bool): Whether to use static quantization.
+        weight_qType (Any): The quantization type for weights.
+        activation_qType (Any): The quantization type for activations.
+        tensors_range (Any): The range of tensors for quantization.
+        nodes_to_quantize (List[str]): List of node names to be quantized.
+        nodes_to_exclude (List[str]): List of node names to be excluded from quantization.
+        op_types_to_quantize (List[str]): List of operation types to be quantized.
+        extra_options (Optional[Dict[str, Any]]): Additional options for quantization.
+
+    Inherits from:
+        OrtONNXQuantizer: Base class for ONNX quantization.
+    &quot;&quot;&quot;
+
+    def __init__(
+        self,
+        model: ModelProto,
+        per_channel: bool,
+        reduce_range: bool,
+        mode: QuantizationMode.QLinearOps,
+        static: bool,
+        weight_qType: Any,
+        activation_qType: Any,
+        tensors_range: Any,
+        nodes_to_quantize: List[str],
+        nodes_to_exclude: List[str],
+        op_types_to_quantize: List[str],
+        extra_options: Optional[Dict[str, Any]] = None,
+    ):
+        super().__init__(
+            model,
+            per_channel=per_channel,
+            reduce_range=reduce_range,
+            mode=mode,
+            static=static,
+            weight_qType=weight_qType,
+            activation_qType=activation_qType,
+            tensors_range=tensors_range,
+            nodes_to_quantize=nodes_to_quantize,
+            nodes_to_exclude=nodes_to_exclude,
+            op_types_to_quantize=op_types_to_quantize,
+            extra_options=extra_options,
+        )</div>
+
+
+
+<div class="viewcode-block" id="VitisONNXQuantizer">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html#quark.onnx.onnx_quantizer.VitisONNXQuantizer">[docs]</a>
+class VitisONNXQuantizer(OrtONNXQuantizer):  # type: ignore
+    &quot;&quot;&quot;
+    A class to perform quantization on an ONNX model specifically optimized for Vitis AI.
+
+    Args:
+        model (ModelProto): The ONNX model to be quantized.
+        per_channel (bool): Whether to perform per-channel quantization.
+        reduce_range (bool): Whether to reduce the quantization range.
+        mode (QuantizationMode.QLinearOps): The quantization mode to be used.
+        static (bool): Whether to use static quantization.
+        weight_qType (Any): The quantization type for weights.
+        activation_qType (Any): The quantization type for activations.
+        tensors_range (Any): Dictionary specifying the min and max values for tensors.
+        nodes_to_quantize (List[str]): List of node names to be quantized.
+        nodes_to_exclude (List[str]): List of node names to be excluded from quantization.
+        op_types_to_quantize (List[str]): List of operation types to be quantized.
+        calibrate_method (Any): The calibration method to be used.
+        quantized_tensor_type (Dict[Any, Any], optional): Dictionary specifying the types for quantized tensors.
+        extra_options (Optional[Dict[str, Any]], optional): Additional options for quantization.
+
+    Inherits from:
+        OrtONNXQuantizer: Base class for ONNX quantization.
+    &quot;&quot;&quot;
+
+    def __init__(
+        self,
+        model: ModelProto,
+        per_channel: bool,
+        reduce_range: bool,
+        mode: QuantizationMode.QLinearOps,
+        static: bool,
+        weight_qType: Any,
+        activation_qType: Any,
+        tensors_range: Any,
+        nodes_to_quantize: List[str],
+        nodes_to_exclude: List[str],
+        op_types_to_quantize: List[str],
+        calibrate_method: Any,
+        quantized_tensor_type: Dict[Any, Any] = {},
+        extra_options: Optional[Dict[str, Any]] = None,
+    ):
+        self.calibrate_method = calibrate_method
+        self.quantized_tensor_type = quantized_tensor_type
+        OrtONNXQuantizer.__init__(
+            self,
+            model,
+            per_channel,
+            reduce_range,
+            mode,
+            static,
+            weight_qType,
+            activation_qType,
+            None,  # base class no need to calculate quantization params
+            nodes_to_quantize,
+            nodes_to_exclude,
+            op_types_to_quantize,
+            extra_options=None,
+        )
+        if not model_has_infer_metadata(model):
+            from onnxruntime.quantization.quant_utils import save_and_reload_model_with_shape_infer
+            model = save_and_reload_model_with_shape_infer(model)
+        self.value_infos = {vi.name: vi for vi in model.graph.value_info}
+        self.value_infos.update({ot.name: ot for ot in model.graph.output})
+        self.value_infos.update({it.name: it for it in model.graph.input})
+
+        self.model = ONNXModel(model)
+        if not static:
+            self.model.replace_gemm_with_matmul()
+
+        self.per_channel = per_channel  # weight-pack per channel
+        self.reduce_range = reduce_range
+        self.mode = mode  # QuantizationMode.Value
+        self.static = static  # use static quantization for inputs.
+        self.fuse_dynamic_quant = False
+
+        self.extra_options = extra_options if extra_options else {}
+        self.enable_subgraph_quantization = (&quot;EnableSubgraph&quot; in self.extra_options
+                                             and self.extra_options[&quot;EnableSubgraph&quot;])
+        self.force_quantize_no_input_check = (&quot;ForceQuantizeNoInputCheck&quot; in self.extra_options
+                                              and self.extra_options[&quot;ForceQuantizeNoInputCheck&quot;])
+        self.q_matmul_const_b_only = &quot;MatMulConstBOnly&quot; in self.extra_options and self.extra_options[&quot;MatMulConstBOnly&quot;]
+
+        self.use_qdq_vitis_custom_ops = True
+        if &quot;UseQDQVitisCustomOps&quot; in self.extra_options:
+            self.use_qdq_vitis_custom_ops = self.extra_options[&quot;UseQDQVitisCustomOps&quot;]
+        self.use_power_of_2_scale = True
+        if &quot;UsePowerOf2Scale&quot; in self.extra_options:
+            self.use_power_of_2_scale = self.extra_options[&quot;UsePowerOf2Scale&quot;]
+
+        self.is_weight_symmetric = (weight_qType in (QuantType.QInt8, VitisQuantType.QInt16, VitisQuantType.QInt32,
+                                                     VitisQuantType.QFloat16, VitisQuantType.QBFloat16,
+                                                     VitisQuantType.QBFP, VitisQuantType.QMX) if &quot;WeightSymmetric&quot;
+                                    not in self.extra_options else self.extra_options[&quot;WeightSymmetric&quot;])
+        self.is_activation_symmetric = (activation_qType in (VitisQuantType.QFloat16, VitisQuantType.QBFloat16,
+                                                             VitisQuantType.QBFP,
+                                                             VitisQuantType.QMX) if &quot;ActivationSymmetric&quot;
+                                        not in self.extra_options else self.extra_options[&quot;ActivationSymmetric&quot;])
+
+        self.is_weight_scaled = True
+        if weight_qType in (VitisQuantType.QFloat16, VitisQuantType.QBFloat16, VitisQuantType.QBFP, VitisQuantType.QMX):
+            self.is_weight_scaled = False if &quot;WeightScaled&quot; not in self.extra_options else self.extra_options[
+                &quot;WeightScaled&quot;]
+        self.is_activation_scaled = True
+        if activation_qType in (VitisQuantType.QFloat16, VitisQuantType.QBFloat16, VitisQuantType.QBFP,
+                                VitisQuantType.QMX):
+            self.is_activation_scaled = False if &quot;ActivationScaled&quot; not in self.extra_options else self.extra_options[
+                &quot;ActivationScaled&quot;]
+
+        self.use_unsigned_relu = (False if &quot;UseUnsignedReLU&quot; not in self.extra_options else
+                                  self.extra_options[&quot;UseUnsignedReLU&quot;])
+        self.activation_qType = get_tensor_type_from_qType(activation_qType)
+        self.weight_qType = get_tensor_type_from_qType(weight_qType)
+        self.tensors_range = tensors_range
+
+        #    Dictionary specifying the min and max values for tensors. It has following format:
+        #        {
+        #            &quot;param_name&quot;: [min, max]
+        #        }
+        #    example:
+        #        {
+        #            &#39;Conv_3:0&#39;: [np.float32(0), np.float32(0.5)],
+        #            &#39;Conv_4:0&#39;: [np.float32(1), np.float32(3.5)]
+        #        }
+
+        self.nodes_to_quantize = nodes_to_quantize  # specific nodes to quantize
+        self.nodes_to_exclude = nodes_to_exclude  # specific nodes to exclude
+        self.op_types_to_quantize = op_types_to_quantize
+        self.new_nodes: List[NodeProto] = []
+        self.parent = None
+        self.graph_scope = &quot;/&quot;  # for human readable debug information
+        self.tensor_names = {}  # in case the shape inference not totally working
+        self.tensor_names.update({ot.name: 1 for ot in model.graph.output})
+        self.tensor_names.update({it.name: 1 for it in model.graph.input})
+        for node in self.model.model.graph.node:
+            self.tensor_names.update({output_name: 1 for output_name in node.output})
+
+        self.opset_version = self.check_opset_version()
+
+        if self.mode not in QuantizationMode:
+            raise ValueError(&quot;unsupported quantization mode {}&quot;.format(self.mode))
+
+        self.quantization_params = self.calculate_quantization_params()
+
+        # QuantizeRange tensor name and zero tensor name for scale and zero point calculation.
+        # Used when static is False
+        self.fixed_qrange_uint8_name = &quot;fixed_quantization_range_uint8&quot;
+        self.fixed_qrange_int8_name = &quot;fixed_quantization_range_int8&quot;
+        # For uint8 data-type, to compute zero point, we subtract rmin from 0 (represented by fixed_zero_name tensor)
+        self.fixed_zero_name = &quot;fixed_zero&quot;
+        # For int8 data-type, zero point is always zero (respresented by fixed_zero_point_name tensor)
+        self.fixed_zero_zp_name = &quot;fixed_zero_zp&quot;
+
+        # Map of all original value names to quantized value names
+        self.quantized_value_map: Dict[Any, Any] = {}
+        # some output from nodes will be quantized, yet itself should be treat as existing so
+        # no dequantized will be applied when needed later
+        self.generated_value_names = self.model.get_non_initializer_inputs()
+        # to store specified scale and zeropoint instead of calculated value, tensor_name-&gt;(scale, zeropoint)
+        self.used_scale_zp_map: Dict[Any, Any] = {}
+
+    def _get_quantization_params(self,
+                                 param_name: str,
+                                 use_scale: Any = None,
+                                 use_zeropoint: Any = None,
+                                 zero_point_type: Any = None) -&gt; Tuple[bool, str, str, Any, Any]:
+        &quot;&quot;&quot;
+        Create initializers and inputs in the graph for zero point and scale of output.
+        Zero point and scale values are obtained from self.quantization_params if specified.
+            parameter param_name: Name of the quantization parameter.
+            return: result, scale_name, zero_point_name, scale_shape, zero_point_shape.
+        &quot;&quot;&quot;
+        from onnxruntime.quantization.onnx_quantizer import QuantizationParams
+        if zero_point_type in [VitisQuantType.QFloat16, VitisQuantType.QBFloat16]:
+            zero_point_values = np.array([0], dtype=np.float32)
+            scale_values = np.array([1], dtype=np.float32)
+            zero_point_type = get_tensor_type_from_qType(zero_point_type)
+        elif use_scale is None or use_zeropoint is None:
+            if zero_point_type is None:
+                zero_point_type = self.activation_qType
+            else:
+                zero_point_type = get_tensor_type_from_qType(zero_point_type)
+            if self.quantization_params is None or param_name not in self.quantization_params:
+                logger.info(f&#39;Quantization parameters for tensor:&quot;{param_name}&quot; not specified&#39;)
+                return False, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;
+
+            params = self.quantization_params[param_name]
+            if not isinstance(params, QuantizationParams):
+                raise TypeError(f&quot;Unexpected type {type(params)} for {param_name!r}.&quot;)
+            if params is None or len(params) != 3:
+                raise ValueError(&quot;Quantization parameters should contain zero point, scale, quant type. &quot;
+                                 f&quot;Specified values for output {param_name}: {params}&quot;)
+
+            zero_point_values = np.array([params[&quot;zero_point&quot;]])
+            if not hasattr(params[&quot;scale&quot;], &quot;dtype&quot;) or params[&quot;scale&quot;].dtype not in (np.float32, np.float16):
+                raise ValueError(f&quot;Unexpected type {type(params[&#39;scale&#39;])} and param_name={param_name!r}&quot;)
+            scale_values = np.array([params[&quot;scale&quot;]])
+            assert scale_values.dtype != np.float64
+        else:
+            if zero_point_type is None:
+                zero_point_type = self.activation_qType
+            else:
+                zero_point_type = get_tensor_type_from_qType(zero_point_type)
+            zero_point_values = np.array([use_zeropoint])
+            scale_values = np.array([use_scale])
+            params = self.quantization_params[param_name]
+            if &quot;scale&quot; in params:
+                dtype = params[&quot;scale&quot;].dtype
+                scale_values = scale_values.astype(dtype)
+            assert scale_values.dtype != np.float64
+
+        zero_point_shape: List[Any] = []
+        zero_point_name = param_name + &quot;_zero_point&quot;
+        scale_shape: List[Any] = []
+        scale_name = param_name + &quot;_scale&quot;
+
+        # Add initializers
+        init_zp = onnx.helper.make_tensor(zero_point_name, zero_point_type, zero_point_shape,
+                                          zero_point_values.ravel().tolist())
+        self.model.add_initializer(init_zp)
+        if scale_values.dtype == np.float32:
+            scale_type = onnx_proto.TensorProto.FLOAT
+        elif scale_values.dtype == np.float16:
+            scale_type = onnx_proto.TensorProto.FLOAT16
+        else:
+            raise ValueError(f&quot;Unexpected dtype={scale_values.dtype} for param_name={param_name!r}&quot;)
+        init_scale = onnx.helper.make_tensor(scale_name, scale_type, scale_shape, scale_values.reshape((-1, )).tolist())
+        self.model.add_initializer(init_scale)
+
+        return True, scale_name, zero_point_name, scale_shape, zero_point_shape
+
+<div class="viewcode-block" id="VitisONNXQuantizer.find_quant_scale_zp">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html#quark.onnx.onnx_quantizer.VitisONNXQuantizer.find_quant_scale_zp">[docs]</a>
+    def find_quant_scale_zp(self, input_name: str) -&gt; Any:
+        &quot;&quot;&quot;
+        Finds the quantization scale and zero-point for a given input.
+
+        This method looks up the quantization scale and zero-point values for the specified input name.
+        It first checks the current instance&#39;s `used_scale_zp_map`. If not found, it recursively checks
+        the parent instance if one exists.
+
+        :param input_name: The name of the input for which to find the quantization scale and zero-point.
+        :type input_name: str
+        :return: A tuple containing the quantization scale and zero-point if found, otherwise (None, None).
+        :rtype: Any
+        &quot;&quot;&quot;
+        if input_name in self.used_scale_zp_map:
+            return self.used_scale_zp_map[input_name]
+        if self.parent is not None:
+            return self.parent.find_quantized_value(input_name)
+        return (None, None)</div>
+
+
+<div class="viewcode-block" id="VitisONNXQuantizer.find_quantized_value">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html#quark.onnx.onnx_quantizer.VitisONNXQuantizer.find_quantized_value">[docs]</a>
+    def find_quantized_value(self, input_name: str) -&gt; Any:
+        &quot;&quot;&quot;
+        Finds the quantized value for a given input.
+
+        This method looks up the quantized value for the specified input name.
+        It first checks the current instance&#39;s `quantized_value_map`. If not found, it recursively checks
+        the parent instance if one exists.
+
+        :param input_name: The name of the input for which to find the quantized value.
+        :type input_name: str
+        :return: The quantized value if found, otherwise None.
+        :rtype: Any
+        &quot;&quot;&quot;
+        if input_name in self.quantized_value_map:
+            return self.quantized_value_map[input_name]
+        if self.parent is not None:
+            return self.parent.find_quantized_value(input_name)
+        return None</div>
+
+
+    def quantize_model(self) -&gt; Any:
+        if self.has_QDQ_nodes():
+            logger.warning(
+                &quot;Please check if the model is already quantized.&quot;
+                &quot;Note you don&#39;t need to quantize a QAT model. OnnxRuntime support to run QAT model directly.&quot;)
+
+        for node in self.model.nodes():
+            # quantize subgraphes if have
+            if self.enable_subgraph_quantization:
+                node = self.quantize_node_with_sub_graph(node)
+
+            number_of_existing_new_nodes = len(self.new_nodes)
+            op_quantizer = CreateOpQuantizer(self, node)
+            op_quantizer.quantize()
+            for i in range(number_of_existing_new_nodes, len(self.new_nodes)):
+                for output_name in self.new_nodes[i].output:
+                    self.generated_value_names.add(output_name)
+
+        self._dequantize_outputs()
+
+        # extend is used to append to the list for a protobuf fields
+        # https://developers.google.com/protocol-buffers/docs/reference/python-generated?csw=1#fields
+        self.model.graph().ClearField(&quot;node&quot;)
+        self.model.graph().node.extend(self.new_nodes)
+
+        # Remove ununsed initializers from graph, starting from the top level graph.
+        if self.parent is None:
+            _, initializers_not_found = self.model.clean_initializers()
+            if len(initializers_not_found) &gt; 0:
+                raise RuntimeError(&quot;Invalid model with unknown initializers/tensors.&quot; + str(initializers_not_found))
+
+        self.model.model.producer_name = __producer__
+        self.model.model.producer_version = __version__
+
+        return self.model.model
+
+<div class="viewcode-block" id="VitisONNXQuantizer.quantize_bias_static">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html#quark.onnx.onnx_quantizer.VitisONNXQuantizer.quantize_bias_static">[docs]</a>
+    def quantize_bias_static(self, bias_name: str, input_name: str, weight_name: str, beta: float = 1.0) -&gt; Any:
+        &quot;&quot;&quot;
+        Quantizes the bias using static quantization. Zero Point == 0 and Scale == Input_Scale * Weight_Scale.
+
+        This method performs the following steps:
+        1. Validates the weight quantization type.
+        2. Retrieves the scale for the weight.
+        3. Retrieves the bias data and its scale.
+        4. Retrieves the scale for the input.
+        5. Calculates the scale for the bias.
+        6. Quantizes the bias data.
+        7. Updates the bias, scale, and zero-point initializers in the model.
+        8. Updates the quantized value map with the new quantized bias information.
+
+        :param bias_name: The name of the bias to be quantized.
+        :type bias_name: str
+        :param input_name: The name of the input associated with the bias.
+        :type input_name: str
+        :param weight_name: The name of the weight associated with the bias.
+        :type weight_name: str
+        :param beta: A scaling factor applied during quantization. Default is 1.0.
+        :type beta: float
+        :return: The name of the quantized bias.
+        :rtype: Any
+
+        :raises ValueError: If the weight quantization type is not supported or if the input name is not found in the quantized value map.
+        &quot;&quot;&quot;
+        # Handle case where bias already in quantization map
+        if bias_name in self.quantized_value_map:
+            return self.quantized_value_map[bias_name].q_name
+
+        # get scale for weight
+        weight_scale_name = self.quantized_value_map[weight_name].scale_name
+        weight_initializer = find_by_name(weight_scale_name, self.model.initializer())
+        weight_scale = tensor_proto_to_array(weight_initializer)
+
+        # get bias
+        bias_initializer = find_by_name(bias_name, self.model.initializer())
+        bias_data = tensor_proto_to_array(bias_initializer)
+        quantized_bias_name = bias_name + TENSOR_NAME_QUANT_SUFFIX
+
+        # get scale for input
+        if input_name in self.quantized_value_map:
+            input_scale_name = self.quantized_value_map[input_name].scale_name
+        elif input_name in self.quantization_params:
+            _, input_scale_name, _, _, _ = self._get_quantization_params(input_name)
+        else:
+            raise ValueError(&quot;Expected {} to be in quantized value map for static quantization&quot;.format(input_name))
+
+        inputscale_initializer = find_by_name(input_scale_name, self.model.initializer())
+        input_scale = tensor_proto_to_array(inputscale_initializer)
+
+        # calcuate scale for bias
+        bias_scale = input_scale * weight_scale * beta
+
+        # quantize bias
+        quantized_data = (np.asarray(bias_data) / bias_scale).round()
+        quantized_data = np.clip(quantized_data, -2**31, 2**31 - 1)  # Clip for Int32 datatype
+        quantized_data = quantized_data.astype(np.int32)
+
+        # update bias initializer
+        bias_np_data = np.asarray(quantized_data, dtype=np.int32).reshape(bias_initializer.dims)
+        packed_bias_initializer = onnx.numpy_helper.from_array(bias_np_data, quantized_bias_name)
+        self.model.initializer().extend([packed_bias_initializer])
+
+        # update scale initializer
+        quantized_bias_scale_name = quantized_bias_name + &quot;_scale&quot;
+        bias_scale_data = np.asarray(bias_scale, dtype=np.float32).reshape(-1)
+        if self.is_per_channel():
+            packed_bias_scale_initializer = onnx.numpy_helper.from_array(bias_scale_data, quantized_bias_scale_name)
+        else:
+            packed_bias_scale_initializer = onnx.helper.make_tensor(quantized_bias_scale_name,
+                                                                    onnx_proto.TensorProto.FLOAT, [], bias_scale_data)
+        self.model.initializer().extend([packed_bias_scale_initializer])
+
+        # update zero initializer
+        quantized_bias_zp_name = quantized_bias_name + &quot;_zero_point&quot;
+        bias_zp_data = np.zeros(bias_scale.shape, dtype=np.int32).reshape(-1)
+        if self.is_per_channel():
+            packed_bias_zp_initializer = onnx.numpy_helper.from_array(bias_zp_data, quantized_bias_zp_name)
+        else:
+            packed_bias_zp_initializer = onnx.helper.make_tensor(quantized_bias_zp_name, onnx_proto.TensorProto.INT32,
+                                                                 [], bias_zp_data)
+        self.model.initializer().extend([packed_bias_zp_initializer])
+
+        assert bias_name not in self.quantized_value_map
+        quantized_value = QuantizedValue(
+            bias_name,
+            quantized_bias_name,
+            quantized_bias_scale_name,
+            quantized_bias_zp_name,
+            QuantizedValueType.Initializer,
+            0 if bias_scale_data.size &gt; 1 else None,
+        )
+        self.quantized_value_map[bias_name] = quantized_value
+
+        return quantized_bias_name</div>
+
+
+    # In some circumstances a weight is not an initializer, for example of MatMul, if both A and B are not
+    # initializer, B can still be considered as Weight
+<div class="viewcode-block" id="VitisONNXQuantizer.quantize_weight">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html#quark.onnx.onnx_quantizer.VitisONNXQuantizer.quantize_weight">[docs]</a>
+    def quantize_weight(
+        self,
+        node: NodeProto,
+        indices: Any,
+        reduce_range: bool = False,
+        op_level_per_channel: bool = False,
+        axis: int = -1,
+        from_subgraph: bool = False,
+    ) -&gt; Any:
+        &quot;&quot;&quot;
+        Quantizes the weights of a given node.
+
+        In some circumstances, a weight is not an initializer. For example, in MatMul, if both A and B are not initializers,
+        B can still be considered as a weight.
+
+        This method calls `__quantize_inputs` to perform the weight quantization.
+
+        :param node: The node containing the weights to be quantized.
+        :type node: NodeProto
+        :param indices: The indices of the inputs to be quantized.
+        :type indices: Any
+        :param reduce_range: Flag to indicate whether to reduce the quantization range. Default is False.
+        :type reduce_range: bool, optional
+        :param op_level_per_channel: Flag to indicate whether to use per-channel quantization at the operator level. Default is False.
+        :type op_level_per_channel: bool, optional
+        :param axis: The axis for per-channel quantization. Default is -1.
+        :type axis: int, optional
+        :param from_subgraph: Flag to indicate whether the node is from a subgraph. Default is False.
+        :type from_subgraph: bool, optional
+        :return: The result of the weight quantization process.
+        :rtype: Any
+        &quot;&quot;&quot;
+        return self.__quantize_inputs(
+            node=node,
+            indices=indices,
+            initializer_use_weight_qType=True,
+            reduce_range=reduce_range,
+            op_level_per_channel=op_level_per_channel,
+            axis=axis,
+            from_subgraph=from_subgraph,
+        )</div>
+
+
+    def __quantize_inputs(
+        self,
+        node: NodeProto,
+        indices: Any,
+        initializer_use_weight_qType: bool = True,
+        reduce_range: bool = False,
+        op_level_per_channel: bool = False,
+        axis: int = -1,
+        from_subgraph: bool = False,
+    ) -&gt; Any:
+        &quot;&quot;&quot;
+        Given a node, this function quantizes the inputs as follows:
+            - If input is an initializer, quantize the initializer data, replace old initializer
+              with new initializer
+            - Else, add QuantizeLinear nodes to perform quantization
+            parameter node: node being quantized in NodeProto format.
+            parameter indices: input indices to quantize.
+            return: (List of quantized input names,
+                     List of zero point names used for input quantization,
+                     List of scale names used for input quantization,
+                     List of new QuantizeLinear nodes created)
+        &quot;&quot;&quot;
+
+        scale_names = []
+        zero_point_names = []
+        quantized_input_names = []
+        nodes = []
+
+        for input_index in indices:
+            node_input = node.input[input_index]
+
+            # Find if this input is already quantized
+            if node_input in self.quantized_value_map:
+                quantized_value = self.quantized_value_map[node_input]
+                scale_names.append(quantized_value.scale_name)
+                zero_point_names.append(quantized_value.zp_name)
+                quantized_input_names.append(quantized_value.q_name)
+                continue
+
+            # Quantize the input
+            initializer = find_by_name(node_input, self.model.initializer())
+            if initializer is not None:
+                if self.per_channel and op_level_per_channel:
+                    (
+                        q_weight_name,
+                        zp_name,
+                        scale_name,
+                    ) = self.quantize_weight_per_channel(
+                        initializer.name,
+                        self.weight_qType if initializer_use_weight_qType else self.activation_qType,
+                        axis,
+                        self.calibrate_method,
+                        reduce_range,
+                    )
+                else:
+                    q_weight_name, zp_name, scale_name = self.quantize_initializer(
+                        initializer,
+                        self.weight_qType if initializer_use_weight_qType else self.activation_qType,
+                        self.calibrate_method,
+                        reduce_range,
+                    )
+
+                quantized_input_names.append(q_weight_name)
+                zero_point_names.append(zp_name)
+                scale_names.append(scale_name)
+            elif self.contains_tensor(node_input):
+                # Add QuantizeLinear node.
+                qlinear_node = self.model.find_node_by_name(node_input + &quot;_QuantizeLinear&quot;, self.new_nodes,
+                                                            self.model.graph())
+                if qlinear_node is None:
+                    quantize_input_nodes = self._get_quantize_input_nodes(node, input_index, self.activation_qType)
+                    if quantize_input_nodes is None:
+                        return (None, None, None, None)
+                    if from_subgraph:
+                        self.add_new_nodes(quantize_input_nodes)
+                    else:
+                        nodes.extend(quantize_input_nodes)
+                    qlinear_node = quantize_input_nodes[-1]
+
+                if qlinear_node.op_type == &quot;QuantizeLinear&quot;:
+                    quantized_input_names.extend(qlinear_node.output)
+                    scale_names.append(qlinear_node.input[1])
+                    zero_point_names.append(qlinear_node.input[2])
+                else:
+                    quantized_input_names.append(qlinear_node.output[0])
+                    scale_names.append(qlinear_node.output[1])
+                    zero_point_names.append(qlinear_node.output[2])
+            elif self.parent is not None:
+                (
+                    parent_quantized_input_names,
+                    parent_zero_point_names,
+                    parent_scale_names,
+                    _,
+                ) = self.parent.__quantize_inputs(
+                    node,
+                    [input_index],
+                    initializer_use_weight_qType=initializer_use_weight_qType,
+                    reduce_range=reduce_range,
+                    op_level_per_channel=op_level_per_channel,
+                    axis=axis,
+                    from_subgraph=True,
+                )
+                quantized_input_names.append(parent_quantized_input_names[0])
+                scale_names.append(parent_scale_names[0])
+                zero_point_names.append(parent_zero_point_names[0])
+                # node should not be add this child level here
+            else:
+                raise ValueError(&quot;Invalid tensor name to quantize: {} @graph scope{}&quot;.format(
+                    node_input, self.graph_scope))
+
+        return quantized_input_names, zero_point_names, scale_names, nodes
+
+<div class="viewcode-block" id="VitisONNXQuantizer.quantize_initializer">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html#quark.onnx.onnx_quantizer.VitisONNXQuantizer.quantize_initializer">[docs]</a>
+    def quantize_initializer(self,
+                             weight: Any,
+                             qType: Any,
+                             method: Any,
+                             reduce_range: bool = False,
+                             keep_float_weight: bool = False) -&gt; Tuple[str, str, str]:
+        &quot;&quot;&quot;
+        :param weight: TensorProto initializer
+        :param qType: type to quantize to. Note that it may be different with weight_qType because of mixed precision
+        :param keep_float_weight: Whether to quantize the weight. In some cases, we only want to qunatize scale and zero point.
+                                  If keep_float_weight is False, quantize the weight, or don&#39;t quantize the weight.
+        :return: quantized weight name, zero point name, scale name
+        &quot;&quot;&quot;
+        # Find if this input is already quantized
+        if weight.name in self.quantized_value_map:
+            quantized_value = self.quantized_value_map[weight.name]
+            return (
+                quantized_value.q_name,
+                quantized_value.zp_name,
+                quantized_value.scale_name,
+            )
+
+        q_weight_name = weight.name + TENSOR_NAME_QUANT_SUFFIX
+        zp_name = weight.name + &quot;_zero_point&quot;
+        scale_name = weight.name + &quot;_scale&quot;
+
+        # Update packed weight, zero point, and scale initializers
+        weight_data = tensor_proto_to_array(weight)
+
+        _, _, zero_point, scale, q_weight_data = quantize_data_pof2s(
+            weight_data.flatten(),
+            qType,
+            self.is_weight_symmetric,
+            self.reduce_range and reduce_range,
+            method=method,
+            use_pof2s=self.use_power_of_2_scale,
+            use_scaling=self.is_weight_scaled,
+        )
+        scale_dtype = weight.data_type
+        scale_initializer = onnx.helper.make_tensor(scale_name, scale_dtype, [], scale.reshape((-1, )).tolist())
+        if qType in ONNX_BFP_QTYPES_LIST:
+            # BFP data types do not need zero point, but we need to consider the case of reusing zero point of
+            # weight for activation, such as Gather aligns its output with input.
+            if self.activation_qType in ONNX_BFP_QTYPES_LIST:
+                zero_initializer = onnx.helper.make_tensor(zp_name, onnx_proto.TensorProto.FLOAT, [],
+                                                           zero_point.reshape((-1, )).tolist())
+            else:
+                if self.activation_qType not in ONNX_FP_QTYPES_LIST:
+                    zero_point = zero_point.astype(ONNX_TYPE_TO_NP_TYPE[self.activation_qType])
+                zero_initializer = onnx.helper.make_tensor(zp_name, self.activation_qType, [],
+                                                           zero_point.reshape((-1, )).tolist())
+        else:
+            zero_initializer = onnx.helper.make_tensor(zp_name, qType, [], zero_point.reshape((-1, )).tolist())
+        self.model.initializer().extend([scale_initializer, zero_initializer])
+
+        if not keep_float_weight:
+            if qType in ONNX_FP_QTYPES_LIST:
+                q_weight_initializer = onnx.TensorProto()
+                q_weight_initializer.data_type = qType
+                q_weight_initializer.dims.extend(weight.dims)
+                q_weight_initializer.name = q_weight_name
+                # Do not remove .flatten().copy() numpy is not clear about data persistence.
+                q_weight_initializer.raw_data = q_weight_data.flatten().copy().tobytes()
+                # Commented out this check since this QType is just for experimental usage.
+                &#39;&#39;&#39;
+                if to_array_extended is not None:
+                    # This test should not be needed but it helped catch some issues
+                    # with data persistence and tobytes.
+                    check = to_array_extended(q_weight_initializer)
+                    if check.shape != weight_data.shape or check.tobytes(
+                    ) != q_weight_data.tobytes():
+                        raise RuntimeError(
+                            f&quot;The initializer of shape {weight_data.shape} could not be created, expecting &quot;
+                            f&quot;{q_weight_data.tobytes()[:10]}, got {check.tobytes()[:10]} and shape={weight.shape}&quot;
+                            f&quot;\nraw={str(q_weight_initializer)[:200]}.&quot;)
+                &#39;&#39;&#39;
+            elif qType in ONNX_BFP_QTYPES_LIST:
+                # We just use original values for BFP data types, because the quantized weight is not actually used
+                q_weight_initializer = onnx.TensorProto()
+                q_weight_initializer.CopyFrom(weight)
+                q_weight_initializer.name = q_weight_name
+            else:
+                q_weight_data = np.asarray(q_weight_data,
+                                           dtype=onnx.helper.tensor_dtype_to_np_dtype(qType)).reshape(weight.dims)
+                q_weight_initializer = onnx.numpy_helper.from_array(q_weight_data, q_weight_name)
+
+            self.model.initializer().extend([q_weight_initializer])
+
+        # Log entry for this quantized weight
+        quantized_value = QuantizedValue(
+            weight.name,
+            q_weight_name,
+            scale_name,
+            zp_name,
+            QuantizedValueType.Initializer,
+            None,
+        )
+        self.quantized_value_map[weight.name] = quantized_value
+
+        return q_weight_name, zp_name, scale_name</div>
+
+
+<div class="viewcode-block" id="VitisONNXQuantizer.quantize_weight_per_channel">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html#quark.onnx.onnx_quantizer.VitisONNXQuantizer.quantize_weight_per_channel">[docs]</a>
+    def quantize_weight_per_channel(
+        self,
+        weight_name: str,
+        weight_qType: Any,
+        channel_axis: Any,
+        method: Any,
+        reduce_range: bool = True,
+        keep_float_weight: bool = False,
+    ) -&gt; Tuple[str, str, str]:
+        &quot;&quot;&quot;
+        Quantizes the given weight tensor per channel.
+
+        This method quantizes the weights per channel, creating separate quantization parameters (scale and zero-point) for each channel.
+
+        :param weight_name: The name of the weight tensor to be quantized.
+        :type weight_name: str
+        :param weight_qType: The data type to use for quantization.
+        :type weight_qType: Any
+        :param channel_axis: The axis representing the channel dimension in the weight tensor.
+        :type channel_axis: Any
+        :param method: The quantization method to use.
+        :type method: Any
+        :param reduce_range: Whether to reduce the quantization range. Default is True.
+        :type reduce_range: bool, optional
+        :param keep_float_weight: Whether to keep the original floating-point weights. Default is False.
+        :type keep_float_weight: bool, optional
+        :return: A tuple containing the names of the quantized weight tensor, zero-point tensor, and scale tensor.
+        :rtype: Tuple[str, str, str]
+
+        :raises ValueError: If the specified weight is not an initializer.
+        &quot;&quot;&quot;
+        if weight_name in self.quantized_value_map:
+            quantized_value = self.quantized_value_map[weight_name]
+            return (
+                quantized_value.q_name,
+                quantized_value.zp_name,
+                quantized_value.scale_name,
+            )
+
+        initializer = find_by_name(weight_name, self.model.initializer())
+        if initializer is None:
+            raise ValueError(&quot;{} is not an initializer&quot;, weight_name)
+
+        weights = tensor_proto_to_array(initializer)
+        channel_count = weights.shape[channel_axis]
+        rmin_list = []
+        rmax_list = []
+        zero_point_list = []
+        scale_list = []
+        quantized_per_channel_data_list = []
+        for i in range(channel_count):
+            per_channel_data = weights.take(i, channel_axis)
+            rmin, rmax, zero_point, scale, quantized_per_channel_data = quantize_data_pof2s(
+                np.array(per_channel_data.flatten().tolist()),
+                weight_qType,
+                self.is_weight_symmetric or weight_qType
+                in (onnx_proto.TensorProto.INT8, onnx_proto.TensorProto.INT16, onnx_proto.TensorProto.INT32,
+                    onnx_proto.TensorProto.FLOAT16, onnx_proto.TensorProto.BFLOAT16),
+                self.reduce_range and reduce_range,
+                method=method,
+                use_pof2s=self.use_power_of_2_scale,
+            )
+            rmin_list.append(rmin)
+            rmax_list.append(rmax)
+            zero_point_list.append(zero_point.item())
+            scale_list.append(scale.item())
+            quantized_per_channel_data_list.append(quantized_per_channel_data)
+
+        # combine per_channel_data into one
+        reshape_dims = list(weights.shape)  # deep copy
+        reshape_dims[channel_axis] = 1  # only one per channel for reshape
+        quantized_weights = np.asarray(quantized_per_channel_data_list[0]).reshape(reshape_dims)
+        for i in range(1, len(quantized_per_channel_data_list)):
+            channel_weights = np.asarray(quantized_per_channel_data_list[i]).reshape(reshape_dims)
+            quantized_weights = np.concatenate((quantized_weights, channel_weights), channel_axis)
+
+        q_weight_name = weight_name + TENSOR_NAME_QUANT_SUFFIX
+        zp_name = weight_name + &quot;_zero_point&quot;
+        scale_name = weight_name + &quot;_scale&quot;
+
+        quantized_value = QuantizedValue(
+            weight_name,
+            q_weight_name,
+            scale_name,
+            zp_name,
+            QuantizedValueType.Initializer,
+            None,
+        )
+        self.quantized_value_map[weight_name] = quantized_value
+
+        # Update packed weight, zero point, and scale initializers
+        zero_scale_shape = [initializer.dims[channel_axis]]
+        scale_initializer = onnx.helper.make_tensor(scale_name, onnx_proto.TensorProto.FLOAT, zero_scale_shape,
+                                                    scale_list)
+        zero_initializer = onnx.helper.make_tensor(zp_name, weight_qType, zero_scale_shape, zero_point_list)
+
+        self.model.initializer().extend([scale_initializer, zero_initializer])
+
+        if not keep_float_weight:
+            quantized_weights = np.asarray(
+                quantized_weights,
+                dtype=onnx.helper.tensor_dtype_to_np_dtype(weight_qType),
+            ).reshape(initializer.dims)
+            q_weight_initializer = onnx.numpy_helper.from_array(quantized_weights, q_weight_name)
+            self.model.initializer().extend([q_weight_initializer])
+
+        return q_weight_name, zp_name, scale_name</div>
+
+
+<div class="viewcode-block" id="VitisONNXQuantizer.calculate_quantization_params">
+<a class="viewcode-back" href="../../../autoapi/quark/onnx/onnx_quantizer/index.html#quark.onnx.onnx_quantizer.VitisONNXQuantizer.calculate_quantization_params">[docs]</a>
+    def calculate_quantization_params(self) -&gt; Any:
+        &quot;&quot;&quot;
+        Calculates the quantization parameters for each tensor in the model.
+
+        This method computes the quantization parameters (scale and zero-point) for each tensor in the model
+        based on its range (rmin and rmax). It adjusts the tensor ranges for the inputs of Clip and Relu nodes
+        and ensures the correct quantization parameters are used for each tensor type.
+
+        :return: A dictionary containing the quantization parameters for each tensor.
+        :rtype: Any
+
+        :raises ValueError: If a weight is not an initializer.
+
+        Notes:
+            - If `self.tensors_range` is None, the method returns immediately.
+            - Adjusts tensor ranges for Clip and Relu nodes.
+            - For versions of ONNX Runtime below 1.16.0, specific quantization parameters are computed.
+            - For versions of ONNX Runtime 1.16.0 and above, the `QuantizationParams` class is used.
+            - Forces asymmetric quantization for ReLU-like output tensors if `self.use_unsigned_relu` is True.
+        &quot;&quot;&quot;
+        if self.tensors_range is None:
+            return
+
+        # adjust tensor_ranges for input of Clip and Relu node
+        relu_like_output_tensors: Any = []
+        for node in self.model.nodes():
+            if node.op_type not in [&quot;Clip&quot;, &quot;Relu&quot;]:
+                continue
+            elif self.should_quantize_node(node) and check_relu_like_node(self.model.model, node):
+                relu_like_output_tensors.append(node.output[0])
+
+            if self.is_activation_symmetric:
+                continue
+            if self.activation_qType in ONNX_WBIT_QTYPES_LIST or self.use_qdq_vitis_custom_ops:
+                continue  # TODO : check what&#39;s the differences
+            if not self.should_quantize_node(node):
+                continue
+            if len(self.model.input_name_to_nodes()[node.input[0]]) != 1:
+                continue
+            if node.input[0] not in self.tensors_range or node.output[0] not in self.tensors_range:
+                continue
+            self.tensors_range[node.input[0]] = self.tensors_range[node.output[0]]
+
+        quantization_params = {}
+
+        from onnxruntime.quantization.onnx_quantizer import QuantizationParams
+
+        for tensor_name in self.tensors_range:
+            td = self.tensors_range[tensor_name]
+            rmin, rmax = td.range_value
+            zp_type = self.activation_qType
+            if tensor_name in self.quantized_tensor_type:
+                zp_type = get_tensor_type_from_qType(self.quantized_tensor_type[tensor_name])
+                logger.info(
+                    f&quot;The type of tensor {tensor_name} is {self.quantized_tensor_type[tensor_name]}: using specific tensor precision&quot;
+                )
+
+            if zp_type in ONNX_FP_QTYPES_LIST:
+                reduce_range = self.is_activation_scaled  # If scale the activation, it will use a reduced range
+                qmin, qmax = get_qmin_qmax_for_qType(zp_type, reduce_range=reduce_range)
+                zero, scale = compute_scale_zp_fp(rmin, rmax, qmin, qmax, zp_type, self.calibrate_method,
+                                                  self.is_activation_symmetric, self.is_activation_scaled)
+                quantization_params[tensor_name] = QuantizationParams(zero_point=zero, scale=scale, quant_type=zp_type)
+            else:
+                symmetric = self.is_activation_symmetric
+
+                if tensor_name in relu_like_output_tensors and (self.is_activation_symmetric
+                                                                and self.use_unsigned_relu):
+                    symmetric = False  # Force it to be asymmetric to utilize representation range fully
+                    rmin = 0  # Reduce the tensor range to the positive half axis
+
+                    node = self.model.output_name_to_node()[tensor_name]
+                    logger.info(&quot;Node {} output tensor {} is forced to be asymmetric.&quot;.format(node.name, tensor_name))
+
+                qmin, qmax = get_qmin_qmax_for_qType(zp_type, symmetric=symmetric)
+
+                zero, scale = compute_scale_zp(rmin, rmax, qmin, qmax, zp_type, self.calibrate_method, symmetric,
+                                               self.use_power_of_2_scale)
+
+                quantization_params[tensor_name] = QuantizationParams(zero_point=zero, scale=scale, quant_type=zp_type)
+
+        return quantization_params</div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

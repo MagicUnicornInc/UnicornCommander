@@ -1,0 +1,921 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.onnx.utils.model_utils &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/onnx/utils/model_utils';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.onnx.utils.model_utils</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.onnx.utils.model_utils</h1><div class="highlight"><pre>
+<span></span>#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+# pylint: disable=g-explicit-length-test
+&quot;&quot;&quot;Utility functions.&quot;&quot;&quot;
+
+import onnx
+import enum
+import copy
+from quark.shares.utils.log import ScreenLogger
+import numpy as np
+from typing import Any, Union, Dict, List
+from onnx import (TensorProto, ModelProto, NodeProto, ValueInfoProto, TensorShapeProto)
+from google.protobuf import text_format
+from onnxruntime.quantization.onnx_model import ONNXModel
+
+logger = ScreenLogger(__name__)
+
+
+<div class="viewcode-block" id="get_tensor_value">
+<a class="viewcode-back" href="../../../../autoapi/quark/onnx/utils/model_utils/index.html#quark.onnx.utils.model_utils.get_tensor_value">[docs]</a>
+def get_tensor_value(initializer: TensorProto) -&gt; np.ndarray[Any, np.dtype[np.float32]]:
+    &quot;&quot;&quot;Convert TensorProto to numpy array.&quot;&quot;&quot;
+    return onnx.numpy_helper.to_array(initializer)</div>
+
+
+
+<div class="viewcode-block" id="generate_initializer">
+<a class="viewcode-back" href="../../../../autoapi/quark/onnx/utils/model_utils/index.html#quark.onnx.utils.model_utils.generate_initializer">[docs]</a>
+def generate_initializer(tensor_array: np.ndarray[Any, np.dtype[np.float32]], dtype: Any, name: str) -&gt; TensorProto:
+    &quot;&quot;&quot;Generate initializers from numpy array.&quot;&quot;&quot;
+    tensor = tensor_array.astype(dtype)
+    init = onnx.numpy_helper.from_array(tensor, name)
+    return init</div>
+
+
+
+<div class="viewcode-block" id="save_model">
+<a class="viewcode-back" href="../../../../autoapi/quark/onnx/utils/model_utils/index.html#quark.onnx.utils.model_utils.save_model">[docs]</a>
+def save_model(model: ModelProto, path: str, as_text: bool = False) -&gt; None:
+    &quot;&quot;&quot;Save onnx model to disk.&quot;&quot;&quot;
+    if as_text:
+        with open(path, &#39;w&#39;) as f:
+            f.write(text_format.MessageToString(model))
+    else:
+        onnx.save(model, path)</div>
+
+
+
+class SharedNodesHelper(object):
+
+    class NodeType(enum.Enum):
+        NODE = 1
+        INITIALIZER = 2
+        INPUT = 3
+
+    @staticmethod
+    def _node_type(node: Union[NodeProto, TensorProto, ValueInfoProto]) -&gt; NodeType:
+        &quot;&quot;&quot;Returns whether the node is a node or initializer.&quot;&quot;&quot;
+        if isinstance(node, onnx.NodeProto):
+            return SharedNodesHelper.NodeType.NODE
+        elif isinstance(node, onnx.TensorProto):
+            return SharedNodesHelper.NodeType.INITIALIZER
+        elif isinstance(node, onnx.ValueInfoProto):
+            return SharedNodesHelper.NodeType.INPUT
+        else:
+            raise ValueError(&#39;Unknown node type for node: {}&#39;.format(node))
+
+    @staticmethod
+    def _add_node_init(model: ModelProto, node_init_to_add: Union[NodeProto, TensorProto, ValueInfoProto]) -&gt; None:
+        &quot;&quot;&quot;Add the node or initializer/input to the model.&quot;&quot;&quot;
+        if SharedNodesHelper._node_type(node_init_to_add) == SharedNodesHelper.NodeType.NODE:
+            for node in model.graph.node:
+                if node.name == node_init_to_add.name:
+                    logger.info(&#39;Node `{}` is already in model, skip adding it.&#39;.format(node.name))
+                    return
+            new_node = model.graph.node.add()
+            new_node.CopyFrom(node_init_to_add)
+        elif SharedNodesHelper._node_type(node_init_to_add) == SharedNodesHelper.NodeType.INITIALIZER:
+            for init in model.graph.initializer:
+                if init.name == node_init_to_add.name:
+                    logger.info(&#39;Initializer `{}` is already in model, skip adding it.&#39;.format(init.name))
+                    return
+            new_init = model.graph.initializer.add()
+            new_init.CopyFrom(node_init_to_add)
+        elif SharedNodesHelper._node_type(node_init_to_add) == SharedNodesHelper.NodeType.INPUT:
+            for inp in model.graph.input:
+                if inp.name == node_init_to_add.name:
+                    logger.info(&#39;Input `{}` is already in model, skip adding it.&#39;.format(inp.name))
+                    return
+            new_input = model.graph.input.add()
+            new_input.CopyFrom(node_init_to_add)
+
+    @staticmethod
+    def _map_name_to_node(model: ModelProto) -&gt; dict[str, NodeProto]:
+        &quot;&quot;&quot;Returns a dict of name to node.
+
+        Returns:
+            {node.name: node}
+        &quot;&quot;&quot;
+        name_to_node_map = {}
+        for node in model.graph.node:
+            name_to_node_map[SharedNodesHelper._get_node_name(node)] = node
+        return name_to_node_map
+
+    @staticmethod
+    def _map_name_to_init(model: ModelProto) -&gt; dict[str, TensorProto]:
+        &quot;&quot;&quot;Returns a dict of name to initializer.
+
+        Returns:
+            {initializer.name: initializer}
+        &quot;&quot;&quot;
+        name_to_init_map = {}
+        for init in model.graph.initializer:
+            name_to_init_map[init.name] = init
+        return name_to_init_map
+
+    @staticmethod
+    def _map_name_to_input(model: ModelProto) -&gt; dict[str, ValueInfoProto]:
+        &quot;&quot;&quot;Returns a dict of name to input.
+
+        Returns:
+            {initializer.name: initializer}
+        &quot;&quot;&quot;
+        name_to_input_map = {}
+        for inp in model.graph.input:
+            name_to_input_map[inp.name] = inp
+        return name_to_input_map
+
+    @staticmethod
+    def _map_tensor_to_producer(model: ModelProto) -&gt; dict[str, NodeProto]:
+        &quot;&quot;&quot;Returns a dict of tensor to its producer node.
+
+        Returns:
+            {tensor.name: producer_node}
+        &quot;&quot;&quot;
+        tensor_to_producer_map = {}
+        for node in model.graph.node:
+            for output_tensor in node.output:
+                tensor_to_producer_map[output_tensor] = node
+
+        for init in model.graph.initializer:
+            tensor_to_producer_map[init.name] = init
+
+        for inp in model.graph.input:
+            tensor_to_producer_map[inp.name] = inp
+        return tensor_to_producer_map
+
+    @staticmethod
+    def _map_tensor_to_consumer(model: ModelProto) -&gt; Dict[str, List[NodeProto]]:
+        &quot;&quot;&quot;Returns a dict of tensor to its consumer nodes.
+
+        Returns:
+            {tensor.name: [consumer_nodes]}
+        &quot;&quot;&quot;
+        tensor_to_consumer_map = {}
+        for node in model.graph.node:
+            for input_tensor in node.input:
+                if input_tensor not in tensor_to_consumer_map:
+                    tensor_to_consumer_map[input_tensor] = [node]
+                else:
+                    tensor_to_consumer_map[input_tensor].append(node)
+        return tensor_to_consumer_map
+
+    @staticmethod
+    def _get_node_name(node: NodeProto) -&gt; str:
+        return node.name
+
+
+def copy_shared_nodes(model: ModelProto) -&gt; ModelProto:
+    helper = SharedNodesHelper()
+
+    # Rename all nodes
+    type_idx = {}
+    for node in model.graph.node:
+        if node.op_type not in type_idx:
+            type_idx[node.op_type] = 1
+        node.name = node.op_type + &#39;_&#39; + str(type_idx[node.op_type])
+        logger.info(&#39;Add node name: &#39;, node.name)
+        type_idx[node.op_type] += 1
+
+    onnx.save(model, &#39;node_name_added.onnx&#39;)
+
+    modified_flag = True
+    while modified_flag:
+        modified_flag = False
+        name_to_node_map: Dict[str, onnx.NodeProto] = helper._map_name_to_node(model)
+        name_to_init_map: Dict[str, onnx.TensorProto] = helper._map_name_to_init(model)
+        name_to_input_map: Dict[str, onnx.ValueInfoProto] = helper._map_name_to_input(model)
+        tensor_to_producer_map: Dict[str, NodeProto] = helper._map_tensor_to_producer(model)
+
+        tensor_to_consumer_map = {}
+        new_nodes = {}
+        node_inputs_to_rename = []
+        for node in model.graph.node:
+            for inp_id, input_tensor in enumerate(node.input):
+                if input_tensor not in tensor_to_consumer_map:
+                    tensor_to_consumer_map[input_tensor] = [node]
+                else:
+                    producer = tensor_to_producer_map[input_tensor]
+                    new_node = copy.deepcopy(producer)
+                    idx = len(tensor_to_consumer_map[input_tensor])
+                    new_node.name = new_node.name + &#39;_&#39; + str(idx)
+
+                    if isinstance(producer, onnx.TensorProto):
+                        new_nodes[new_node.name] = new_node
+                        logger.info(&#39;Need to update init: &#39;, node.name, inp_id, new_node.name)
+                        node_inputs_to_rename.append((node.name, inp_id, new_node.name))
+                        tensor_to_consumer_map[input_tensor].append(node)
+                    elif isinstance(producer, onnx.NodeProto):
+                        if producer.op_type in [&quot;DequantizeLinear&quot;]:
+                            new_node.output[0] = new_node.name + &#39;_out&#39;
+                            new_nodes[new_node.name] = new_node
+                            logger.info(&#39;Need to update: &#39;, node.name, inp_id, new_node.output[0])
+                            node_inputs_to_rename.append((node.name, inp_id, new_node.output[0]))
+                            tensor_to_consumer_map[input_tensor].append(node)
+                    else:
+                        pass
+
+        for name, new_node in new_nodes.items():
+            helper._add_node_init(model, new_node)
+
+        name_to_node_map = helper._map_name_to_node(model)
+
+        for (node_name, inp_id, new_node_name) in node_inputs_to_rename:
+            modified_flag = True
+            node = name_to_node_map[node_name]
+            logger.info(&#39;Update node input&#39;, node_name, inp_id, new_node_name)
+            node.input[inp_id] = new_node_name
+
+    return model
+
+
+def clean_initializer_in_input(model: ModelProto) -&gt; ModelProto:
+
+    if model.ir_version &lt; 4:
+        logger.warning(&quot;Initilizer should be included in input domain if the model ir_version is below 4.&quot;)
+        logger.warning(&quot;The mode ir_version will be set as 4&quot;)
+        model.ir_version = 4
+
+    inputs = model.graph.input
+    input_name_dict = {}
+    for inp in inputs:
+        input_name_dict[inp.name] = inp
+
+    for init in model.graph.initializer:
+        if init.name in input_name_dict:
+            model.graph.input.remove(input_name_dict[init.name])
+
+    return model
+
+
+def get_shape_list(shape: TensorShapeProto) -&gt; List[Union[int, str]]:
+    shape_list = []
+    for d in shape.dim:
+        if d.HasField(&quot;dim_value&quot;):
+            shape_list.append(d.dim_value)
+        elif d.HasField(&quot;dim_param&quot;):
+            shape_list.append(d.dim_param)
+        else:
+            shape_list.append(&quot;?&quot;)
+    return shape_list
+
+
+def convert_nchw_to_nhwc(model: ModelProto) -&gt; Any:
+    temp_model = clean_initializer_in_input(model)
+    onnx_model = ONNXModel(temp_model)
+
+    node_name_list = []
+    for node in onnx_model.graph().node:
+        node_name_list.append(node.name)
+
+    for inp in onnx_model.graph().input:
+        shape_list = get_shape_list(inp.type.tensor_type.shape)
+
+        if len(shape_list) != 4:
+            logger.warning(f&quot;Expected 4-dimension input shape but got {shape_list}, skip the nchw to nhwc conversion.&quot;)
+            continue
+
+        C, H, W = shape_list[1:]
+        if not all(isinstance(_, int) for _ in [C, H, W]):
+            logger.warning(f&quot;Expected integer input shape but got [{C}, {H}, {W}], skip the nchw to nhwc conversion.&quot;)
+            continue
+
+        if not (int(H) &gt; int(C) and int(W) &gt; int(C)):
+            logger.warning(
+                f&quot;Expected H,W &gt; C but got [{C}, {H}, {W}]. Please confirm whether the input model is in NCHW format&quot;)
+
+        inp.type.tensor_type.shape.dim[1].dim_value = H
+        inp.type.tensor_type.shape.dim[2].dim_value = W
+        inp.type.tensor_type.shape.dim[3].dim_value = C
+
+        transpose_name = inp.name + &quot;_transpose&quot;
+        count = 1
+        while transpose_name in node_name_list:
+            transpose_name += &quot;_&quot; + str(count)
+            count += 1
+        inp_transpose_node = onnx.helper.make_node(&quot;Transpose&quot;, [inp.name], [transpose_name],
+                                                   name=transpose_name,
+                                                   perm=[0, 3, 1, 2])
+        onnx_model.replace_input_of_all_nodes(inp.name, transpose_name)
+        onnx_model.add_node(inp_transpose_node)
+
+    for out in onnx_model.graph().output:
+        shape_list = get_shape_list(out.type.tensor_type.shape)
+
+        if len(shape_list) != 4:
+            logger.info(
+                f&quot;Expected 4-dimension output shape but got {shape_list}, skip the nchw to nhwc conversion for output {out}.&quot;
+            )
+            continue
+
+        C, H, W = shape_list[1:]
+        if not all(isinstance(_, int) for _ in [C, H, W]):
+            logger.warning(
+                f&quot;Expected integer output shape but got [{C}, {H}, {W}], skip the nchw to nhwc conversion for output {out}.&quot;
+            )
+            continue
+
+        if not (int(H) &gt; int(C) and int(W) &gt; int(C)):
+            logger.warning(
+                f&quot;Expected H,W &gt; C but got [{C}, {H}, {W}], Please confirm whether the output {out} is in NCHW format&quot;)
+
+        out.type.tensor_type.shape.dim[1].dim_value = H
+        out.type.tensor_type.shape.dim[2].dim_value = W
+        out.type.tensor_type.shape.dim[3].dim_value = C
+
+        transpose_name = out.name + &quot;_transpose&quot;
+        count = 1
+        while transpose_name in node_name_list:
+            transpose_name += &quot;_&quot; + str(count)
+            count += 1
+        out_transpose_node = onnx.helper.make_node(&quot;Transpose&quot;, [out.name], [transpose_name],
+                                                   name=transpose_name,
+                                                   perm=[0, 2, 3, 1])
+        onnx_model.add_node(out_transpose_node)
+        last_node: Union[NodeProto, Any] = None
+        penultimate_node: Union[NodeProto, Any] = None
+        for node in onnx_model.graph().node:
+            if node.output[0] == out.name:
+                last_node = node
+                logger.debug(&#39;last_node name :`{}` .&#39;.format(last_node.name))
+        for node in onnx_model.graph().node:
+            if node.output[0] == last_node.input[0]:
+                penultimate_node = node
+                logger.debug(&#39;penultimate_node name :`{}` .&#39;.format(penultimate_node.name))
+        if (last_node.op_type == &quot;DequantizeLinear&quot; and penultimate_node.op_type == &quot;QuantizeLinear&quot;):
+            quantize_linear_name = out_transpose_node.name + &quot;_QuantizeLinear&quot;
+            transpose_QuantizeLinear = onnx.helper.make_node(
+                op_type=penultimate_node.op_type,
+                inputs=[out_transpose_node.output[0], penultimate_node.input[1], penultimate_node.input[2]],
+                outputs=[quantize_linear_name],
+                name=out_transpose_node.name + &quot;_QuantizeLinear&quot;,
+                domain=penultimate_node.domain)
+            out_transpose_node.output[0] = quantize_linear_name
+            onnx_model.graph().node.extend([transpose_QuantizeLinear])
+            dequantize_linear_name = out_transpose_node.name + &quot;_DequantizeLinear&quot;
+            transpose_DequantizeLinear = onnx.helper.make_node(
+                op_type=last_node.op_type,
+                inputs=[transpose_QuantizeLinear.output[0], last_node.input[1], last_node.input[2]],
+                outputs=[dequantize_linear_name],
+                name=out_transpose_node.name + &quot;_DequantizeLinear&quot;,
+                domain=last_node.domain)
+            onnx_model.graph().node.extend([transpose_DequantizeLinear])
+            transpose_DequantizeLinear.output[0] = transpose_name
+            out.name = dequantize_linear_name
+        else:
+            out.name = transpose_name
+    onnx_model.topological_sort()
+    return onnx_model.model
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

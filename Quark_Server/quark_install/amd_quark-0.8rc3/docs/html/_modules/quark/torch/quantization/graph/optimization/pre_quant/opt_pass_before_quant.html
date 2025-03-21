@@ -1,0 +1,814 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../../../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../../../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../../../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../../../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../../../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant</h1><div class="highlight"><pre>
+<span></span>#
+# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+import torch
+import operator
+from typing import Tuple
+import copy
+from torch.fx import GraphModule, Node
+from quark.torch.quantization.nn.modules.quantize_conv import QuantConv2d, QuantConvTranspose2d
+from quark.torch.quantization.nn.modules.quantize_linear import QuantLinear
+from quark.torch.quantization.nn.modules.quantize_conv_bn_fused import QuantizedConvBatchNorm2d
+from quark.torch.quantization.graph.torch_utils import BATCHNORM_OPS_WO_TRAIN
+from torch.ao.quantization.pt2e.utils import _get_tensor_constant_from_node
+from quark.torch.quantization.graph.torch_utils import is_conv2d_node, is_batchnorm2d_node, is_mean_node
+from quark.torch.quantization.graph.optimization.opt_pass_manager import OptPassBase
+from quark.shares.utils.log import ScreenLogger
+
+logger = ScreenLogger(__name__)
+
+__all__ = [&#39;SplitQuantModuleCalledOverOnce&#39;, &quot;ConvertBn2D2ConvQOPass&quot;, &#39;ConvertReduceMean2GapQOPass&#39;]
+
+
+<div class="viewcode-block" id="SplitQuantModuleCalledOverOnce">
+<a class="viewcode-back" href="../../../../../../../autoapi/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant/index.html#quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant.SplitQuantModuleCalledOverOnce">[docs]</a>
+class SplitQuantModuleCalledOverOnce(OptPassBase):
+
+<div class="viewcode-block" id="SplitQuantModuleCalledOverOnce.requires">
+<a class="viewcode-back" href="../../../../../../../autoapi/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant/index.html#quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant.SplitQuantModuleCalledOverOnce.requires">[docs]</a>
+    def requires(self, graph_module: GraphModule) -&gt; None:
+        pass</div>
+
+
+<div class="viewcode-block" id="SplitQuantModuleCalledOverOnce.call">
+<a class="viewcode-back" href="../../../../../../../autoapi/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant/index.html#quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant.SplitQuantModuleCalledOverOnce.call">[docs]</a>
+    def call(self, m: GraphModule) -&gt; GraphModule:
+        &#39;&#39;&#39;
+        For better deployment for AMD&#39;s specific hardware, e.g IPU
+        if one module used over one in forward, we will instance a quant module for each all proceduce
+        &#39;&#39;&#39;
+        need_process_qt_module = (QuantConv2d, QuantConvTranspose2d, QuantLinear, QuantizedConvBatchNorm2d)
+        device = [module for module in m.parameters()][0].device  # cpu/gpu
+        qt_module_target = set()
+
+        def _get_split_module_name(name: str) -&gt; str:
+            idx = 1
+            while name + &quot;_sp_&quot; + str(idx) in qt_module_target:
+                idx += 1
+            return name + &quot;_sp_&quot; + str(idx)
+
+        for n in m.graph.nodes:
+            if not n.op == &quot;call_module&quot;:
+                continue
+            if not isinstance(getattr(m, n.target), need_process_qt_module):
+                continue
+            if n.target in qt_module_target:
+                getattr(m, n.target)
+                split_module = copy.deepcopy(getattr(m, n.target)).to(device)
+                new_module_name = _get_split_module_name(n.target)
+                setattr(m, new_module_name, split_module)
+                n.target = new_module_name
+                qt_module_target.add(new_module_name)
+                logger.info(&quot;Node {}, call moduele: {}, instant another dependent module: {}&quot;.format(
+                    n.name,
+                    getattr(m, n.target).__class__.__name__, new_module_name))
+            else:
+                qt_module_target.add(n.target)
+
+        m.graph.eliminate_dead_code()
+        m.recompile()
+        return m</div>
+</div>
+
+
+
+<div class="viewcode-block" id="ConvertBn2D2ConvQOPass">
+<a class="viewcode-back" href="../../../../../../../autoapi/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant/index.html#quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant.ConvertBn2D2ConvQOPass">[docs]</a>
+class ConvertBn2D2ConvQOPass(OptPassBase):
+
+<div class="viewcode-block" id="ConvertBn2D2ConvQOPass.requires">
+<a class="viewcode-back" href="../../../../../../../autoapi/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant/index.html#quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant.ConvertBn2D2ConvQOPass.requires">[docs]</a>
+    def requires(self, graph_module: GraphModule) -&gt; None:
+        pass</div>
+
+
+    # ref: from torch.nn.utils.fusion import fuse_conv_bn_weights
+    def _fuse_sg_bn_2_conv(self, bn_w: torch.nn.Parameter, bn_b: torch.nn.Parameter, bn_rm: torch.Tensor,
+                           bn_rv: torch.Tensor, bn_eps: float) -&gt; Tuple[torch.nn.Parameter, torch.nn.Parameter]:
+        r&quot;&quot;&quot;Fuse convolutional module parameters and BatchNorm module parameters into new convolutional module parameters.
+
+        Args:
+            bn_rm (torch.Tensor): BatchNorm running mean.
+            bn_rv (torch.Tensor): BatchNorm running variance.
+            bn_eps (float): BatchNorm epsilon.
+            bn_w (Optional[torch.Tensor]): BatchNorm weight.
+            bn_b (Optional[torch.Tensor]): BatchNorm bias.
+        Returns:
+            Tuple[torch.nn.Parameter, torch.nn.Parameter]: Fused convolutional weight and bias.
+        &quot;&quot;&quot;
+        bn_var_rsqrt = torch.rsqrt(bn_rv + bn_eps)
+        fused_conv_w = (bn_w * bn_var_rsqrt).to(dtype=bn_w.dtype)
+        fused_conv_b = ((-1 * bn_rm) * bn_var_rsqrt * bn_w + bn_b).to(dtype=bn_rm.dtype)
+
+        return torch.nn.Parameter(fused_conv_w,
+                                  bn_w.requires_grad), torch.nn.Parameter(fused_conv_b, bn_rm.requires_grad)
+
+<div class="viewcode-block" id="ConvertBn2D2ConvQOPass.call">
+<a class="viewcode-back" href="../../../../../../../autoapi/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant/index.html#quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant.ConvertBn2D2ConvQOPass.call">[docs]</a>
+    def call(self, m: GraphModule) -&gt; GraphModule:
+        &#39;&#39;&#39;
+        process a single bn layer (with no conv2d before)
+        transfer the bn layer to a single conv2d node
+        &#39;&#39;&#39;
+        device = [module for module in m.parameters()][0].device  # cpu/gpu
+        count_replace_num = 0  # used for track
+        to_delete_node = []
+        for n in m.graph.nodes:
+            if not is_batchnorm2d_node(n):
+                continue
+            bn_node = n
+            parent_node = bn_node.args[0]
+            if is_conv2d_node(parent_node):
+                raise ValueError(
+                    &quot;Please call replace_conv2dbn_quantizedconv_module() in advance to fold ops.conv + ops.bn.&quot;)
+            if parent_node == &quot;call_function&quot; and n.target == torch.ops.aten.concat.default:  # type: ignore [attr-defined]
+                logger.info(&quot;found concat -&gt; bn, recommand use fold_batch_norm_after_concat strategy&quot;)
+                continue
+            logger.info(&quot;Befor BN node: {}. found node: {}, type: {}, convert this single BN2d to Conv2D&quot;.format(
+                bn_node.name, parent_node.name, parent_node.op))
+
+            bn_w_node = bn_node.args[1]
+            bn_b_node = bn_node.args[2]
+            bn_rm_node = bn_node.args[3]
+            bn_rv_node = bn_node.args[4]
+            bn_w = _get_tensor_constant_from_node(bn_w_node, m)  # type: ignore [no-untyped-call]
+            bn_b = _get_tensor_constant_from_node(bn_b_node, m)  # type: ignore [no-untyped-call]
+            bn_run_m = _get_tensor_constant_from_node(bn_rm_node, m)  # type: ignore [no-untyped-call]
+            bn_run_v = _get_tensor_constant_from_node(bn_rv_node, m)  # type: ignore [no-untyped-call]
+            assert isinstance(bn_w, torch.nn.Parameter)
+            assert isinstance(bn_b, torch.nn.Parameter)
+            assert isinstance(bn_run_m, torch.Tensor)
+            assert isinstance(bn_run_v, torch.Tensor)
+            in_channels = bn_w.shape[0]
+            out_channels = bn_w.shape[0]
+            bn_eps = bn_node.args[6] if bn_node.target in BATCHNORM_OPS_WO_TRAIN else bn_node.args[7]
+
+            new_weight, new_bias = self._fuse_sg_bn_2_conv(bn_w, bn_b, bn_run_m, bn_run_v, bn_eps)
+
+            quantized_conv2d = QuantConv2d(
+                in_channels,
+                out_channels,
+                kernel_size=1,  # with empty quant config
+                groups=in_channels,
+                bias=True).to(device=device)
+            quantized_conv2d.weight.data = new_weight.data.reshape([in_channels, 1, 1, 1]).clone()
+            assert quantized_conv2d.bias is not None
+            quantized_conv2d.bias.data = new_bias.data.clone()
+            quant_conv2d_name = &quot;QuantConv2d_cvt_from_&quot; + bn_node.name
+            setattr(m, quant_conv2d_name, quantized_conv2d)
+            input_activation_node = bn_node.args[0]
+            count_replace_num += 1
+
+            to_delete_node.append(bn_node)
+            to_delete_node += [bn_w_node, bn_b_node, bn_rm_node, bn_rv_node]
+            # NOTE as diffenert torch version may capture different torch.opt.aten.**BN** version
+            if isinstance(bn_node.next.target, type(operator.getitem)):
+                for next_node in bn_node.users:
+                    to_delete_node.insert(0, next_node)
+            with m.graph.inserting_after(input_activation_node):
+                quant_conv2d_node = m.graph.create_node(&#39;call_module&#39;, quant_conv2d_name, (input_activation_node, ), {})
+                quant_conv2d_node.meta = bn_node.meta
+                # quant_conv2d_node.meta[&quot;skip_quant&quot;] = skip_quant
+                if isinstance(bn_node.next.target, type(operator.getitem)):
+                    quant_conv2d_node.meta[&#39;val&#39;] = bn_node.meta[&#39;val&#39;][0]
+                    bn_node.next.replace_all_uses_with(quant_conv2d_node)
+                # torch2.5: e.g ops.aten.relu -&gt; &#39;call_function&#39;
+                else:
+                    bn_node.replace_all_uses_with(quant_conv2d_node)
+        if count_replace_num:
+            [m.graph.erase_node(node) for node in to_delete_node]
+            logger.info(&quot;Totally replace sg ops.aten.batch_norm to {} count:\t{}.&quot;.format(
+                QuantConv2d.__name__, count_replace_num))
+            m.graph.eliminate_dead_code()
+            m.recompile()
+        return m</div>
+</div>
+
+
+
+<div class="viewcode-block" id="ConvertReduceMean2GapQOPass">
+<a class="viewcode-back" href="../../../../../../../autoapi/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant/index.html#quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant.ConvertReduceMean2GapQOPass">[docs]</a>
+class ConvertReduceMean2GapQOPass(OptPassBase):
+    &#39;&#39;&#39;
+    For torch code: is torch.mean( **args) is equal to torch.nn.AdaptiveAvgPool2d((1, 1)) # Global Average Pooling
+    for the corresponding ONNX model: change reduce_mean type node to GlobalAveragePooling type node
+    change reduce mean to global average pooling if they are equal.
+     NOTE at present support 2D image/feature  [N, C,H, W]
+    &#39;&#39;&#39;
+
+<div class="viewcode-block" id="ConvertReduceMean2GapQOPass.requires">
+<a class="viewcode-back" href="../../../../../../../autoapi/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant/index.html#quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant.ConvertReduceMean2GapQOPass.requires">[docs]</a>
+    def requires(self, graph_module: GraphModule) -&gt; None:
+        pass</div>
+
+
+    def _check_replace_condition(
+        self, mean_node: Node
+    ) -&gt; bool:  # func: mean.dim(Tensor self, int[1]? dim, bool keepdim=False, *, ScalarType? dtype=None)
+        mean_dim = mean_node.args[1] if len(
+            mean_node.args) &gt;= 2 else mean_node.target._schema.arguments[1].default_value  # type: ignore[union-attr]
+        keep_dim = mean_node.args[2] if len(
+            mean_node.args) &gt;= 3 else mean_node.target._schema.arguments[2].default_value  # type: ignore[union-attr]
+        if mean_dim == [2, 3] and keep_dim:
+            if len(mean_node.meta[&#39;val&#39;].shape) == 4 and mean_node.meta[&#39;val&#39;].shape[2:] == torch.Size([1, 1]):
+                return True  # only 2D tensor with size (b, c, 1, 1)
+            else:
+                return False
+        else:
+            return False
+
+    def _modify_meta_info(self, avg_pool_node: Node) -&gt; None:
+        #  torch/fx/passes/utils/source_matcher_utils.py: get_source_partitions
+        assert avg_pool_node.meta.get(&quot;source_fn_stack&quot;, None) is not None
+        avg_pool_node.meta[&quot;source_fn_stack&quot;][-1] = (avg_pool_node.name, torch.nn.AdaptiveAvgPool2d)
+        return
+
+<div class="viewcode-block" id="ConvertReduceMean2GapQOPass.call">
+<a class="viewcode-back" href="../../../../../../../autoapi/quark/torch/quantization/graph/optimization/pre_quant/opt_pass_before_quant/index.html#quark.torch.quantization.graph.optimization.pre_quant.opt_pass_before_quant.ConvertReduceMean2GapQOPass.call">[docs]</a>
+    def call(self, m: GraphModule) -&gt; GraphModule:
+        &#39;&#39;&#39;
+        if a torch.ops.aten.mean.dim() equal to torch.ops.aten.adaptive_avg_pool2d.default(x, [1, 1])
+        then change, to align with ONNX strategy, to let the final onnx model to GlobalAveragePooling node
+        &#39;&#39;&#39;
+        device = [module for module in m.parameters()][0].device  # cpu/gpu
+        count_replace_num = 0  # used for track
+        to_delete_node = []
+        for n in m.graph.nodes:
+            if not is_mean_node(n):
+                continue
+            mean_node = n
+            parent_node = mean_node.args[0]
+            if not self._check_replace_condition(mean_node):
+                continue
+            to_delete_node.append(mean_node)
+            count_replace_num += 1
+            with m.graph.inserting_after(mean_node):
+                adaptive_avg_pool_node = m.graph.create_node(
+                    &#39;call_function&#39;,
+                    torch.ops.aten.adaptive_avg_pool2d.default,  # type: ignore[attr-defined]
+                    (parent_node, [1, 1]),
+                    {})
+                adaptive_avg_pool_node.meta = mean_node.meta  # TODO use deepcopy future
+                self._modify_meta_info(adaptive_avg_pool_node)
+                mean_node.replace_all_uses_with(adaptive_avg_pool_node)
+
+        if count_replace_num:
+            [m.graph.erase_node(node) for node in to_delete_node]
+            logger.info(
+                &quot;Totally replace ops.aten.mean to ops.aten.adaptive_avg_pool2d count:\t{}.&quot;.format(count_replace_num))
+            m.graph.eliminate_dead_code()
+            m.recompile()
+        return m</div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../../../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

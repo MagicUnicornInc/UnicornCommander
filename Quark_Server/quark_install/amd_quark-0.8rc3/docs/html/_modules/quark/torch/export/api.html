@@ -1,0 +1,1136 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>quark.torch.export.api &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../../../../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../../../../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../../../../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../../../../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/quark/torch/export/api';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../../../../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/user_guide_config_description.html">Configuring ONNX Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/appendix_full_quant_config_features.html">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../onnx/example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../onnx/onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../onnx/onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">quark.torch.export.api</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for quark.torch.export.api</h1><div class="highlight"><pre>
+<span></span>#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+&quot;&quot;&quot;Quark Exporting and Importing API for PyTorch.&quot;&quot;&quot;
+
+from __future__ import annotations
+import json
+import tempfile
+from pathlib import Path
+from typing import Union, List, Dict, Tuple, Optional, Any
+import dataclasses
+
+import torch
+import torch.nn as nn
+from safetensors.torch import save_file
+from tqdm import tqdm
+import subprocess
+import re
+
+from quark.shares.utils.log import ScreenLogger, log_errors
+from quark.torch.quantization.utils import set_op_by_name
+from quark.torch.export.main_import.pretrained_config import PretrainedConfig
+from quark.torch.export.utils import preprocess_import_info
+from quark.torch.quantization.nn.modules import QuantLinear
+from quark.torch.quantization.tensor_quantize import FakeQuantizeBase, ScaledFakeQuantize
+from quark.torch.export.config.config import JsonExporterConfig, ExporterConfig
+from quark.torch.quantization.config.config import Config
+from quark.torch.quantization.config.type import QuantizationMode
+from quark.torch.export.json_export.builder.native_model_info_builder import NativeModelInfoBuilder
+from quark.torch.export.main_export.model_post_process import ModelPostProcessor
+from quark.torch.export.main_export.quant_config_parser import QuantConfigParser, get_layer_quant_config
+from quark.torch.export.nn.modules.qparamslinear import QParamsLinear
+import quark.torch.export.nn.modules.qparamslinear
+
+__all__ = [&quot;ModelExporter&quot;, &quot;save_params&quot;, &quot;ModelImporter&quot;]
+
+logger = ScreenLogger(__name__)
+
+
+def check_scale_mm_is_available() -&gt; bool:
+    scale_mm_is_available = False
+
+    if not torch.cuda.is_available():
+        return False
+    if torch.version.cuda is not None:
+        device = torch.device(&quot;cuda&quot;)
+        compute_capability = torch.cuda.get_device_capability(device)
+        major, minor = compute_capability
+        if (major, minor) &gt;= (9, 0) or (major == 8 and minor &gt;= 9):
+            scale_mm_is_available = True
+
+    elif torch.version.hip is not None:
+        result = subprocess.run(&quot;rocminfo | grep -i &#39;gfx&#39;&quot;, capture_output=True, text=True, shell=True)
+
+        if result.returncode != 0:
+            raise RuntimeError(&quot;The `rocminfo` command failed or was not found.&quot;)
+
+        output = result.stdout.strip()
+        matches = re.findall(r&quot;gfx(\d+)&quot;, output.lower())
+
+        scale_mm_is_available = True if len(matches) &gt; 0 else False
+        for match in matches:
+            version_number = int(match)
+            if version_number &lt; 940:
+                # In general, all video card models should be the same,
+                # All graphics cards must be eligible
+                scale_mm_is_available = False
+                break
+
+    return scale_mm_is_available
+
+
+<div class="viewcode-block" id="ModelExporter">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.ModelExporter">[docs]</a>
+class ModelExporter:
+    &quot;&quot;&quot;
+    Provides an API for exporting quantized Pytorch deep learning models.
+    This class converts the quantized model to json-pth, json-safetensors files or onnx graph, and saves to export_dir.
+
+    Args:
+        config (ExporterConfig): Configuration object containing settings for exporting.
+        export_dir (Union[Path, str]): The target export directory. This could be a string or a pathlib.Path(string) object.
+    &quot;&quot;&quot;
+
+    def __init__(self, config: ExporterConfig, export_dir: Union[Path, str] = tempfile.gettempdir()) -&gt; None:
+        self.export_dir = Path(export_dir)
+        self.export_dir.mkdir(parents=True, exist_ok=True)
+        self.config = config
+
+<div class="viewcode-block" id="ModelExporter.export_quark_model">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.ModelExporter.export_quark_model">[docs]</a>
+    def export_quark_model(self, model: nn.Module, quant_config: Config, custom_mode: str = &quot;quark&quot;) -&gt; None:
+        &quot;&quot;&quot;
+        This function aims to export json and pth files of the quantized Pytorch model by quark file format.
+        The model&#39;s network architecture or configuration is stored in the json file, and parameters including weight, bias, scale, and zero_point are stored in the pth file.
+
+        Parameters:
+            model (transformers.PreTrainedModel): The quantized model to be exported.
+            quant_config (Config): Configuration object containing settings for quantization. Default is None.
+            custom_mode (str): Whether to export the quantization config and model in a custom format expected by some downstream library. Possible options:
+                - `&quot;quark&quot;`: standard quark format. This is the default and recommended format that should be favored.
+                - `&quot;awq&quot;`: targets AutoAWQ library.
+                - `&quot;fp8&quot;`: targets vLLM-compatible fp8 models.
+
+        Returns:
+            None
+        **Examples**:
+
+            .. code-block:: python
+
+                # default exporting:
+                export_path = &quot;./output_dir&quot;
+                from quark.torch import ModelExporter
+                from quark.torch.export.config.config import ExporterConfig, JsonExporterConfig, OnnxExporterConfig
+                NO_MERGE_REALQ_CONFIG = JsonExporterConfig(weight_format=&quot;real_quantized&quot;,
+                                                           pack_method=&quot;reorder&quot;)
+                export_config = ExporterConfig(json_export_config=NO_MERGE_REALQ_CONFIG, onnx_export_config=OnnxExporterConfig())
+                exporter = ModelExporter(config=export_config, export_dir=export_path)
+                quant_config = get_config(args.quant_scheme, args.group_size, args.model_dir, args.kv_cache_dtype, args.fp8_attention_quant, args.exclude_layers, args.pre_quantization_optimization, args.pre_optimization_config_file_path, args.quant_algo, args.quant_algo_config_file_path, model_type)
+                exporter.export_quark_model(model, quant_config=quant_config, custom_mode=args.custom_mode)
+
+        Note:
+            Currently, default exporting quark format (json + pth).
+        &quot;&quot;&quot;
+
+        if custom_mode not in [&quot;quark&quot;, &quot;fp8&quot;, &quot;awq&quot;]:
+            raise ValueError(
+                f&quot;The supported values for `custom_mode` are {[&#39;quark&#39;, &#39;fp8&#39;, &#39;awq&#39;, &#39;auto&#39;]} but custom_mode={custom_mode} was provided. Please check your code or open an issue in Quark repository.&quot;
+            )
+
+        if quant_config is None:
+            raise ValueError(&quot;quant_config should not be None when exporting default format files&quot;)
+
+        logger.info(&quot;Start exporting quark format quantized model ...&quot;)
+        model = self.get_export_model(model=model, quant_config=quant_config, custom_mode=custom_mode)
+        self.save_quark_export_model(model)
+        self.reset_model(model)
+        if self.config.json_export_config.weight_format == &quot;real_quantized&quot;:
+            logger.info(&quot;quark_format real_quantized model exported to {} successfully.&quot;.format(self.export_dir))
+        else:
+            logger.info(&quot;quark_format fake_quantized model exported to {} successfully.&quot;.format(self.export_dir))</div>
+
+
+<div class="viewcode-block" id="ModelExporter.get_export_model">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.ModelExporter.get_export_model">[docs]</a>
+    def get_export_model(self,
+                         model: nn.Module,
+                         quant_config: Config,
+                         custom_mode: str = &quot;quark&quot;,
+                         add_export_info_for_hf: bool = True) -&gt; nn.Module:
+        &#39;&#39;&#39;
+        Merges scales, replaces modules of the quantized model to prepare for export, and add export information in config.json.
+
+        Scale merging selects the maximum scale value in specified `weight_group` as the scale for each module in the group.
+
+        Build kv_scale selects the maximum kv_scale value in `kv_group` as the scale for the key projection output quantization and value projection output quantization.
+
+        Module replacement converts the model&#39;s module (e.g. `QuantLinear`) according to the weight_format (to `QparamsLinear`).
+
+        Parameters:
+            model (transformers.PreTrainedModel): The quantized model to be exported.
+            quant_config (Config): Configuration object containing settings for quantization.
+            custom_mode (str): Whether to export the quantization config and model in a custom format expected by some downstream library. Possible options:
+                - `&quot;quark&quot;`: standard quark format. This is the default and recommended format that should be favored.
+                - `&quot;awq&quot;`: targets AutoAWQ library.
+                - `&quot;fp8&quot;`: targets vLLM-compatible fp8 models.
+        add_export_info_for_hf (bool): Whether to add export info of quark to config.json when using hf_format_export. When loading the model, we recover the kv_cache in autofp8 format through the weight file, but we need the name of kv_layer, it is very cumbersome to get it from quark&#39;s map, it is more reasonable to get it from config. If we find kv_scale in weight_flie and there is no special kv_layer_name, we will use k_proj,v_proj to recover kv_cache by default.
+        &#39;&#39;&#39;
+
+        quark_quant_config = quant_config.to_dict()
+        quantization_config_dict = {}
+        config_parser = QuantConfigParser(quant_config, self.config.json_export_config)
+        if custom_mode != &quot;quark&quot;:
+            # Some quantization methods (fp8, awq) might be used in external libraries directly. Quark&#39;s `Config` is parsed
+            # to detect whether we may add custom keys in the config.json `quantization_config` to make loading quark models
+            # in external libraries easier.
+            custom_config, inferred_custom_mode = config_parser.get_custom_config()
+            if inferred_custom_mode != custom_mode:
+                raise ValueError(
+                    f&quot;Requested to export the model in the custom mode `{custom_mode}`, but the quantization config used does not appear to match with this `custom_mode`. If using `custom_mode=&#39;awq&#39;` or `custom_mode=&#39;fp8&#39;`, please make sure the quantization config is well defined to match these custom modes. Alternatively, please use `custom_mode=&#39;quark&#39;` or open an issue in Quark repository.&quot;
+                )
+
+            # This custom_config might be empty.
+            if len(custom_config) &gt; 0:
+                quantization_config_dict.update(custom_config)
+            else:
+                quantization_config_dict.update(quark_quant_config)
+            if add_export_info_for_hf:
+                quantization_config_dict[&quot;export&quot;] = dataclasses.asdict(self.config.json_export_config)
+        else:
+            _, inferred_custom_mode = config_parser.get_custom_config()
+
+            if inferred_custom_mode != &quot;quark&quot;:
+                logger.info(
+                    f&quot;The quantized model is being exported in `ModelExporter.export_model_info` with the default `custom_mode=&#39;quark&#39;`, which uses the standard format to export quark. However, the `Config` used also matches with the custom_mode `&#39;{inferred_custom_mode}&#39;`, which is not recommended but may temporarily facilitate usage in some downstream libraries. If you would like to use this custom export, please use `ModelExporter.export_model_info(..., custom_mode=&#39;{inferred_custom_mode}&#39;)`.&quot;
+                )
+
+            quark_quant_config[&quot;export&quot;] = dataclasses.asdict(self.config.json_export_config)
+            quantization_config_dict.update(quark_quant_config)
+
+        model.config.update({&quot;quantization_config&quot;: quantization_config_dict})
+
+        # Map `QuantLinear` (fake quantization) to `QparamsLinear` (&quot;real&quot; quantization, where weights have low precision).
+        self.processor = ModelPostProcessor(model,
+                                            self.config.json_export_config,
+                                            custom_mode=custom_mode,
+                                            output_quant=quant_config.global_quant_config.output_tensors is not None)
+        self.processor.merge_scale()
+        model = self.processor.get_processed_model()
+        return model</div>
+
+
+    def save_quark_export_model(self, model: nn.Module) -&gt; None:
+        torch.save(model.state_dict(), self.export_dir.joinpath(&#39;model_state_dict.pth&#39;))
+        with open(self.export_dir.joinpath(&#39;config.json&#39;), &#39;w&#39;) as json_file:
+            json.dump(model.config.to_dict(), json_file, indent=4)
+
+<div class="viewcode-block" id="ModelExporter.reset_model">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.ModelExporter.reset_model">[docs]</a>
+    def reset_model(self, model: nn.Module) -&gt; None:
+        &#39;&#39;&#39;
+        Restore exported model to freezed Model for inferring, restore config content.
+        &#39;&#39;&#39;
+        model.config.__dict__.pop(&quot;quantization_config&quot;)
+        model = self.processor.reset_model()</div>
+
+
+<div class="viewcode-block" id="ModelExporter.export_onnx_model">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.ModelExporter.export_onnx_model">[docs]</a>
+    def export_onnx_model(self,
+                          model: nn.Module,
+                          input_args: Union[torch.Tensor, Tuple[float]],
+                          input_names: List[str] = [],
+                          output_names: List[str] = [],
+                          verbose: bool = False,
+                          opset_version: Optional[int] = None,
+                          do_constant_folding: bool = True,
+                          operator_export_type: torch.onnx.OperatorExportTypes = torch.onnx.OperatorExportTypes.ONNX,
+                          uint4_int4_flag: bool = False) -&gt; None:
+        &quot;&quot;&quot;
+        This function aims to export onnx graph of the quantized Pytorch model.
+
+        Parameters:
+            model (torch.nn.Module): The quantized model to be exported.
+            input_args (Union[torch.Tensor, Tuple[float]]): Example inputs for this quantized model.
+            input_names (List[str]): Names to assign to the input nodes of the onnx graph, in order. Default is empty list.
+            output_names (List[str]): Names to assign to the output nodes of the onnx graph, in order. Default is empty list.
+            verbose (bool): Flag to control showing verbose log or no. Default is False
+            opset_version (Optional[int]): The version of the default (ai.onnx) opset to target. If not set, it will be valued the latest version that is stable for the current version of PyTorch.
+            do_constant_folding (bool): Apply the constant-folding optimization. Default is False
+            operator_export_type (torch.onnx.OperatorExportTypes): Export operator type in onnx graph. The choices include OperatorExportTypes.ONNX, OperatorExportTypes.ONNX_FALLTHROUGH, OperatorExportTypes.ONNX_ATEN and OperatorExportTypes.ONNX_ATEN_FALLBACK. Default is OperatorExportTypes.ONNX.
+            uint4_int4_flag (bool): Flag to indicate uint4/int4 quantized model or not. Default is False.
+
+        Returns:
+            None
+
+        **Examples**:
+
+            .. code-block:: python
+
+                from quark.torch import ModelExporter
+                from quark.torch.export.config.config import ExporterConfig, JsonExporterConfig
+                export_config = ExporterConfig(json_export_config=JsonExporterConfig())
+                exporter = ModelExporter(config=export_config, export_dir=export_path)
+                exporter.export_onnx_model(model, input_args)
+
+        Note:
+            Mix quantization of int4/uint4 and int8/uint8 is not supported currently.
+            In other words, if the model contains both quantized nodes of uint4/int4 and uint8/int8, this function cannot be used to export the ONNX graph.
+        &quot;&quot;&quot;
+        from quark.torch.export.onnx import convert_model_to_uint4_int4
+        logger.info(&quot;Start exporting quantized onnx model ...&quot;)
+
+        for module in model.modules():
+            if isinstance(module, ScaledFakeQuantize):
+                module.disable_observer()
+                module.enable_fake_quant()
+        onnx_path = str(self.export_dir / &quot;quark_model.onnx&quot;)
+        torch.onnx.export(model.eval(),
+                          input_args,
+                          onnx_path,
+                          verbose=verbose,
+                          input_names=input_names,
+                          output_names=output_names,
+                          opset_version=opset_version,
+                          do_constant_folding=do_constant_folding,
+                          operator_export_type=operator_export_type)
+        if uint4_int4_flag:
+            convert_model_to_uint4_int4(onnx_path)
+        else:
+            logger.info(&quot;Quantized onnx model exported to {} successfully.&quot;.format(onnx_path))</div>
+
+
+<div class="viewcode-block" id="ModelExporter.export_gguf_model">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.ModelExporter.export_gguf_model">[docs]</a>
+    def export_gguf_model(self, model: nn.Module, tokenizer_path: Union[str, Path], model_type: str) -&gt; None:
+        &quot;&quot;&quot;
+        This function aims to export gguf file of the quantized Pytorch model.
+
+        Parameters:
+            model (torch.nn.Module): The quantized model to be exported.
+            tokenizer_path (Union[str, Path]): Tokenizer needs to be encoded into gguf model. This argument specifies the directory path of tokenizer which contains tokenizer.json, tokenizer_config.json and/or tokenizer.model
+            model_type (str): The type of the model, e.g. gpt2, gptj, llama or gptnext.
+
+        Returns:
+            None
+
+        **Examples**:
+
+            .. code-block:: python
+
+                from quark.torch import ModelExporter
+                from quark.torch.export.config.config import ExporterConfig, JsonExporterConfig
+                export_config = ExporterConfig(json_export_config=JsonExporterConfig())
+                exporter = ModelExporter(config=export_config, export_dir=export_path)
+                exporter.export_gguf_model(model, tokenizer_path, model_type)
+
+        Note:
+            Currently, only support asymetric int4 per_group weight-only quantization, and the group_size must be 32.
+            Supported models include Llama2-7b, Llama2-13b, Llama2-70b, and Llama3-8b.
+        &quot;&quot;&quot;
+
+        logger.info(&quot;Start exporting gguf quantized model ...&quot;)
+
+        save_params(model, model_type, export_dir=self.export_dir)
+
+        json_path = self.export_dir / f&quot;{model_type}.json&quot;
+        params_path = self.export_dir / f&quot;{model_type}.safetensors&quot;
+        gguf_path = self.export_dir / f&quot;{model_type}.gguf&quot;
+        from quark.torch.export.gguf_export.api import convert_exported_model_to_gguf
+        convert_exported_model_to_gguf(model_type, json_path, params_path, tokenizer_path, gguf_path)
+
+        if json_path.exists():
+            json_path.unlink()
+        if params_path.exists():
+            params_path.unlink()
+
+        logger.info(&quot;GGUF quantized model exported to {} successfully.&quot;.format(gguf_path))</div>
+
+
+    def export_model_info_from_gguf(self, model: nn.Module, gguf_path: str, model_type: str) -&gt; None:
+
+        logger.info(&quot;Start exporting quantized model from gguf model ...&quot;)
+
+        params_dict: Dict[str, torch.Tensor] = {}
+        builder = NativeModelInfoBuilder(model=model, config=self.config.json_export_config)
+        info = builder.build_model_info(params_dict)
+        from quark.torch.export.gguf_export.api import insert_quant_info_from_gguf
+        info, params_dict = insert_quant_info_from_gguf(model_type, info, params_dict, gguf_path)
+        json_path = self.export_dir / f&quot;{model_type}_from_gguf.json&quot;
+        with open(json_path, &quot;w&quot;) as f:
+            json.dump(info, f, indent=4)
+
+        # handle tensors shared
+        data_ptr_list: List[str] = []
+        for key, value in params_dict.items():
+            if str(value.data_ptr()) in data_ptr_list:
+                params_dict[key] = value.clone()
+            else:
+                data_ptr_list.append(str(value.data_ptr()))
+
+        params_path = self.export_dir / f&quot;{model_type}_from_gguf.safetensors&quot;
+        save_file(params_dict, params_path)
+
+        logger.info(&quot;Exported quantized model from gguf model to {} successfully.&quot;.format(self.export_dir))</div>
+
+
+
+<div class="viewcode-block" id="save_params">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.save_params">[docs]</a>
+def save_params(model: nn.Module,
+                model_type: str,
+                args: Optional[Tuple[Any, ...]] = None,
+                kwargs: Optional[Dict[str, Any]] = None,
+                export_dir: Union[Path, str] = tempfile.gettempdir(),
+                quant_mode: QuantizationMode = QuantizationMode.eager_mode,
+                compressed: bool = False,
+                reorder: bool = True) -&gt; None:
+    &quot;&quot;&quot;
+    Save the network architecture or configurations and parameters of the quantized model.
+    For eager mode quantization, the model&#39;s configurations are stored in json file, and parameters including weight, bias, scale, and zero_point are stored in safetensors file.
+    For fx_graph mode quantization, the model&#39;s network architecture and parameters are stored in pth file.
+
+    Parameters:
+        model (torch.nn.Module): The quantized model to be saved.
+        model_type (str): The type of the model, e.g. gpt2, gptj, llama or gptnext.
+        args (Optional[Tuple[Any, ...]]): Example tuple inputs for this quantized model. Only available for fx_graph mode quantization. Default is None.
+        kwargs (Optional[Dict[str, Any]]): Example dict inputs for this quantized model. Only available for fx_graph mode quantization. Default is None.
+        export_dir (Union[Path, str]): The target export directory. This could be a string or a pathlib.Path(string) object.
+        quant_mode (QuantizationMode): The quantization mode. The choice includes &quot;QuantizationMode.eager_mode&quot; and &quot;QuantizationMode.fx_graph_mode&quot;. Default is &quot;QuantizationMode.eager_mode&quot;.
+        compressed (bool): export the compressed (real quantized) model or QDQ model, Default is False and export the QDQ model
+        reorder (bool): pack method, uses pack the weight(eg. packs four torch.int8 value into one torch.int32 value). Default is True
+
+    Returns:
+        None
+
+    **Examples**:
+
+        .. code-block:: python
+
+            # eager mode:
+            from quark.torch import save_params
+            save_params(model, model_type=model_type, export_dir=&quot;./save_dir&quot;)
+
+        .. code-block:: python
+
+            # fx_graph mode:
+            from quark.torch.export.api import save_params
+            save_params(model,
+                        model_type=model_type,
+                        args=example_inputs,
+                        export_dir=&quot;./save_dir&quot;,
+                        quant_mode=QuantizationMode.fx_graph_mode)
+    &quot;&quot;&quot;
+    logger.info(&quot;Start saving parameters of quantized model ...&quot;)
+    export_dir = Path(export_dir)
+    export_dir.mkdir(parents=True, exist_ok=True)
+    if quant_mode is QuantizationMode.eager_mode:
+        params_dict: Dict[str, torch.Tensor] = {}
+        builder = NativeModelInfoBuilder(model=model, config=JsonExporterConfig())
+        info = builder.build_model_info(params_dict, compressed=compressed, reorder=reorder)
+        json_path = export_dir / f&quot;{model_type}.json&quot;
+        with open(json_path, &quot;w&quot;) as f:
+            json.dump(info, f, indent=4)
+
+        # handle tensors shared
+        data_ptr_list: List[str] = []
+        for key, value in params_dict.items():
+            if str(value.data_ptr()) in data_ptr_list:
+                params_dict[key] = value.clone()
+            else:
+                data_ptr_list.append(str(value.data_ptr()))
+
+        params_path = export_dir / f&quot;{model_type}.safetensors&quot;
+        save_file(params_dict, params_path)
+    elif quant_mode is QuantizationMode.fx_graph_mode:
+        if args is None:
+            raise ValueError(&quot;args should not be None when saving fx_graph_mode quantized model&quot;)
+        model_file_path = export_dir / f&quot;{model_type}_quantized.pth&quot;
+        exported_model = torch.export.export(model, args, kwargs=kwargs)
+        torch.export.save(exported_model, model_file_path)
+
+    logger.info(&quot;Parameters of quantized model saved to {} successfully.&quot;.format(export_dir))</div>
+
+
+
+@log_errors
+<div class="viewcode-block" id="ModelImporter">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.ModelImporter">[docs]</a>
+class ModelImporter:
+    &quot;&quot;&quot;
+    Provides an API for importing quantized Pytorch deep learning models.
+    This class load json-pth or json-safetensors files to model.
+
+    Args:
+        model_info_dir (str): The target import directory.
+    &quot;&quot;&quot;
+
+    def __init__(self, model_info_dir: str) -&gt; None:
+        self.model_info_dir = model_info_dir
+
+    def get_model_config(self) -&gt; PretrainedConfig:
+        model_config = PretrainedConfig(pretrained_dir=self.model_info_dir)
+        return model_config
+
+    def get_model_state_dict(self) -&gt; Dict[str, Any]:
+        model_state_dict: Dict[str, Any] = torch.load(Path(self.model_info_dir) / &quot;model_state_dict.pth&quot;)
+        return model_state_dict
+
+<div class="viewcode-block" id="ModelImporter.import_model_info">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.ModelImporter.import_model_info">[docs]</a>
+    def import_model_info(self, model: nn.Module) -&gt; nn.Module:
+        &quot;&quot;&quot;
+        This function aims to import quark(json-pth) files of the HuggingFace large language model.
+
+        It could recover the weight, bias, scale, and zeropoint information of the model and execute the inference
+
+        Parameters:
+            model (transformers.PreTrainedModel): The original HuggingFace large language model.
+
+        Returns:
+            model: Models that have completed weight import
+        **Examples**:
+
+            .. code-block:: python
+
+                # default exporting:
+                import_model_dir = &quot;./import_model_dir&quot;
+                from quark.torch import ModelImporter
+                importer = ModelImporter(model_info_dir=args.import_model_dir)
+                model = importer.import_model_info(model)
+
+        &quot;&quot;&quot;
+        logger.info(&quot;Start importing quark_format(pth_json) quantized model ...&quot;)
+        model_config = self.get_model_config()
+        model_state_dict = self.get_model_state_dict()
+        model = self.import_model(model, model_config, model_state_dict)
+        model.load_state_dict(model_state_dict)
+        logger.info(&quot;quark_format(pth_json) quantized model imported successfully.&quot;)
+        return model</div>
+
+
+<div class="viewcode-block" id="ModelImporter.import_model">
+<a class="viewcode-back" href="../../../../autoapi/quark/torch/export/api/index.html#quark.torch.export.api.ModelImporter.import_model">[docs]</a>
+    def import_model(self, model: nn.Module, model_config: PretrainedConfig, model_state_dict: Dict[str,
+                                                                                                    Any]) -&gt; nn.Module:
+        &quot;&quot;&quot;
+        This function uses the loaded state_dict and config to build the model
+        &quot;&quot;&quot;
+        quark.torch.export.nn.modules.qparamslinear.SCALE_MM_IS_AVAILABLE = check_scale_mm_is_available()
+        if model_config.quantization_config is None:
+            logger.info(&quot;This is a non-quantized model&quot;)
+            return model
+        custom_mode = model_config.quantization_config[&quot;quant_method&quot;]
+        assert custom_mode in [&quot;fp8&quot;, &quot;awq&quot;, &quot;quark&quot;]
+        is_kv_cache = False
+        model_state_dict, is_kv_cache, kv_layers_name = preprocess_import_info(
+            model_state_dict=model_state_dict,
+            is_kv_cache=is_kv_cache,
+            kv_layers_name=model_config.kv_layers_name,
+            custom_mode=custom_mode)
+        if custom_mode != &quot;quark&quot;:
+            # For `&quot;awq&quot;` and `&quot;fp8&quot;` custom modes, there is no way to determine whether bias is quantized simply looking at the serialized `quantization_config`.
+            is_bias_quantized = any(&quot;bias.scales&quot; in key or &quot;bias_scale&quot; in key for key in model_state_dict.keys())
+            quantization_config = QuantConfigParser.from_custom_config(model_config.quantization_config,
+                                                                       is_bias_quantized=is_bias_quantized,
+                                                                       is_kv_cache=is_kv_cache,
+                                                                       kv_layers_name=kv_layers_name)
+        else:
+            quantization_config = Config.from_dict(model_config.quantization_config)
+        is_real_quantized_mode = True if model_config.weight_format is None or model_config.weight_format == &quot;real_quantized&quot; else False
+        if is_real_quantized_mode:
+            logger.info(&quot;In-place OPs replacement start.&quot;)
+            _map_to_quark(
+                model,
+                quantization_config,
+                model_config.pack_method,  # type: ignore[arg-type]
+                custom_mode)
+
+        # The high precision (fake quantize) serialization is only used by quark format.
+        else:
+            logger.info(&quot;In-place OPs replacement start.&quot;)
+            named_modules = dict(model.named_modules(remove_duplicate=False))
+            for name, float_module in tqdm(named_modules.items()):
+                layer_quantization_config = get_layer_quant_config(quantization_config, type(float_module), name)
+                if layer_quantization_config is not None and isinstance(float_module, nn.Linear):
+                    # TODO: add other types of modules, will del &quot;original save_param and load_params in quantize_quark.py&quot;
+                    quant_module = QuantLinear.from_float(float_module, layer_quantization_config)
+                    set_op_by_name(model, name, quant_module)
+            named_modules = dict(model.named_modules(remove_duplicate=False))
+            for name, module in named_modules.items():
+                if isinstance(module, FakeQuantizeBase):
+                    freezed_quantized_module = module.to_freezed_module()
+                    set_op_by_name(model, name, freezed_quantized_module)
+        logger.info(&quot;Converting quantized ops end&quot;)
+
+        return model</div>
+</div>
+
+
+
+def _map_to_quark(model: nn.Module, quantization_config: Config, pack_method: str, custom_mode: str) -&gt; None:
+    &quot;&quot;&quot;
+    Maps a non-quantized model (possibly on meta device) to a model with QParamsLinear layers with weights not initialized. This function is useful to later load a checkpoint in the quark model using `model.load_state_dict(state_dict)`.
+
+    Parameters:
+        model (torch.nn.Module): An instance of the original not-quantized model. This model may be on `meta` device, or may have random weights.
+        quantization_config (Config): The quantization configuration orginally used to quantize the model in Quark.
+        pack_method (str): The packing method used when the model was serialized.
+        custom_mode (str): The custom mode to use to initialize the `QParamsLinear` layers. The recommended mode is simply quark-native `&quot;quark&quot;`, but `&quot;awq&quot;` and `&quot;fp8&quot;` are also available.
+    &quot;&quot;&quot;
+    named_modules = dict(model.named_modules(remove_duplicate=False))
+    for op_name, float_module in tqdm(named_modules.items()):
+        op_type = type(float_module)
+        layer_quantization_config = get_layer_quant_config(quantization_config, op_type, op_name)
+
+        if layer_quantization_config is not None and isinstance(float_module, nn.Linear):
+            qparams_linear = QParamsLinear.from_module(
+                float_module,
+                custom_mode,
+                pack_method,
+                quant_config=layer_quantization_config,
+            )
+
+            set_op_by_name(model, op_name, qparams_linear)
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../../../../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

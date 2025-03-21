@@ -1,0 +1,1244 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Full List of Quantization Configuration Features &#8212; Quark 0.8rc3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=6b4ca4e1" />
+    <link rel="stylesheet" type="text/css" href="../_static/rocm_header.css?v=4044f309" />
+    <link rel="stylesheet" type="text/css" href="../_static/rocm_footer.css?v=25204c5a" />
+    <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=fcff5274" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=5b1fe69a"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="../_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="../_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="../_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="../_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'onnx/appendix_full_quant_config_features';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Calibration Methods" href="config/calibration_methods.html" />
+    <link rel="prev" title="Configuring ONNX Quantization" href="user_guide_config_description.html" />
+<script type="text/javascript">
+    window.addEventListener("load", function(event) {
+        var coll = document.querySelectorAll('.toggle > .header');  // sdelect the toggles header.
+        var i;
+
+        for (i = 0; i < coll.length; i++) {                        
+            coll[i].innerText = "Show code ▼\n\n";
+            
+            coll[i].addEventListener("click", function() {
+                var content = this.nextElementSibling;  // code block.
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.innerText = "Show code ▼\n\n";
+                } else {
+                    content.style.display = "block";
+                    this.innerText = "Hide code ▶";
+                }
+            });
+        }
+    });
+</script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="https://quark.docs.amd.com">Quark</a>
+                <a class="header-all-versions" href="https://quark.docs.amd.com/latest/versions.html">Version List</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark/issues/new/choose" id="navsupport" role="button" aria-expanded="false" target="_blank" >
+                                Support
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Quark 0.8rc3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Release Notes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../release_note.html">Release Information</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started with AMD Quark</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction to Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basic_usage.html">Basic Usage</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/basic_usage_pytorch.html">AMD Quark for PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_usage_onnx.html">AMD Quark for ONNX</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pytorch/pytorch_examples.html">Accessing PyTorch Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_diffusers.html">Diffusion Model Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_brevitas.html">AMD Quark Extension for Brevitas Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_llm_pruning.html">Language Model Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_llm_ptq.html">Language Model PTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_llm_qat.html">Language Model QAT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_vision.html">Vision Model Quantization using FX Graph Mode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="onnx_examples.html">Accessing ONNX Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_BFP.html">Block Floating Point (BFP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_MX.html">MX Formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_adaround.html">Fast Finetune AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_adaquant.html">Fast Finetune AdaQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_cle.html">Cross-Layer Equalization (CLE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_gptq.html">GPTQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_mixed_precision.html">Mixed Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_smoothquant.html">Smooth Quant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_ryzenai_autosearch_resnet50.html">Best practice example using auto search for resnet50 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_ryzenai_yolov3_customer_evaluator.html">Best practice example using auto search for yolov3 quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_dynamic_quantization_llama2.html">Quantizing an Llama-2-7b Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_dynamic_quantization_opt.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_image_classification.html">Quantizing a ResNet50-v1-12 Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_language_models.html">Quantizing an OPT-125M Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_weights_only_quant_int4_matmul_nbits_llama2.html">Quantizing an Llama-2-7b Model Using the ONNX MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_weights_only_quant_int8_qdq_llama2.html">Quantizating Llama-2-7b model using MatMulNBits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image_classification_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Image Classification Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="object_detection_example_quark_onnx_ryzen_ai_best_practice.html">Best Practice for Quantizing an Object Detection Model</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced AMD Quark Features for PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pytorch/user_guide_config_description.html">Configuring PyTorch Quantization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/calibration_methods.html">Calibration Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/calibration_datasets.html">Calibration Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../pytorch/quark_save_load.html">Save and Load Quantized Models</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pytorch/export/quark_export.html">Exporting Quantized Models</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/export/quark_export_onnx.html">ONNX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/export/quark_export_hf.html">HuggingFace Format</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../pytorch/export/quark_export_gguf.html">GGUF Format</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../pytorch/export/gguf_llamacpp.html">Bridge from Quark to llama.cpp</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/export/quark_export_quark.html">Quark Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/export/quark_export_oga.html">ONNX Runtime Gen AI Model Builder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../pytorch/quark_torch_best_practices.html">Best Practices for Post-Training Quantization (PTQ)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pytorch/debug.html">Debugging quantization Degradation</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pytorch/llm_quark.html">Language Model Optimization</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_llm_pruning.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_llm_ptq.html">Language Model Post Training Quantization (PTQ) Using Quark</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_llm_qat.html">Language Model QAT Using Quark</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval.html">Language Model Evaluations in Quark</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval_perplexity.html">Perplexity Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval_rouge_meteor.html">Rouge &amp; Meteor Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval_harness.html">LM-Evaluation Harness Evaluations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pytorch/example_quark_torch_llm_eval_harness_offline.html">LM-Evaluation Harness (Offline)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/tutorial_rotation.html">Quantizing with Rotation and SmoothQuant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/tutorial_quarot.html">Rotation-based quantization with QuaRot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../pytorch/smoothquant.html">Activation/Weight Smoothing (SmoothQuant)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pytorch/tutorial_bfp16.html">Block Floating Point 16</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pytorch/extensions.html">Extensions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_pytorch_light.html">Integration with AMD Pytorch-light (APL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/example_quark_torch_brevitas.html">Brevitas Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../pytorch/adv_mx.html">Using MX (Microscaling)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pytorch/adv_two_level.html">Two Level Quantization Formats</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Quark Features for ONNX</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="user_guide_config_description.html">Configuring ONNX Quantization</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Full List of Quantization Config Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config/calibration_methods.html">Calibration methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config/calibration_datasets.html">Calibration datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config/quantization_strategies.html">Quantization Strategies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config/quantization_schemes.html">Quantization Schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config/quantization_symmetry.html">Quantization Symmetry</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide_supported_optype_datatype.html">Data and OP Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gpu_usage_guide.html">Accelerate with GPUs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_mix_precision.html">Mixed Precision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_bfp16_quantization.html">Block Floating Point 16 (BFP16)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_bf16_quantization.html">BF16 Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_microscaling_quantization.html">Microscaling (MX)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_microexponents_quantization.html">Microexponents (MX)</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="accuracy_improvement_algorithms.html">Accuracy Improvement Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="accuracy_algorithms/cle.html">Quantizing Using CrossLayerEqualization (CLE)</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="accuracy_algorithms/ada.html">Quantization Using AdaQuant and AdaRound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="accuracy_algorithms/sq.html">SmoothQuant (SQ)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="accuracy_algorithms/quarot.html">QuaRot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_quark_onnx_gptq.html">Quantizating a model with GPTQ</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide_auto_search.html">Automatic Search for Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_quark_onnx_auto_search.html">Auto search for quantizing a yolov3 ONNX model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ryzen_ai_best_practice.html">Best Practice for Ryzen AI in AMD Quark ONNX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_quark_onnx_ryzenai.html">Best Practice of RyzenAI ONNX Model Quantization using Auto Search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config/user_guide_onnx_model_inference_save_input_npy.html">Using ONNX Model Inference and Saving Input Data in NPY Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optional_utilities.html">Optional Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">Tools</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">APIs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pytorch/pytorch_apis.html">PyTorch APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/torch/pruning/api/index.html">Pruning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/torch/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/torch/export/api/index.html">Export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/torch/pruning/config/index.html">Pruner Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/torch/quantization/config/config/index.html">Quantizer Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/torch/export/config/config/index.html">Exporter Configuration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="onnx_apis.html">ONNX APIs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/onnx/quantization/api/index.html">Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/onnx/optimize/index.html">Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/onnx/calibrate/index.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/onnx/onnx_quantizer/index.html">ONNX Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/onnx/qdq_quantizer/index.html">QDQ Quantizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/onnx/quantization/config/config/index.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autoapi/quark/onnx/quant_utils/index.html">Quantization Utilities</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Troubleshooting and Support</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../pytorch/pytorch_faq.html">PyTorch FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="onnx_faq.html">ONNX FAQ</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="user_guide_config_description.html" class="nav-link">Configuring ONNX Quantization</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Full List of Quantization Configuration Features</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Full List of Quantization Configuration Features</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="full-list-of-quantization-configuration-features">
+<h1>Full List of Quantization Configuration Features<a class="headerlink" href="#full-list-of-quantization-configuration-features" title="Link to this heading">#</a></h1>
+<p>Quantization Configuration</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">quark.onnx</span><span class="w"> </span><span class="kn">import</span> <span class="n">QuantType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">quark.onnx.quantization.config.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span><span class="p">,</span> <span class="n">QuantizationConfig</span>
+<span class="n">quant_config</span> <span class="o">=</span> <span class="n">QuantizationConfig</span><span class="p">(</span>
+    <span class="n">quant_format</span><span class="o">=</span><span class="n">quark</span><span class="o">.</span><span class="n">onnx</span><span class="o">.</span><span class="n">QuantFormat</span><span class="o">.</span><span class="n">QDQ</span><span class="p">,</span>
+    <span class="n">calibrate_method</span><span class="o">=</span><span class="n">quark</span><span class="o">.</span><span class="n">onnx</span><span class="o">.</span><span class="n">PowerOfTwoMethod</span><span class="o">.</span><span class="n">MinMSE</span><span class="p">,</span>
+    <span class="n">input_nodes</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">output_nodes</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">op_types_to_quantize</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">extra_op_types_to_quantize</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">per_channel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">reduce_range</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">activation_type</span><span class="o">=</span><span class="n">quark</span><span class="o">.</span><span class="n">onnx</span><span class="o">.</span><span class="n">QuantType</span><span class="o">.</span><span class="n">QInt8</span><span class="p">,</span>
+    <span class="n">weight_type</span><span class="o">=</span><span class="n">quark</span><span class="o">.</span><span class="n">onnx</span><span class="o">.</span><span class="n">QuantType</span><span class="o">.</span><span class="n">QInt8</span><span class="p">,</span>
+    <span class="n">nodes_to_quantize</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">nodes_to_exclude</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">subgraphs_to_exclude</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">optimize_model</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">use_dynamic_quant</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">use_external_data_format</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">execution_providers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;CPUExecutionProvider&#39;</span><span class="p">],</span>
+    <span class="n">enable_npu_cnn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">enable_npu_transformer</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">convert_fp16_to_fp32</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">convert_nchw_to_nhwc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">include_cle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">include_sq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">include_rotation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">extra_options</span><span class="o">=</span><span class="p">{},)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">global_quant_config</span><span class="o">=</span><span class="n">quant_config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><strong>model_input</strong>: (String) This parameter specifies the file path of the model that is to be quantized.</p></li>
+<li><p><strong>model_output</strong>: (String) This parameter specifies the file path where the quantized model will be saved.</p></li>
+<li><p><strong>calibration_data_reader</strong>: (Object or None) This parameter is a calibration data reader that enumerates the calibration data and generates inputs for the original model. If you wish to use random data for a quick test, you can set calibration_data_reader to None.</p></li>
+<li><p><strong>quant_format</strong>: (String) This parameter is used to specify the quantization format of the model. It has the following options:</p>
+<ul class="simple">
+<li><p>quark.onnx.QuantFormat.QOperator: This option quantizes the model directly using quantized operators.</p></li>
+<li><p>quark.onnx.QuantFormat.QDQ: This option quantizes the model by inserting QuantizeLinear/DeQuantizeLinear into the tensor. It supports 8-bit quantization only.</p></li>
+<li><p>quark.onnx.VitisQuantFormat.QDQ: This option quantizes the model by inserting VitisQuantizeLinear/VitisDequantizeLinear into the tensor. It supports a wider range of bit-widths and precisions.</p></li>
+<li><p>quark.onnx.VitisQuantFormat.FixNeuron (Experimental): This option quantizes the model by inserting FixNeuron (a combination of QuantizeLinear and DeQuantizeLinear) into the tensor. This quant format is currently experimental and cannot use for actual deployment.</p></li>
+</ul>
+</li>
+<li><p><strong>calibrate_method</strong>: (String) The method used in calibration, default to quark.onnx.PowerOfTwoMethod.MinMSE.</p>
+<p>For NPU_CNN platforms, power-of-two methods should be used, options are:</p>
+<ul class="simple">
+<li><p>quark.onnx.PowerOfTwoMethod.NonOverflow: This method get the power-of-two quantize parameters for each tensor to make sure min/max values not overflow.</p></li>
+<li><p>quark.onnx.PowerOfTwoMethod.MinMSE: This method get the power-of-two quantize parameters for each tensor to minimize the mean-square-loss of quantized values and float values. This takes longer time but usually gets better accuracy.</p></li>
+</ul>
+<p>For NPU_Transformer or CPU platforms, float scale methods should be used, options are:</p>
+<ul class="simple">
+<li><p>quark.onnx.CalibrationMethod.MinMax: This method obtains the
+quantization parameters based on the minimum and maximum values of
+each tensor.</p></li>
+<li><p>quark.onnx.CalibrationMethod.Entropy: This method determines the
+quantization parameters by considering the entropy algorithm of each
+tensor’s distribution.</p></li>
+<li><p>quark.onnx.CalibrationMethod.Percentile: This method calculates
+quantization parameters using percentiles of the tensor values.</p></li>
+</ul>
+</li>
+<li><p><strong>input_nodes</strong>: (List of Strings) This parameter is a list of the
+names of the starting nodes to be quantized. Nodes in the model
+before these nodes will not be quantized. For example, this argument
+can be used to skip some pre-processing nodes or stop the first node
+from being quantized. The default value is an empty list ([]).</p></li>
+<li><p><strong>output_nodes</strong>: (List of Strings) This parameter is a list of the
+names of the end nodes to be quantized. Nodes in the model after
+these nodes will not be quantized. For example, this argument can be
+used to skip some post-processing nodes or stop the last node from
+being quantized. The default value is an empty list ([]).</p></li>
+<li><p><strong>op_types_to_quantize</strong>: (List of Strings or None) If specified,
+only operators of the given types will be quantized (e.g., [‘Conv’]
+to only quantize Convolutional layers). By default, all supported
+operators will be quantized.</p></li>
+<li><p><strong>extra_op_types_to_quantize</strong>: (List of Strings or None) If specified,
+the given operator types will be included as additional targets for
+quantization, expanding the set of operators to be quantized without
+replacing the existing configuration (e.g., [‘Gemm’] to include Gemm
+layers in addition to the currently specified types). By default, no
+extra operator types will be added for quantization.</p></li>
+<li><p><strong>per_channel</strong>: (Boolean) Determines whether weights should be
+quantized per channel. The default value is False. For DPU/NPU
+devices, this must be set to False as they currently do not support
+per-channel quantization.</p></li>
+<li><p><strong>reduce_range</strong>: (Boolean) If True, quantizes weights with 7-bits.
+The default value is False. For DPU/NPU devices, this must be set to
+False as they currently do not support reduced range quantization.</p></li>
+<li><p><strong>activation_type</strong>: (QuantType) Specifies the quantization data type
+for activations, options can be found in the table below. The default
+is quark.onnx.QuantType.QInt8.</p></li>
+<li><p><strong>weight_type</strong>: (QuantType) Specifies the quantization data type for
+weights, options can be found in the table below. The default is
+quark.onnx.QuantType.QInt8. For NPU devices, this must be set to
+QuantType.QInt8.</p></li>
+<li><p><strong>nodes_to_quantize</strong>:(List of Strings or None) If specified, only
+the nodes in this list are quantized. The list should contain the
+names of the nodes, for example, [‘Conv__224’, ‘Conv__252’]. The
+default value is an empty list ([]).</p></li>
+<li><p><strong>nodes_to_exclude</strong>:(List of Strings or None) If specified, the
+nodes in this list will be excluded from quantization. The default
+value is an empty list ([]).</p></li>
+<li><p><strong>subgraphs_to_exclude</strong>:(List or None) If specified, the
+nodes in these subgraphs will be excluded from quantization. For example, you can use [([“Conv1”], [“Conv2”]), ([“Relu9”, “MatMul10”])] if you do not want to quantize nodes between “Conv1” and “Conv2” and nodes between “Relu9” and “MatMul10”, as well as these start and end nodes themselves. If the subgraph is complex with multiple start nodes and multiple end nodes, you can use [([start_node1, start_node2], [end_node1, end_node2, end_node3])]. The default
+value is an empty list ([]).</p></li>
+<li><p><strong>optimize_model</strong>:(Boolean) If True, optimizes the model before
+quantization. Model optimization performs certain operator fusion
+that makes quantization tool’s job easier. For instance, a
+Conv/ConvTranspose/Gemm operator followed by BatchNormalization can
+be fused into one during the optimization, which can be quantized
+very efficiently. The default value is True.</p></li>
+<li><p><strong>use_dynamic_quant</strong>: (Boolean) This flag determines whether to apply
+dynamic quantization to the model. If True, dynamic quantization is used;
+if False, static quantization is applied. The default is False.</p></li>
+<li><p><strong>use_external_data_format</strong>: (Boolean) This option is used for large
+size (&gt;2GB) model. The model proto and data will be stored in
+separate files. The default is False.</p></li>
+<li><p><strong>execution_providers</strong>: (List of Strings) This parameter defines the
+execution providers that will be used by ONNX Runtime to do
+calibration for the specified model. The default value
+‘CPUExecutionProvider’ implies that the model will be computed using
+the CPU as the execution provider. You can also set this to other
+execution providers supported by ONNX Runtime such as
+‘CUDAExecutionProvider’ for GPU-based computation, if they are
+available in your environment. The default is
+[‘CPUExecutionProvider’].</p></li>
+<li><p><strong>enable_npu_cnn</strong>: (Boolean) This parameter is a flag that
+determines whether to generate a quantized model that is suitable for
+the DPU/NPU. If set to True, the quantization process will consider
+the specific limitations and requirements of the DPU/NPU, thus
+creating a model that is optimized for DPU/NPU computations. This
+parameter primarily addresses the optimization of CNN based models
+for deployment on DPU/NPU. The default is False. <strong>Note</strong>: In the
+previous versions, “enable_npu_cnn” was named “enable_dpu”.
+“enable_dpu” will be deprecated in future releases, please use
+“enable_npu_cnn” instead.</p></li>
+<li><p><strong>enable_npu_transformer</strong>: (Boolean) This parameter is a flag that
+determines whether to generate a quantized model that is suitable for
+the NPU. If set to True, the quantization process will consider the
+specific limitations and requirements of the NPU, thus creating a
+model that is optimized for NPU computations. This parameter
+primarily addresses the optimization of transformer models for
+deployment on NPU. The default is False.</p></li>
+<li><p><strong>convert_fp16_to_fp32</strong>: (Boolean) This parameter controls whether
+to convert the input model from float16 to float32 before
+quantization. For float16 models, it is recommended to set this
+parameter to True. The default value is False. When using
+convert_fp16_to_fp32 in AMD Quark for ONNX, it requires onnxsim to
+simplify the ONNX model. Please make sure that onnxsim is installed
+by using ‘python -m pip install onnxsim’.</p></li>
+<li><p><strong>convert_nchw_to_nhwc</strong>: (Boolean) This parameter controls whether
+to convert the input NCHW model to input NHWC model before
+quantization. For input NCHW models, it is recommended to set this
+parameter to True. The default value is False.</p></li>
+<li><p><strong>include_cle</strong>: (Boolean) This parameter is a flag that determines
+whether to optimize the models using CrossLayerEqualization; it can
+improve the accuracy of some models. The default is False.</p></li>
+<li><p><strong>include_fast_ft</strong>: (Boolean) This parameter is a flag that
+determines whether to use adaround or adaquant algorithm for
+finetuning, this is an experimental feature. The default is False.</p></li>
+<li><p><strong>include_sq</strong>: (Boolean) This parameter is a flag that determines
+whether to optimize the models using SmoothQuant; it can improve the
+accuracy of transformer-based models like Llama. The default is False.</p></li>
+<li><p><strong>include_rotation</strong>: (Boolean) This parameter is a flag that determines whether
+to optimize the models using QuaRot. It can improve the accuracy of LLMs like
+Llama. RConfigPath must be given if include_rotation is True. The default is False.</p></li>
+<li><p><strong>include_auto_mp</strong>: (Boolean) If True, the auto mixed precision will be turned on.
+The default is False.</p></li>
+<li><p><strong>specific_tensor_precision</strong>: (Boolean) This parameter is a flag
+that determines whether to use tensor-level mixed precision, this is
+an experimental feature. The default is False.</p></li>
+<li><p><strong>log_severity_level</strong>: (Int) This parameter is used to select the
+severity level of screen printing logs. Its value ranges from 0 to 4: 0 for DEBUG,
+1 for INFO, 2 for WARNING, 3 for ERROR and 4 for CRITICAL or FATAL. Default value is 1,
+which means printing all messages including INFO, WARNING, ERROR and etc by default.</p></li>
+<li><p><strong>extra_options</strong>: (Dictionary or None) Contains key-value pairs for
+various options in different cases. Current used:</p>
+<ul class="simple">
+<li><p><strong>ActivationSymmetric</strong>: (Boolean) If True, symmetrize calibration
+data for activations. The default is False.</p></li>
+<li><p><strong>WeightSymmetric</strong>: (Boolean) If True, symmetrize calibration
+data for weights. The default is True.</p></li>
+<li><p><strong>ActivationScaled</strong>: (Boolean) If True, all activations will be scaled to the exact numeric range.
+The default is True for integer data type quantization and False for BFloat16 and Float16, which means
+by default the BFloat16/Float16 quantization will cast float32 tensors to BFloat16/Float16 directly.</p></li>
+<li><p><strong>WeightScaled</strong>: (Boolean) If True, all weights will be scaled to the exact numeric range.
+The default is True for integer data type quantization and False for BFloat16 and Float16, which means
+by default the BFloat16/Float16 quantization will cast float32 tensors to BFloat16/Float16 directly.</p></li>
+<li><p><strong>QuantizeFP16</strong>: (Boolean) If True, the data type of the input model should be float16. It only takes effect when onnxruntime version is 1.18 or above. The default is False.</p></li>
+<li><p><strong>UseFP32Scale</strong>: (Boolean) If True, the scale of the quantized model is converted from float16 to float32 when the quantization is done. It only takes effect only if QuantizeFP16 is True. It must be False when UseMatMulNBits is True. The default is True.</p></li>
+<li><p><strong>UseUnsignedReLU</strong>: (Boolean) If True, the output tensor of ReLU
+and Clip, whose min is 0, will be forced to be asymmetric. The
+default is False.</p></li>
+<li><p><strong>QuantizeBias</strong>: (Boolean) If True, quantize the Bias as a normal
+weights. The default is True. For DPU/NPU devices, this must be
+set to True.</p></li>
+<li><p><strong>Int32Bias</strong>: (Boolean) If True, bias will be quantized in int32
+data type; if false, it will have the same data type as weight. The
+default is False when enable_npu_cnn is True. Otherwise the
+default is True.</p></li>
+<li><p><strong>RemoveInputInit</strong>: (Boolean) If True, initializer in graph
+inputs will be removed because it will not be treated as constant
+value/weight. This may prevent some of the graph optimizations,
+like const folding. The default is True.</p></li>
+<li><p><strong>SimplifyModel</strong>: (Boolean) If True, The input model will be
+simplified using the onnxsim tool. The default is True.</p></li>
+<li><p><strong>EnableSubgraph</strong>: (Boolean) If True, the subgraph will be
+quantized. The default is False. More support for this feature is
+planned in the future.</p></li>
+<li><p><strong>ForceQuantizeNoInputCheck</strong>: (Boolean) If True, latent operators
+such as maxpool and transpose will always quantize their inputs,
+generating quantized outputs even if their inputs have not been
+quantized. The default behavior can be overridden for specific
+nodes using nodes_to_exclude.</p></li>
+<li><p><strong>MatMulConstBOnly</strong>: (Boolean) If True, only MatMul operations
+with a constant ‘B’ will be quantized. The default is False for
+static mode and True for dynmaic mode.</p></li>
+<li><p><strong>AddQDQPairToWeight</strong>: (Boolean) If True, both QuantizeLinear and
+DeQuantizeLinear nodes are inserted for weight, maintaining its
+floating-point format. The default is False, which quantizes
+floating-point weight and feeds it solely to an inserted
+DeQuantizeLinear node. In the PowerOfTwoMethod calibration method,
+this setting will also be effective for the bias.</p></li>
+<li><p><strong>OpTypesToExcludeOutputQuantization</strong>: (List of Strings or None)
+If specified, the output of operators with these types will not be
+quantized. The default is an empty list.</p></li>
+<li><p><strong>DedicatedQDQPair</strong>: (Boolean) If True, an identical and
+dedicated QDQ pair is created for each node. The default is False,
+allowing multiple nodes to share a single QDQ pair as their
+inputs.</p></li>
+<li><p><strong>QDQOpTypePerChannelSupportToAxis</strong>: (Dictionary) Sets the
+channel axis for specific operator types (e.g., {‘MatMul’: 1}).
+This is only effective when per-channel quantization is supported
+and per_channel is True. If a specific operator type supports
+per-channel quantization but no channel axis is explicitly
+specified, the default channel axis will be used. For DPU/NPU
+devices, this must be set to {} as per-channel quantization is
+currently unsupported. The default is an empty dict ({}).</p></li>
+<li><p><strong>UseQDQVitisCustomOps</strong>: (Boolean) If True, The UInt8 and Int8
+quantization will be executed by the custom operations library,
+otherwise by the library of onnxruntime extensions. The default is
+True, only valid in quark.onnx.VitisQuantFormat.QDQ.</p></li>
+<li><p><strong>CalibTensorRangeSymmetric</strong>: (Boolean) If True, the final range
+of the tensor during calibration will be symmetrically set around
+the central point “0”. The default is False. In PowerOfTwoMethod
+calibration method, the default is True.</p></li>
+<li><p><strong>CalibMovingAverage</strong>: (Boolean) If True, the moving average of
+the minimum and maximum values will be computed when the
+calibration method selected is MinMax. The default is False. In
+PowerOfTwoMethod calibration method, this should be set to False.</p></li>
+<li><p><strong>CalibMovingAverageConstant</strong>: (Float) Specifies the constant
+smoothing factor to use when computing the moving average of the
+minimum and maximum values. The default is 0.01. This is only
+effective when the calibration method selected is MinMax and
+CalibMovingAverage is set to True. In PowerOfTwoMethod calibration
+method, this option is unsupported.</p></li>
+<li><p><strong>Percentile</strong>: (Float) If the calibration method is set to
+‘quark.onnx.CalibrationMethod.Percentile,’ then this parameter can
+be set to the percentage for percentile. The default is 99.999.</p></li>
+<li><p><strong>UseRandomData</strong>: (Boolean) Required to be true when the
+RandomDataReader is needed. The default value is false.</p></li>
+<li><p><strong>RandomDataReaderInputShape</strong>: (Dict) It is required to use
+dict {name : shape} to specify a certain input. For example,
+RandomDataReaderInputShape={“image” : [1, 3, 224, 224]} for the
+input named “image”. The default value is an empty dict {}.</p></li>
+<li><p><strong>RandomDataReaderInputDataRange</strong>: (Dict or None) Specifies the
+data range for each inputs if used random data reader
+(calibration_data_reader is None). Currently, if set to None then
+the random value will be 0 or 1 for all inputs, otherwise range
+[-128,127] for unsigned int, range [0,255] for signed int and
+range [0,1] for other float inputs. The default is None.</p></li>
+<li><p><strong>Int16Scale</strong>: (Boolean) If True, the float scale will be
+replaced by the closest value corresponding to M and 2<strong>N, where
+the range of M and 2</strong>N is within the representation range of
+int16 and uint16. The default is False.</p></li>
+<li><p><strong>MinMSEMode</strong>: (String) When using
+quark.onnx.PowerOfTwoMethod.MinMSE, you can specify the method for
+calculating minmse. By default, minmse is calculated using all
+calibration data. Alternatively, you can set the mode to
+“MostCommon”, where minmse is calculated for each batch separately
+and take the most common value. The default setting is ‘All’.</p></li>
+<li><p><strong>ConvertOpsetVersion</strong>: (Int or None) Specifies the target opset version for the ONNX model.
+If set, the model’s opset version will be updated accordingly. The default is None.</p></li>
+<li><p><strong>ConvertBNToConv</strong>: (Boolean) If True, the BatchNormalization
+operation will be converted to Conv operation. The default is True
+when enable_npu_cnn is True.</p></li>
+<li><p><strong>ConvertReduceMeanToGlobalAvgPool</strong>: (Boolean) If True, the
+Reduce Mean operation will be converted to Global Average Pooling
+operation. The default is True when enable_npu_cnn is True.</p></li>
+<li><p><strong>SplitLargeKernelPool</strong>: (Boolean) If True, the large kernel
+Global Average Pooling operation will be split into multiple
+Average Pooling operation. The default is True when enable_npu_cnn
+is True.</p></li>
+<li><p><strong>ConvertSplitToSlice</strong>: (Boolean) If True, the Split operation
+will be converted to Slice operation. The default is True when
+enable_npu_cnn is True.</p></li>
+<li><p><strong>FuseInstanceNorm</strong>: (Boolean) If True, the split instance norm
+operation will be fused to InstanceNorm operation. The default is
+True.</p></li>
+<li><p><strong>FuseL2Norm</strong>: (Boolean) If True, a set of L2norm operations will
+be fused to L2Norm operation. The default is True.</p></li>
+<li><p><strong>FuseGelu</strong>: (Boolean) If True, a set of Gelu operations will
+be fused to Gelu operation. The default is True.</p></li>
+<li><p><strong>FuseLayerNorm</strong>: (Boolean) If True, a set of LayerNorm
+operations will be fused to LayerNorm operation. The default is
+True.</p></li>
+<li><p><strong>ConvertClipToRelu</strong>: (Boolean) If True, the Clip operations that
+has a min value of 0 will be converted to ReLU operations. The
+default is True when enable_npu_cnn is True.</p></li>
+<li><p><strong>SimulateDPU</strong>: (Boolean) If True, a simulation transformation
+that replaces some operations with an approximate implementation
+will be applied for DPU when enable_npu_cnn is True. The default
+is True.</p></li>
+<li><p><strong>ConvertLeakyReluToDPUVersion</strong>: (Boolean) If True, the Leaky
+Relu operation will be converted to DPU version when SimulateDPU
+is True. The default is True.</p></li>
+<li><p><strong>ConvertSigmoidToHardSigmoid</strong>: (Boolean) If True, the Sigmoid
+operation will be converted to Hard Sigmoid operation when
+SimulateDPU is True. The default is True.</p></li>
+<li><p><strong>ConvertHardSigmoidToDPUVersion</strong>: (Boolean) If True, the Hard
+Sigmoid operation will be converted to DPU version when
+SimulateDPU is True. The default is True.</p></li>
+<li><p><strong>ConvertAvgPoolToDPUVersion</strong>: (Boolean) If True, the global or
+kernel-based Average Pooling operation will be converted to DPU
+version when SimulateDPU is True. The default is True.</p></li>
+<li><p><strong>ConvertReduceMeanToDPUVersion</strong>: (Boolean) If True, the
+ReduceMean operation will be converted to DPU version when
+SimulateDPU is True. The default is True.</p></li>
+<li><p><strong>ConvertSoftmaxToDPUVersion</strong>: (Boolean) If True, the Softmax
+operation will be converted to DPU version when SimulateDPU is
+True. The default is False.</p></li>
+<li><p><strong>NPULimitationCheck</strong>: (Boolean) If True, the quantization position
+will be adjust due to the limitation of DPU/NPU. The default is
+True.</p></li>
+<li><p><strong>MaxLoopNum</strong>: (Int) The quantizer adjusts or aligns the quantization
+position through loops, this option is used to set the maximum number of loops.
+The default value is 5.</p></li>
+<li><p><strong>AdjustShiftCut</strong>: (Boolean) If True, adjust the shift cut of
+nodes when NPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AdjustShiftBias</strong>: (Boolean) If True, adjust the shift bias of
+nodes when NPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AdjustShiftRead</strong>: (Boolean) If True, adjust the shift read of
+nodes when NPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AdjustShiftWrite</strong>: (Boolean) If True, adjust the shift write of
+nodes when NPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AdjustHardSigmoid</strong>: (Boolean) If True, adjust the position of hard
+sigmoid nodes when NPULimitationCheck is True. The default is
+True.</p></li>
+<li><p><strong>AdjustShiftSwish</strong>: (Boolean) If True, adjust the shift swish
+when NPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AlignConcat</strong>: (Boolean) If True, adjust the quantization position of
+concat when NPULimitationCheck is True. The default is True,
+when the power-of-two scale is used, otherwise it’s False.</p></li>
+<li><p><strong>AlignPool</strong>: (Boolean) If True, adjust the quantization position of
+pooling when NPULimitationCheck is True. The default is True,
+when the power-of-two scale is used, otherwise it’s False.</p></li>
+<li><p><strong>AlignPad</strong>: (Boolean) If True, adjust the quantization position of
+pad when NPULimitationCheck is True. The default is True,
+when the power-of-two scale is used, otherwise it’s False.</p></li>
+<li><p><strong>AlignSlice</strong>: (Boolean) If True, adjust the quantization position of
+slice when NPULimitationCheck is True. The default is True,
+when the power-of-two scale is used, otherwise it’s False.</p></li>
+<li><p><strong>AlignTranspose</strong>: (Boolean) If True, adjust the quantization position of
+transpose when NPULimitationCheck is True. The default is False.</p></li>
+<li><p><strong>AlignReshape</strong>: (Boolean) If True, adjust the quantization position of
+reshape when NPULimitationCheck is True. The default is False.</p></li>
+<li><p><strong>AdjustBiasScale</strong>: (Boolean) If True, adjust the bias scale equal to activation scale
+multiply by weights scale. The default is True.</p></li>
+<li><p><strong>BFPAttributes</strong>: (Dictionary) A parameter used to specify the
+attributes for BFPFixNeuron.</p>
+<ul>
+<li><p><strong>bfp_method</strong>: (String) BFP method. The options are “to_bfp“ and “to_bfp_prime”,
+corresponding to classic BFP and BFP with micro exponents, respectively.
+The default is ‘to_bfp’.</p></li>
+<li><p><strong>axis</strong>: (Int) The axis for splitting the input tensor into blocks. The default is 1
+but can be modified by the quantizer according to the tensor’s shape.</p></li>
+<li><p><strong>bit_width</strong>: (Int) Bits for the block floating point. For BFP16,
+this parameter should be 16, which consists of three parts: 8 bits shared exponent,
+1 bit sign and 7 bits mantissa. The default is 16.</p></li>
+<li><p><strong>block_size</strong>: (Int) Size of block. The default is 8.</p></li>
+<li><p><strong>sub_block_size</strong>: (Int) Size of sub-block, only effective when bfp_method is “to_bfp_prime”.
+The default is 2.</p></li>
+<li><p><strong>sub_block_shift_bits</strong>: (Int) Bits for the micro exponents of a sub block, only effective
+when bfp_method is “to_bfp_prime”. The default is 1.</p></li>
+<li><p><strong>rounding_mode</strong>: (Int) Rounding mode, 0 for rounding half away from zero, 1 for rounding half
+upward and 2 for rounding half to even. The default is 0.</p></li>
+<li><p><strong>convert_to_bfloat_before_bfp</strong>: (Int) If set to 1, convert the input tensor to BFloat16
+before converting to BFP. The default is 0.</p></li>
+<li><p><strong>use_compiler_version_cpu_kernel</strong>: (Int) If set to 1, use a customized cpu kernel.
+The default is 0.</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p><strong>MXAttributes</strong>: (Dictionary) A parameter used to specify the
+attributes for MXFixNeuron.</p>
+<ul>
+<li><p><strong>element_dtype</strong>: (String) Element data type. The options are “fp8_e5m2”, “fp8_e4m3”,
+“fp6_e3m2”, “fp6_e2m3”, “fp4_e2m1” and “int8”. The default is “int8”.</p></li>
+<li><p><strong>axis</strong>: (Int) The axis for splitting the input tensor into blocks. The default is 1
+but can be modified by the quantizer according to the tensor’s shape.</p></li>
+<li><p><strong>block_size</strong>: (Int) Size of block. The default is 32.</p></li>
+<li><p><strong>rounding_mode</strong>: (Int) Rounding mode, 0 for rounding half away from zero, 1 for rounding half
+upward and 2 for rounding half to even. The default is 0.</p></li>
+</ul>
+</li>
+<li><p><strong>ReplaceClip6Relu</strong>: (Boolean) If True, Replace Clip(0,6) with
+Relu in the model. The default is False.</p></li>
+<li><p><strong>CLESteps</strong>: (Int) Specifies the steps for CrossLayerEqualization
+execution when include_cle is set to true, The default is 1, When
+set to -1, an adaptive CrossLayerEqualization will be conducted.
+The default is 1.</p></li>
+<li><p><strong>CLETotalLayerDiffThreshold</strong>: (Float) Specifies The threshold
+represents the sum of mean transformations of
+CrossLayerEqualization transformations across all layers when
+utilizing CrossLayerEqualization. The default is 2e-7.</p></li>
+<li><p><strong>CLEScaleAppendBias</strong>: (Boolean) Whether the bias be included
+when calculating the scale of the weights, The default is True.</p></li>
+<li><p><strong>CopySharedInit</strong>: (List or None) Specifies the node op_types to run
+duplicating initializer in the model for separate quantization use across
+different nodes, e.g. [‘Conv’, ‘Gemm’, ‘Mul’] input, only shared initializer
+in these nodes will be duplicated. None means that skip this conversion
+while empty list means that run this for all op_types included in the
+given model, default is empty list.</p></li>
+<li><p><strong>FastFinetune</strong>: (Dictionary) A parameter used to specify the
+settings for fast finetune.</p>
+<ul>
+<li><p><strong>OptimAlgorithm</strong>: (String) The specified algorithm for fast finetune. Optional values are “adaround” and “adaquant”. The
+“adaround” adjusts the weights rounding function, which is
+relatively stable and might converge faster. The “adaquant” trains
+the weight (and bias optional) directly, so might have a greater
+improvement if the parameters, especially the learning rate and
+batch size, are optimal. The default value is “adaround”.</p></li>
+<li><p><strong>OptimDevice</strong>: (String) Specifies the compute device used for
+PyTorch model training during fast finetuning. Optional values
+are “cpu”, and “cuda:0”. The default value is “cpu”.</p></li>
+<li><p><strong>InferDevice</strong>: (String) Specifies the compute device used for
+ONNX model inference during fast finetuning. Optional values are
+“cpu” and “cuda:0”. The default value is “cpu”.</p></li>
+<li><p><strong>FixedSeed</strong>: (Int) Seed for random data generator, that makes
+the fast finetuned results could be reproduced.</p></li>
+<li><p><strong>DataSize</strong>: (Int) Specifies the size of the data used for
+finetuning. Its recommended setting the batch size of the data to
+1 in the data reader to ensure counting the size accurately. It
+uses all the data from the data reader by default.</p></li>
+<li><p><strong>BatchSize</strong>: (Int) Batch size for finetuning. The larger batch
+size, usually the better accuracy but the longer training time.
+The default value is 1.</p></li>
+<li><p><strong>NumBatches</strong>: (Int) The mini-batches in a iteration. It should
+always be 1. The default value is 1.</p></li>
+<li><p><strong>NumIterations</strong>: (Int) The Iterations for finetuning. The more
+iterations, the better accuracy but the longer training time. The
+default value is 1000.</p></li>
+<li><p><strong>LearningRate</strong>: (Float) Learning rate of finetuning for all
+layers. It has a significant impact on the accuracy improvement,
+you need to try some learning rates to get a better result for
+your model. The default value is 0.1 for AdaRound and 0.00001 for
+AdaQuant.</p></li>
+<li><p><strong>EarlyStop</strong>: (Bool) If average loss of a certain number of
+iterations decreases comparing with the previous one, the training
+of the layer will stop early. It will accelerate the finetuning
+process and avoid overfitting. The default value is False.</p></li>
+<li><p><strong>LRAdjust</strong>: (Tuple) Besides the overall learning rate, users
+could set up a scheme to adjust learning rate further according to
+the mean square error (MSE) between the quantized module and
+original float module. Its a tuple contains two members, the
+first one is a threshold of the MSE and the second one is the new
+learning rate. For example, setting as (1.0, 0.2) means using a
+new learning rate 0.2 for the layer whose MSE is bigger than 1.0.</p></li>
+<li><p><strong>TargetOpType</strong>: (List) The target operation types to finetune.
+The default value is [Conv, ConvTranspose, Gemm, MatMul,
+InstanceNormalization]. The MatMul node must have one and only one
+set of weights.</p></li>
+<li><p><strong>SelectiveUpdate</strong>: (Bool) If the end-to-end accuracy does not
+improve after finetuned a certain layer, discard the optimized
+weight (and bias) of the layer. The default value is False.</p></li>
+<li><p><strong>UpdateBias</strong>: (Bool) Specifies whether to update bias
+parameters during fine-tuning. Its only available for AdaQuant.
+The default value is False.</p></li>
+<li><p><strong>OutputQDQ</strong>: (Bool) Specifies whether include the output
+tensors QDQ pair of the compute nodes for finetuning. The default
+value is False.</p></li>
+<li><p><strong>DropRatio</strong>: (Float) Specifies the ratio to drop the input
+data from the float module. It ranges from 0 to 1, 0 represents
+the input data is from the float module fully, 1 represents all
+from quantized module. The default value is 0.5.</p></li>
+<li><p><strong>LogPeriod</strong>: (Int) Indicate how many iterations to print the
+log once. The default value is NumIterations/10.</p></li>
+</ul>
+</li>
+<li><p><strong>SmoothAlpha</strong>: (Float) This parameter control how much
+difficulty we want to migrate from activation to weights, The
+default value is 0.5.</p></li>
+<li><p><strong>RMatrixDim</strong>: (Int) Specifies the dimension for constructing
+rotation matrix. The default value is 4096.</p></li>
+<li><p><strong>UseRandomHad</strong>: (Boolean) If True, the rotation matrix will be
+generated by the random Hadamard scheme. The default is False.</p></li>
+<li><p><strong>RConfigPath</strong>: (String) Set the path for rotation config file.
+This is necessary when using QuaRot. The default is “”.</p></li>
+<li><p><strong>RemoveQDQConvClip</strong>: (Boolean) If True, the QDQ between
+Conv/Add/Gemm and Clip will be removed for DPU. The default is
+True.</p></li>
+<li><p><strong>RemoveQDQConvRelu</strong>: (Boolean) If True, the QDQ between
+Conv/Add/Gemm and Relu will be removed for DPU. The default is
+True.</p></li>
+<li><p><strong>RemoveQDQConvLeakyRelu</strong>: (Boolean) If True, the QDQ between
+Conv/Add/Gemm and LeakyRelu will be removed for DPU. The default
+is True.</p></li>
+<li><p><strong>RemoveQDQConvPRelu</strong>: (Boolean) If True, the QDQ between
+Conv/Add/Gemm and PRelu will be removed for DPU. The default is
+True.</p></li>
+<li><p><strong>RemoveQDQConvGelu</strong>: (Boolean) If True, the QDQ between
+Conv/Add/Gemm and Gelu will be removed. The default is False.</p></li>
+<li><p><strong>RemoveQDQMulAdd</strong>: (Boolean) If True, the QDQ between
+Mul and Add will be removed for NPU. The default is False.</p></li>
+<li><p><strong>RemoveQDQBetweenOps</strong>: (List of tuples (Strings, Strings) or None)
+This parameter accepts a list of tuples representing operation type
+pairs (e.g., Conv and Relu). If set, the QDQ between the specified
+pairs of operations will be removed for NPU. The default is None.</p></li>
+<li><p><strong>RemoveQDQInstanceNorm</strong>: (Boolean) If True, the QDQ between
+InstanceNorm and Relu/LeakyRelu/PRelu will be removed for DPU. The
+default is False.</p></li>
+<li><p><strong>FoldBatchNorm</strong>: (Boolean) If True, the BatchNormalization
+operation will be fused with Conv, ConvTranspose or Gemm
+operation. The BatchNormalization operation after Concat operation
+will also be fused, if the all input operations of the Concat
+operation are Conv, ConvTranspose or Gemm operatons.The default is
+True.</p></li>
+<li><p><strong>BF16WithClip</strong>: (Boolean) If True, during BFloat16
+quantization, insert “Clip” node before “VitisQuantizeLinear” node to
+add boundary protection for activation. The default is False.</p></li>
+<li><p><strong>BF16QDQToCast</strong>: (Boolean) If True, during BFloat16
+quantization, replace QuantizeLinear/DeQuantizeLinear ops with Cast
+ops to accelerate BFloat16 quantized inference. The default is False.</p></li>
+<li><p><strong>FixShapes</strong>: (String) Set the input_shapes of the quantized
+model to a fixed shape by default if not explicitly specified. The
+example: ‘FixShapes’:’input_1:[1,224,224,3];input_2:[1,96,96,3]’</p></li>
+<li><p><strong>MixedPrecisionTensor</strong>: (Dictionary) A parameter used to specify
+the settings for mixed precision tensors. It is a dictionary where
+the keys are of the VitisQuantType/QuantType enumeration type, and
+the values are lists containing tensors that need to be processed
+using mixed precision.
+Example:”MixedPrecisionTensor”:{quark.onnx.VitisQuantType.QBFloat16:[‘/stem/stem.2/Relu_output_0’,
+‘onnx::Conv_664’, ‘onnx::Conv_665’]} <strong>Note</strong>:If there is a tensor
+with bias, ‘Int32Bias’ needs set to False.</p></li>
+<li><p><strong>AutoMixprecision</strong>: (Dictionary) A parameter used to specify the
+settings for auto mixed precision.</p>
+<ul>
+<li><p><strong>DataSize</strong>: (Int) Specifies the size of the data used for mix-precision. The entire data reader will be used by default.</p></li>
+<li><p><strong>TargetOpType</strong>: (Set) The user defined op type set for mix-precision. The default value is (‘Conv’, ‘ConvTranspose’, ‘Gemm’, ‘MatMul’).</p></li>
+<li><p><strong>TargetQuantType</strong>: (QuantType) Activation data type to be mixed in the model if ‘ActTargetQuantType’ is not given. Error will be raised if TargetQuantType is not specified.</p></li>
+<li><p><strong>ActTargetQuantType</strong>: (QuantType) Activation data type to be mixed in the model.
+If both ActTargetQuantType and WeightTargetQuantType are not specified, the ActTargetQuantType will be same as TargetQuantType.
+If only ActTargetQuantType is not specified, the ActTargetQuantType will be the original activation_type.</p></li>
+<li><p><strong>WeightTargetQuantType</strong>: (QuantType) Weight data type to be mixed in the model.
+If both ActTargetQuantType and WeightTargetQuantType are not specified, the ActTargetQuantType will be same as TargetQuantType.
+If only WeightTargetQuantType is not specified, the WeightTargetQuantType will be the original weight_type.</p></li>
+<li><p><strong>BiasTargetQuantType</strong>: (QuantType) Bias data type to be mixed in the model.
+If BiasTargetQuantType is not specified and Int32Bias is True, the BiasTargetQuantType will be int32.
+If BiasTargetQuantType is not specified and Int32Bias is False, the BiasTargetQuantType will be same as WeightTargetQuantType.</p></li>
+<li><p><strong>OutputIndex</strong>: (Int) The index of model output to be calculated for loss.</p></li>
+<li><p><strong>L2Target</strong>: (Float) The L2 loss will be no larger than the L2Target.
+If L2Target is not specified, the model will be quantized to the target quant type.</p></li>
+<li><p><strong>Top1AccTarget</strong>: (Float) The Top1 accuracy loss will be no larger than the Top1AccTarget.
+If Top1AccTarget is not specified, the model will be quantized to the target quant type.</p></li>
+<li><p><strong>EvaluateFunction</strong>: (Function) The function to measure top1 accuracy loss. Input of the function is model output(numpy tensor),
+output of the function is top1 accuracy(between 0~1). If EvaluateFunction is not specified while Top1AccTarget is given, error will be raised.</p></li>
+<li><p><strong>NumTarget</strong>: (Int) Specified the number of nodes for mix-precision to minimize the loss. The default value of NumTarget is 0.</p></li>
+<li><p><strong>TargetTensors</strong>: (List) Specified the names of nodes to mix into the target quant type. It’s a experimental option and will be deprecated in the future. The default value is [].</p></li>
+<li><p><strong>TargetIndices</strong>: (List) Specified the indices (based on sensitivity analysis results) of the nodes to mix into the target quant type. The default value is [].</p></li>
+<li><p><strong>ExcludeIndices</strong>: (List) Specified the indices (based on sensitivity analysis results) of the nodes not to mix into the target quant type. The default value is [].</p></li>
+<li><p><strong>NoInputQDQShared</strong>: (Bool) If True, will skip the nodes who shared the input Q/DQ pair with other nodes. The default value is True.</p></li>
+<li><p><strong>AutoMixUseFastFT</strong>: (Bool) If True, will perform fast finetune to improve accuracy after mixed a layer. The default value is False.</p></li>
+</ul>
+</li>
+<li><p><strong>FoldRelu</strong>: (Boolean) If True, the Relu will be fold to Conv
+when use VitisQuantFormat. The default is False.</p></li>
+<li><p><strong>CalibDataSize</strong>: (Int) This parameter controls how many data are
+used for calibration. The default to using all the data in the
+calibration dataloader.</p></li>
+<li><p><strong>SaveTensorHistFig</strong>: (Boolean) If True, save the tensor
+histogram to the file ‘tensor_hist’ in the working directory. The
+default is False.</p></li>
+<li><p><strong>QuantizeAllOpTypes</strong>: (Boolean) If True, all operation types will be quantized.
+In the BF16 config, the default is True, while for others, the default is False.</p></li>
+<li><p><strong>WeightsOnly</strong>: (Boolean) If True, only quantize weights of the
+model. The default is False.</p></li>
+<li><p><strong>AlignEltwiseQuantType</strong>: (Boolean) If True, quantize weights of the node with the activation quant type if node type in [Mul, Add, Sub, Div, Min, Max] when quant_format is VitisQuantFormat.QDQ and enable_npu_cnn is False and enable_npu_transformer is False. The default is False.</p></li>
+<li><p><strong>EnableVaimlBF16</strong>: (Boolean) If True, the bfloat16 quantized model with vitis qdq will be converted to a bfloat16 quantized model with bfloat16 weights stored as float32. Vaiml is the name of a compiler, the bfloat16 quantized model can be directly deployed on the compiler if the parameter is True. The default is False.</p></li>
+<li><p><strong>UseGPTQ</strong>: (Boolean) If True, GPTQ algorithm will be applied to the
+model. The default is False.</p></li>
+<li><p><strong>GPTQParams</strong>: (Dictionary) A parameter used to specify the
+settings for GPTQ.</p>
+<ul>
+<li><p><strong>Bits</strong>: (int) The quantization bits used in GPTQ. The default is 8.</p></li>
+<li><p><strong>BlockSize</strong>: (int) The block size in GPTQ determines
+how many columns of weights will be quantized for one update. The default is 128.</p></li>
+<li><p><strong>GroupSize</strong>: (int) The group size in GPTQ determines how many columns of weights share one set of scale and zero-point. The default is -1.</p></li>
+<li><p><strong>PercDamp</strong>: (int) Percent of the average Hessian diagonal to use for dampening. The default is 0.01.</p></li>
+<li><p><strong>ActOrder</strong>: (Boolean) Determine whether to re-order Hessian matrix according the values of diag. The default is False.</p></li>
+<li><p><strong>PerChannel</strong>: (Boolean) Determine whether perform per-channel quantization in GPTQ. The default is False.</p></li>
+<li><p><strong>MSE</strong>: (Boolean) Determine whether to use MSE method to do data calibration in GPTQ. The default is False.</p></li>
+</ul>
+</li>
+<li><p><strong>UseMatMulNBits</strong>: (Boolean) If True, only quantize weights with nbits for MatMul of the
+model. The default is False.</p></li>
+<li><p><strong>MatMulNBitsParams</strong>: (Dictionary) A parameter used to specify the
+settings for MatMulNBits Quantizer.</p>
+<ul>
+<li><p><strong>Algorithm</strong>: (str) The algorithm in MatMulNBits Quantization determines which algorithm (“DEFAULT”, “GPTQ”, “HQQ”) to be used to quantize weights. The default is “DEFAULT”.</p></li>
+<li><p><strong>GroupSize</strong>: (int) The block size in MatMulNBits Quantization determines how many weights share a scale. The default is 128.</p></li>
+<li><p><strong>Symmetric</strong>: (Boolean) If True, symmetrize quantization for weights. The default is True.</p></li>
+<li><p><strong>Bits</strong>: (int) The target bits to quantize. Only 4b quantization is supported for inference, additional bits support is planned.</p></li>
+<li><p><strong>AccuracyLevel</strong>: (int) The quantization level of input, can be: 0(unset), 1(fp32), 2(fp16), 3(bf16), or 4(int8). The default is 0.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Table 7. Quantize Types can be selected for different Quantize Formats</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>quant_format</p></th>
+<th class="head"><p>quant_type</p></th>
+<th class="head"><p>comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>QuantFormat.QDQ</p></td>
+<td><p>QuantType.QUInt8
+QuantType.QInt8
+QuantType.QUInt4
+QuantType.QInt4</p></td>
+<td><p>Implemented by native
+QuantizeLi
+near/DequantizeLinear</p></td>
+</tr>
+<tr class="row-odd"><td><p>quark.onnx
+.VitisQuantFormat.QDQ</p></td>
+<td><p>QuantType.QUInt8
+QuantType.QInt8
+quark.onnx.V
+itisQuantType.QUInt16
+quark.onnx.
+VitisQuantType.QInt16
+quark.onnx.V
+itisQuantType.QUInt32
+quark.onnx.
+VitisQuantType.QInt32
+quark.onnx.Vi
+tisQuantType.QFloat16
+quark.onnx.Vit
+isQuantType.QBFloat16</p></td>
+<td><p>Implemented by
+customized
+VitisQuantizeLinear/
+VitisDequantizeLinear</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Note</strong>: For pure [UInt4, Int4, UInt8, Int8] quantization, we recommend that users
+set quant_format to QuantFormat.QDQ as it uses native
+QuantizeLinear/DequantizeLinear operations which may have offer better
+compatibility and performance.</p>
+<blockquote>
+<div><p>Additionally, for UINT4 and INT4 quantization types, ONNX Runtime version 1.19.0 or later is required. Users must ensure that the <code class="docutils literal notranslate"><span class="pre">calibration_method</span></code> is a native ORT quantization method (MinMax, Percentile, etc.).</p>
+</div></blockquote>
+<!--
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+--></section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="user_guide_config_description.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Configuring ONNX Quantization</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="config/calibration_methods.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Calibration Methods</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on Feb 14, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://quark.docs.amd.com/latest/license.html">Quark Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2024 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>
