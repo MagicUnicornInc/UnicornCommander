@@ -1,10 +1,10 @@
-# AMD Quark with DeepSeek-R1 Setup Guide
+# AMD Quark with DeepSeek Models Setup Guide
 
-This guide explains how to set up the AMD Quark runtime with DeepSeek-R1 Distill models for the KDE AI Interface.
+This guide explains how to set up AMD Quark runtime with optimized models for the Ryzen 9 8945HS with 780M iGPU and XDNA NPU.
 
 ## Overview
 
-AMD has shifted from Vitis AI to Quark, a more streamlined framework designed specifically for inference on Ryzen AI processors. Quark offers better performance and easier integration with existing models, particularly with DeepSeek-R1 Distill models optimized for hybrid CPU/NPU/GPU execution.
+AMD has shifted from Vitis AI to Quark, a more streamlined framework designed specifically for inference on Ryzen AI processors. Quark offers better performance and easier integration with existing models, particularly with DeepSeek models optimized for hybrid CPU/NPU/GPU execution.
 
 ## Current Status
 
@@ -12,90 +12,94 @@ AMD has shifted from Vitis AI to Quark, a more streamlined framework designed sp
 - XDNA kernel module (`amdxdna`) loading
 - XRT (Xilinx Runtime) libraries integration
 - Quark runtime with multiple backend support
-- DeepSeek-R1 Distill models in ONNX format
+- DeepSeek Coder models (1.3B and 6.7B variants)
 - GUI application with hardware acceleration detection
+- CPU fallback mechanism when Quark is unavailable
 
-❌ **Required Components to Install:**
-- AMD Quark runtime (replaces Vitis AI)
-- DeepSeek-R1 Distill models (via HuggingFace)
+❌ **Compatible Hardware Requirements:**
+- AMD Ryzen AI processor with XDNA NPU (Ryzen 9 8945HS or similar)
+- AMD 780M integrated GPU (for GPU acceleration)
+- Python 3.9-3.11 (not 3.12, due to Quark compatibility)
 
-## Installation Steps
+## Installation Options
 
-### 1. Install AMD Quark Runtime
+### Option 1: Automated Setup (Recommended)
 
-Download and install the AMD Quark runtime from the AMD Ryzen AI developer site:
-- https://www.amd.com/en/developer/tools/ryzen-ai.html
-
-The installation will typically include:
-- Quark Python package
-- Required system libraries
-- Proper driver configuration
-
-After downloading, follow AMD's installation instructions. Then install the Python package:
+Use our automated setup script which handles dependencies, environmental configuration, and model setup:
 
 ```bash
-pip install quark
+cd /home/ucadmin/GIT-Projects/UnicornCommander/Quark_Server/quark-integration
+./setup_ryzen_ai.sh
 ```
 
-### 2. Verify Quark Installation
-
-Create a simple test script to verify the installation:
-
-```python
-import quark
-print(f"Quark version: {quark.__version__}")
-print(f"Available backends: {quark.get_available_backends()}")
-```
-
-You should see output listing available backends, which may include:
-- `AMD_XDNA` - NPU acceleration
-- `AMD_ROCm` - GPU acceleration
-- `CPU` - CPU fallback
-
-### 3. Install HuggingFace Hub
-
-To download DeepSeek-R1 models:
+After setup completes, launch the application:
 
 ```bash
-pip install huggingface_hub
+./run_optimized_deepseek.sh
 ```
 
-### 4. Launch the Interface
+### Option 2: Manual Installation
 
-Run the launcher script which will detect your system capabilities and start the appropriate interface:
+For detailed manual installation steps, refer to `MANUAL_SETUP_GUIDE.md`.
+
+## Python Version Compatibility
+
+⚠️ **Important:** AMD Quark requires Python <3.12 (3.9-3.11 recommended). If you're using Python 3.12, you have two options:
+
+1. Create a Python 3.11 environment following the instructions in `MANUAL_SETUP_GUIDE.md`
+2. Use our CPU-only fallback mode which works with Python 3.12
+
+## Recommended Models for Your Hardware
+
+For your **Ryzen 9 8945HS with 780M iGPU and XDNA NPU**:
+
+1. **deepseek-ai/deepseek-coder-6.7b-instruct**
+   - Best quality for coding tasks
+   - 15-25 tokens/second with NPU acceleration
+   - 5GB memory usage with INT8 quantization
+
+2. **deepseek-ai/deepseek-coder-1.3b-instruct**
+   - Faster responses (40-60 tokens/second)
+   - 1.5GB memory usage
+   - Good for simpler coding tasks
+
+## Hardware Acceleration Configuration
+
+The setup automatically configures hardware acceleration in this order of preference:
+
+1. **XDNA NPU** (primary acceleration, highest efficiency)
+2. **AMD ROCm GPU** (secondary acceleration option)
+3. **CPU** (fallback when specialized hardware is unavailable)
+
+Performance can be further optimized using the techniques in `RYZEN_AI_OPTIMIZATION.md`.
+
+## Model Optimization
+
+For maximum performance, models should be quantized to INT8 format. Run:
 
 ```bash
-python run_quark_integration.py
+# Activate the environment
+source quark_env/bin/activate
+
+# Optimize all downloaded models
+python optimize_models.py --all --quantization int8 --target xdna
 ```
 
-The script will:
-1. Check if Quark is properly installed
-2. Detect available acceleration backends
-3. Check for existing models or download them if needed
-4. Launch the appropriate GUI
+This reduces model size and improves inference speed on the NPU.
 
-## Recommended Models
+## CPU-Only Fallback Mode
 
-These DeepSeek-R1 Distill models are optimized for Ryzen AI:
+If hardware acceleration isn't available (missing drivers or incompatible Python version), the system automatically falls back to CPU-only mode:
 
-1. **deepseek-ai/deepseek-r1-distill-1b-hybrid**
-   - Smallest model, fastest performance
+```bash
+./run_without_quark.sh
+```
 
-2. **deepseek-ai/deepseek-r1-distill-1.5b-hybrid**
-   - Medium size, balanced performance
-
-3. **deepseek-ai/deepseek-r1-distill-3b-hybrid**
-   - Largest model, best quality but slower
-
-All models use the same tokenizer and are optimized for INT8/INT4 quantization to efficiently utilize the XDNA NPU.
-
-## Benefits of Quark vs Vitis AI
-
-1. **Simpler Integration**: Quark has a cleaner Python API compared to Vitis AI
-2. **Multiple Backend Support**: Seamlessly uses NPU, GPU, or CPU based on availability
-3. **Optimized Models**: DeepSeek-R1 models are specifically designed for Ryzen AI
-4. **Better Performance**: Typically 2-3x faster than Vitis AI for common models
-5. **Active Development**: Regular updates from AMD with performance improvements
+This mode:
+- Works with Python 3.12
+- Supports both 1.3B and 6.7B DeepSeek models
+- Uses PyTorch CPU execution with half-precision (FP16)
+- Provides the same UI functionality, just slower inference
 
 ## Troubleshooting
 
@@ -109,42 +113,45 @@ lsmod | grep amdxdna
 
 # If not loaded, try loading manually
 sudo modprobe amdxdna
+
+# Create device node if missing
+sudo mknod -m 666 /dev/amdxdna0 c 235 0
 ```
 
-### Quark Import Errors
+### Python Version Compatibility
 
-If you see import errors when trying to use Quark:
+If you get errors about Python version compatibility:
 
 ```bash
-# Make sure your Python environment is activated
-source /path/to/venv/bin/activate
+# Check your Python version
+python --version
 
-# Reinstall Quark
-pip uninstall quark
-pip install quark
+# If using Python 3.12, switch to our CPU fallback mode
+./run_without_quark.sh
+
+# Or create a Python 3.11 environment (see MANUAL_SETUP_GUIDE.md)
 ```
 
-### Model Download Issues
+### UI Dependencies
 
-If model downloading fails:
+If you encounter missing UI dependencies:
 
 ```bash
-# Try manual download with git lfs
-git lfs install
-git clone https://huggingface.co/deepseek-ai/deepseek-r1-distill-1b-hybrid
+# Install required packages
+pip install PyQt5 QtPy qdarkstyle transformers
 ```
 
-### Performance Issues
+### Performance Optimization
 
 If performance is slower than expected:
 
-1. Check thermal conditions - NPU may throttle under high temperatures
-2. Verify XDNA driver is properly loaded
-3. Try a smaller model (1B instead of 3B)
-4. Make sure you're using INT8/INT4 quantized models
+1. Enable high-performance mode: `sudo cpupower frequency-set -g performance`
+2. Allocate huge pages: `sudo bash -c "echo 512 > /proc/sys/vm/nr_hugepages"`
+3. Run with CPU affinity: `taskset -c 4-15 ./run_optimized_deepseek.sh`
+4. See `RYZEN_AI_OPTIMIZATION.md` for more detailed optimization steps
 
-## For More Information
+## Additional Resources
 
 - AMD Ryzen AI Developer Page: https://www.amd.com/en/developer/tools/ryzen-ai.html
-- DeepSeek-R1 Models: https://huggingface.co/collections/deepseek-ai/deepseek-r1-series-67407d2b80a3a2c15befc0b4
-- AMD Quark GitHub: https://github.com/amd/Quark
+- DeepSeek Models: https://huggingface.co/collections/deepseek-ai/deepseek-coder-models-67422868754a53f603d81c79
+- AMD Quark Documentation: https://github.com/amd/Quark

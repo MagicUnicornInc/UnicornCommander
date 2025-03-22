@@ -1,32 +1,48 @@
 #!/bin/bash
-# Fallback script for running DeepSeek without Quark
+# Launch script for optimized DeepSeek models on AMD Ryzen AI
 
-# Activate the environment if it exists
-if [ -d "quark_env" ]; then
-    source quark_env/bin/activate
-fi
+# Activate environment
+source quark_env/bin/activate
+source quark_env.sh 2>/dev/null || echo "Environment file not found, using defaults"
 
-# Check for GUI dependencies
-python -c "import PyQt5" || pip install PyQt5 QtPy qdarkstyle
+# Check Quark availability
+echo "Checking Quark availability..."
+HAS_QUARK=0
+python -c "import quark; print(f'Quark version: {quark.__version__}'); print(f'Available backends: {quark.get_available_backends()}')" && HAS_QUARK=1 || echo "❌ Quark not available - continuing with CPU fallback"
 
-# Install transformers if needed
-python -c "import transformers" || pip install transformers huggingface_hub
+# Check for PyQt5
+echo "Checking UI dependencies..."
+python -c "import PyQt5; print('PyQt5 available')" || pip install PyQt5 QtPy qdarkstyle
 
-# Launch the CPU-only GUI 
-cat > cpu_deepseek_gui.py << 'EOF'
+# Launch the appropriate GUI
+if [ $HAS_QUARK -eq 1 ]; then
+    echo "Launching DeepSeek GUI with Quark acceleration..."
+    python quark_deepseek_gui.py
+else
+    echo "Launching DeepSeek GUI in fallback mode..."
+    # Run the fallback GUI version that doesn't require Quark
+    if [ -f "run_without_quark.sh" ]; then
+        bash ./run_without_quark.sh
+    else
+        echo "Creating fallback CPU-only interface..."
+        # Check which GUI file exists
+        if [ -f "test_quark_deepseek.py" ]; then
+            python test_quark_deepseek.py --cpu-only
+        else
+            # Create a minimal fallback GUI
+            cat > fallback_deepseek_gui.py << 'EOF'
 #!/usr/bin/env python3
 import sys
 import os
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QTextEdit, QLineEdit, QPushButton, QLabel, QComboBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QTextEdit, QLineEdit, QPushButton, QLabel
 from PyQt5.QtCore import Qt
 import qdarkstyle
-import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-class CPUDeepSeekGUI(QMainWindow):
+class FallbackDeepSeekGUI(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("DeepSeek CPU Interface - Ryzen 9 8945HS")
+        self.setWindowTitle("DeepSeek Fallback Interface (CPU Mode)")
         self.resize(900, 700)
         
         # Create central widget and layout
@@ -35,16 +51,8 @@ class CPUDeepSeekGUI(QMainWindow):
         layout = QVBoxLayout(central_widget)
         
         # Status label
-        self.status_label = QLabel("Detecting available models...")
+        self.status_label = QLabel("Loading model in CPU-only mode (this may take a while)...")
         layout.addWidget(self.status_label)
-        
-        # Model selector
-        model_layout = QVBoxLayout()
-        model_label = QLabel("Select Model:")
-        self.model_selector = QComboBox()
-        model_layout.addWidget(model_label)
-        model_layout.addWidget(self.model_selector)
-        layout.addLayout(model_layout)
         
         # Chat history display
         self.chat_display = QTextEdit()
@@ -61,77 +69,39 @@ class CPUDeepSeekGUI(QMainWindow):
         self.send_button.clicked.connect(self.send_message)
         layout.addWidget(self.send_button)
         
-        # Find available models
-        self.detect_models()
-        
-        # Load model when selected
-        self.model_selector.currentIndexChanged.connect(self.load_model)
-        
-        # Set up initial values
-        self.model = None
-        self.tokenizer = None
-        
-    def detect_models(self):
-        try:
-            models_dir = "models"
-            available_models = []
-            
-            # Check for models
-            if os.path.exists(os.path.join(models_dir, "deepseek-coder-1.3b-instruct")):
-                available_models.append(("DeepSeek Coder 1.3B", os.path.join(models_dir, "deepseek-coder-1.3b-instruct")))
-                
-            if os.path.exists(os.path.join(models_dir, "deepseek-coder-6.7b-instruct")):
-                available_models.append(("DeepSeek Coder 6.7B", os.path.join(models_dir, "deepseek-coder-6.7b-instruct")))
-            
-            if not available_models:
-                self.status_label.setText("❌ No models found in 'models' directory!")
-                return
-                
-            # Add models to selector
-            self.models = available_models
-            for model_name, _ in available_models:
-                self.model_selector.addItem(model_name)
-                
-            self.status_label.setText(f"Found {len(available_models)} models")
-            
-        except Exception as e:
-            self.status_label.setText(f"❌ Error detecting models: {str(e)}")
+        # Load model
+        self.load_model()
         
     def load_model(self):
         try:
-            index = self.model_selector.currentIndex()
-            if index < 0 or index >= len(self.models):
+            # Check for available model
+            models_dir = "models"
+            if os.path.exists(os.path.join(models_dir, "deepseek-coder-1.3b-instruct")):
+                model_path = os.path.join(models_dir, "deepseek-coder-1.3b-instruct")
+                self.status_label.setText("Loading DeepSeek 1.3B model (smaller, faster)...")
+            elif os.path.exists(os.path.join(models_dir, "deepseek-coder-6.7b-instruct")):
+                model_path = os.path.join(models_dir, "deepseek-coder-6.7b-instruct")
+                self.status_label.setText("Loading DeepSeek 6.7B model (larger, may be slow on CPU)...")
+            else:
+                self.status_label.setText("❌ No models found in 'models' directory!")
                 return
                 
-            model_name, model_path = self.models[index]
-            self.status_label.setText(f"Loading {model_name} (this may take a while)...")
-            QApplication.processEvents()  # Update the UI
-            
             # Load tokenizer
             self.tokenizer = AutoTokenizer.from_pretrained(model_path)
             
-            # Load model with limited precision to save memory
+            # Load model in CPU mode
             self.model = AutoModelForCausalLM.from_pretrained(
                 model_path,
-                torch_dtype=torch.float16,
                 device_map="cpu",
                 low_cpu_mem_usage=True,
             )
-            
-            self.status_label.setText(f"✅ Model loaded: {model_name}")
-            self.chat_display.append(f"<b>System:</b> {model_name} loaded successfully. This is running in CPU-only mode, so responses may be slow.")
-            
+            self.status_label.setText(f"✅ Model loaded: {os.path.basename(model_path)} (CPU-only mode)")
         except Exception as e:
             self.status_label.setText(f"❌ Error loading model: {str(e)}")
-            self.chat_display.append(f"<b>System:</b> Error loading model: {str(e)}")
     
     def send_message(self):
         user_message = self.input_field.toPlainText().strip()
         if not user_message:
-            return
-            
-        if self.model is None or self.tokenizer is None:
-            self.chat_display.append("<b>System:</b> Please select and load a model first.")
             return
             
         # Clear input field
@@ -142,7 +112,7 @@ class CPUDeepSeekGUI(QMainWindow):
         
         try:
             # Generate response
-            self.status_label.setText("Generating response... (CPU-only mode, please be patient)")
+            self.status_label.setText("Generating response... (may take a while in CPU-only mode)")
             QApplication.processEvents()  # Update the UI
             
             # Prepare prompt
@@ -178,9 +148,11 @@ class CPUDeepSeekGUI(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-    window = CPUDeepSeekGUI()
+    window = FallbackDeepSeekGUI()
     window.show()
     sys.exit(app.exec_())
 EOF
-
-python cpu_deepseek_gui.py
+            python fallback_deepseek_gui.py
+        fi
+    fi
+fi
