@@ -1,42 +1,62 @@
- 
-# AI Assistant Interface for KDE Plasma - Project Document
+# AI Assistant Interface for KDE Plasma 6 - Project Document
 
 ## Project Overview
 
-This document outlines the development of a native KDE Plasma interface for interacting with AI models through MCP (Model Context Protocol) servers. The interface will provide a seamless, system-level AI assistant experience similar to Spotlight or ChatGPT's floating window.
+This document outlines the development of a native KDE Plasma 6 interface for interacting with AI models through the UnicornCommander ecosystem. The interface provides a seamless, system-level AI assistant experience with advanced memory features, agent capabilities, and multiple backend options including hardware acceleration.
 
 ## 1. System Architecture
 
 ```
-┌───────────────────────┐     ┌─────────────────┐     ┌───────────────────┐
-│  KDE Plasma Interface │     │                 │     │                   │
-│  ┌─────────────────┐  │     │  MCP Protocol   │     │   AI Models       │
-│  │ Quick Access UI │──┼────►│  Interface      │────►│   (Local/Remote)  │
-│  └─────────────────┘  │     │                 │     │                   │
-└───────────────────────┘     └─────────────────┘     └───────────────────┘
+┌─────────────────────────────────────┐
+│        UnicornCommander System      │
+├─────────────────┬───────────────────┤
+│ KDE AI Interface│  Backend Services │
+│ ┌─────────────┐ │ ┌───────────────┐ │
+│ │     UI      │ │ │  MCP Servers  │ │
+│ │  Components ├─┼─►  (System      │ │
+│ └─────────────┘ │ │   Control)    │ │
+│ ┌─────────────┐ │ └───────────────┘ │
+│ │  Memory     │ │ ┌───────────────┐ │
+│ │  System     ├─┼─►  Quark Server │ │
+│ └─────────────┘ │ │  (AMD Accel)  │ │
+│ ┌─────────────┐ │ └───────────────┘ │
+│ │  Agent      │ │ ┌───────────────┐ │
+│ │  System     ├─┼─► AI Models     │ │
+│ └─────────────┘ │ │ (Local/Remote)│ │
+└─────────────────┴───────────────────┘
 ```
 
 ### Components:
-- **PyQt5 Interface**: Native KDE application for user interaction
-- **MCP Client**: Handles communication with MCP servers
-- **Configuration Manager**: Stores user preferences and model connections
+- **KDE AI Interface**: PyQt6-based native KDE Plasma 6 application 
+- **MCP Servers**: System control capabilities for desktop integration
+- **Quark Server**: AMD Ryzen AI hardware acceleration
+- **Memory System**: Vector databases for short and long-term memory
+- **Agent System**: Specialized agents for different tasks
 
 ## 2. Technical Specifications
 
 ### Development Technologies
-- **Language**: Python 3.10+
-- **UI Framework**: PyQt5/PySide2
-- **Protocol**: Model Context Protocol (MCP)
+- **Language**: Python 3.12+
+- **UI Framework**: PyQt6 (for KDE Plasma 6)
+- **Protocol**: Model Context Protocol (MCP) 
+- **Memory System**: Qdrant/ChromaDB for vector storage
+- **Database**: PostgreSQL/Redis for structured storage
+- **Hardware Acceleration**: AMD XDNA NPU support
 - **Additional Libraries**:
-  - `requests` for API communication
+  - `aiohttp` for async API communication
   - `websockets` for streaming responses
   - `keyring` for secure credential storage
+  - `onnxruntime` with Vitis AI Execution Provider
 
 ### System Requirements
-- KDE Plasma Desktop 5.24+
-- Qt 5.15+ or Qt 6.2+
-- Python 3.10+
-- 100MB disk space for application
+- KDE Plasma 6.1+ (tested with 6.1.5)
+- KDE Frameworks 6.0+ (tested with 6.6.0)
+- Qt 6.6+ (tested with 6.6.2)
+- Linux Kernel 6.10+ (tested with 6.11.0-19)
+- Python 3.12+
+- Wayland display server compatibility
+- 200MB disk space for application
+- For hardware acceleration: AMD Ryzen AI compatible hardware
 
 ## 3. User Interface Design
 
@@ -48,158 +68,261 @@ This document outlines the development of a native KDE Plasma interface for inte
    - Expands to conversational view when engaged
 
 2. **Conversation View**
-   - Resizable, draggable window
+   - Resizable, draggable window with modern KDE Plasma 6 styling
    - Split into conversation history and input area
-   - Support for markdown rendering
-   - Code syntax highlighting
+   - Support for markdown rendering and code syntax highlighting
    - Option to pin window to stay visible
+   - Collapsible sections for better space management
 
 3. **System Integration**
    - Optional system tray icon
    - Notification support
-   - Theme-aware (follows KDE color scheme)
+   - Theme-aware (follows KDE Breeze theme)
    - Accessibility features
+   - Wayland compatibility
+
+4. **Multi-Backend Selection**
+   - OpenAI API integration
+   - Ollama backend for local models
+   - AMD Ryzen AI hardware acceleration
+
+5. **Memory Controls**
+   - Toggle buttons for memory features
+   - Conversation history management
+   - RAG (Retrieval-Augmented Generation) toggle
+   - Context controls
 
 ## 4. Feature Requirements
 
-### MVP Features
+### Core Features
 - Text-based conversation with AI models
-- Model selection from available MCP servers
-- History within session
-- Basic system integration (shortcuts, theming)
-- Copy/paste support
+- Multiple backend support (OpenAI, Ollama, AMD Ryzen AI)
+- Conversation history with persistence
+- Model selection dropdown
+- System integration (shortcuts, theming)
+- Memory system with vector database
 
-### Future Enhancements
-- Voice input/output
-- Image understanding/generation
-- Persistent conversation history
-- Context-aware suggestions based on current applications
-- Plugin system for extended capabilities
+### Advanced Features
+- Agent system with specialized capabilities (KDE, Code, Data, Network)
+- Hardware acceleration for AMD Ryzen AI
+- RAG (Retrieval-Augmented Generation)
+- Semantic search across memory
+- Screen content context (capture and analysis)
 
-## 5. MCP Integration
+## 5. Multi-Backend Integration
 
 ### Communication Flow
 1. User input captured through interface
-2. Request formatted to MCP specification
-3. Request sent to configured MCP server
-4. Streaming response received and displayed
-5. Context maintained for conversation continuity
+2. Backend manager routes request to appropriate backend
+3. For MCP-enabled agents, request routed through MCP servers
+4. Memory system enhances prompt with relevant context
+5. Response streamed back to user interface
+6. Context maintained in memory system
 
 ### Configuration Options
-- Multiple MCP server connections
-- Per-server authentication
-- Context window settings
-- Temperature and other inference parameters
+- OpenAI API settings (key, model, parameters)
+- Ollama server configuration (URL, model selection)
+- AMD Ryzen AI options (model selection, performance settings)
+- Memory system settings (vector database, embedding model)
+- Agent permissions and capabilities
 
-## 6. Development Roadmap
+## 6. Memory System
 
-### Phase 1: Foundation (Weeks 1-2)
-- Basic PyQt5 application structure
-- UI layout implementation
-- Placeholder functions for AI interaction
+### Components
+- Short-term memory for current conversation
+- Long-term memory via vector database (Qdrant or ChromaDB)
+- Structured storage with PostgreSQL and Redis
+- Memory integration layer for GUI interfaces
+- RAG for context-enhanced responses
 
-### Phase 2: MCP Integration (Weeks 3-4)
-- MCP client implementation
-- Response streaming
-- Basic error handling
-- Configuration storage
+### Capabilities
+- Semantic search across all memories
+- Contextual prompt enhancement
+- Conversation history management
+- Screen content memory (from captures)
 
-### Phase 3: System Integration (Weeks 5-6)
-- Global shortcuts
-- KDE theming compatibility
-- System tray functionality
-- Notifications
+## 7. Agent System
 
-### Phase 4: Polish (Weeks 7-8)
-- Performance optimization
-- Accessibility improvements
-- Documentation
-- Packaging for distribution
+### Agent Types
+- DirectAgent: Basic assistant without additional tools
+- KDEDesktopAgent: Interacts with KDE desktop via MCP
+- CodeExecutionAgent: Can execute code and provide results
+- DataAnalysisAgent: Analyzes data provided in the context
+- NetworkAgent: Performs network operations
 
-## 7. Implementation Details
+### MCP Integration
+- Tool access via MCP servers
+- Security permissions for system operations
+- User control over agent capabilities
 
-### PyQt5 Application Structure
+## 8. Implementation Details
+
+### Application Structure
 
 ```python
-# Main application structure
-app_root/
-├── main.py                 # Entry point
-├── ui/
-│   ├── main_window.py      # Main window implementation
-│   ├── conversation_view.py # Conversation display widget
-│   ├── input_area.py       # User input widget
-│   └── settings_dialog.py  # Configuration dialog
-├── mcp/
-│   ├── client.py           # MCP protocol client
-│   ├── message.py          # Message formatting
-│   └── streaming.py        # Streaming response handler
-├── config/
-│   ├── settings.py         # User settings manager
-│   └── models.py           # Model configuration
-└── utils/
-    ├── shortcuts.py        # Global shortcut handler
-    ├── markdown.py         # Markdown rendering
-    └── system_integration.py # KDE integration functions
+# Current consolidated structure
+UnicornCommander/
+├── KDE_AI_Interface/
+│   ├── app_root/
+│   │   ├── ui/             # UI components
+│   │   ├── mcp/            # MCP client
+│   │   ├── config/         # Configuration
+│   │   ├── rag/            # RAG components
+│   │   ├── memory/         # Memory system
+│   │   ├── agents/         # Agent system
+│   │   ├── system/         # System integration
+│   │   └── utils/          # Utility functions
+│   ├── amd-ryzen-ai/       # AMD AI hardware support
+│   ├── unified_ai_gui.py   # Unified interface
+│   └── run_kde_ai_interface.py # Main launcher
+├── MCP_Servers/            # Backend services
+├── Quark_Server/           # AMD Quark acceleration
+└── Docs/                   # Documentation
 ```
 
 ### MCP Client Interface
 
 ```python
-class MCPClient:
-    def __init__(self, server_url, api_key=None):
-        self.server_url = server_url
-        self.api_key = api_key
-        self.session = requests.Session()
-        if api_key:
-            self.session.headers.update({"Authorization": f"Bearer {api_key}"})
-
-    async def send_message(self, message, context=None, stream=True):
-        """Send message to MCP server and return response"""
-        # Implementation details for MCP protocol
-
-    async def stream_response(self, response):
-        """Handle streaming response from MCP server"""
-        # Implementation for websocket or chunked HTTP responses
+class MCPCoordinatorClient(QObject):
+    """Client for interacting with the MCP Central Coordinator and its servers"""
+    
+    # Signals
+    operation_started = pyqtSignal()
+    operation_result = pyqtSignal(dict)
+    operation_error = pyqtSignal(str)
+    
+    async def query_krunner(self, query):
+        """Query KRunner for the given search term"""
+        return await self.execute_operation("kde", "/api/krunner/query", "POST", {"query": query})
+    
+    async def execute_code(self, code, language="python"):
+        """Execute code in the specified language"""
+        return await self.execute_operation("code", "/api/execute", "POST", 
+                                           {"code": code, "language": language})
 ```
 
-## 8. User Workflow
+## 9. Hardware Acceleration Setup
+
+### AMD Ryzen AI Setup (Ubuntu 24.10)
+
+1. **Install ROCm Components**:
+   ```bash
+   # Update system
+   sudo apt update && sudo apt upgrade -y
+   
+   # Add ROCm repository
+   wget -qO - http://repo.radeon.com/rocm/rocm.gpg.key | sudo apt-key add -
+   echo 'deb [arch=amd64] http://repo.radeon.com/rocm/apt/debian/ noble main' | sudo tee /etc/apt/sources.list.d/rocm.list
+   
+   # Install ROCm components
+   sudo apt update
+   sudo apt install -y rocm-smi rocminfo rocm-cmake
+   ```
+
+2. **Install XDNA Driver**:
+   ```bash
+   sudo apt install -y amdxdna-dkms
+   sudo modprobe amdxdna
+   ```
+
+3. **Install XRT (Xilinx Runtime)**:
+   ```bash
+   # XRT package for Ubuntu 24.10
+   sudo apt install -y xrt
+   
+   # Set environment variables
+   echo 'export XILINX_XRT=/opt/xilinx/xrt' | sudo tee -a /etc/environment
+   ```
+
+4. **Download and Install AMD Ryzen AI Software Stack**:
+   ```bash
+   # Download from AMD's official website and install
+   # Specific commands will depend on AMD's latest package format
+   
+   # Verify installation
+   python -c "import onnxruntime as ort; print(ort.get_available_providers())"
+   # Should show 'VitisAIExecutionProvider' in the list
+   ```
+
+5. **Verify Hardware Acceleration**:
+   ```bash
+   # Check XDNA device
+   ls -la /dev/amdxdna*
+   
+   # Check ROCm installation
+   rocminfo
+   ```
+
+### Performance Expectations:
+- **DeepSeek 6.7B**: 15-25 tokens/second with NPU acceleration
+- **DeepSeek 1.3B**: 40-60 tokens/second with NPU acceleration
+- **CPU-only fallback**: Still functional but with reduced performance
+
+## 10. User Workflow
 
 1. User activates interface via Alt+Space
-2. Quick bar appears, accepting text input
+2. Interface appears, accepting text input
 3. User types query and presses Enter
-4. Interface expands to conversation view
-5. Query is sent to configured MCP server
-6. Response streams in real-time to conversation view
-7. User can continue conversation or dismiss interface
+4. If multiple backends are configured, user can select desired backend
+5. Memory system enhances prompt with relevant context
+6. If agent features are needed, appropriate agent is activated
+7. Response streams in real-time with formatting
+8. Conversation is automatically saved to memory
 
-## 9. Testing Strategy
+## 11. Distribution and Deployment
 
-- Unit tests for MCP client
-- Integration tests for UI components
-- End-to-end testing with mock MCP server
-- User testing for interface usability
-- Performance testing for response times
+### Packaging for KDE Plasma 6
+- Create AppImage for easy distribution
+- Package as Flatpak for distribution via Flathub
+- Create .deb packages for Ubuntu 24.10 and derivatives
+- Include in KDE Neon Developer Edition
 
-## 10. Distribution Plan
+### System Integration
+- Desktop file for KDE application menu
+- Automatic startup option
+- Global keyboard shortcuts
+- KRunner plugin integration
 
-- Package as standard KDE application (.deb/.rpm packages)
-- Include in custom KDE Plasma distribution
-- Provide installation scripts for existing KDE installations
-- Distribution through KDE Store
-
-## 11. Security Considerations
+## 12. Security Considerations
 
 - Secure storage of API keys using system keyring
-- Local-only processing option for sensitive information
-- Clear data retention policies
-- User control over conversation logging
+- Sandboxed code execution environment
+- Permission system for MCP server operations
+- Encryption for stored conversations
+- Opt-in data collection policy
 
-## 12. Next Steps
+## 13. Setup for Ubuntu 24.10 with KDE Plasma 6
 
-1. Set up development environment with PyQt5
-2. Create basic UI prototype
-3. Implement placeholder MCP client
-4. Test with local models
-5. Refine UI based on initial testing
-6. Implement full MCP protocol support
+1. **Install Dependencies**:
+   ```bash
+   sudo apt update
+   sudo apt install -y python3-pyqt6 python3-pyqt6.qtwebengine python3-pip python3-venv
+   sudo apt install -y libqt6sql6-psql redis-server postgresql
+   ```
 
+2. **Create Python Virtual Environment**:
+   ```bash
+   python3 -m venv ~/unicorn-env
+   source ~/unicorn-env/bin/activate
+   pip install -r requirements.txt
+   ```
+
+3. **Set Up Databases**:
+   ```bash
+   # PostgreSQL setup
+   sudo -u postgres createdb kde_ai_interface
+   sudo -u postgres createuser -P $USER
+   sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE kde_ai_interface TO $USER;"
+   
+   # Start Redis
+   sudo systemctl start redis
+   ```
+
+4. **Run the Application**:
+   ```bash
+   # Main unified interface
+   ./run_unified_ai_gui.sh
+   
+   # Or hardware-accelerated version if AMD Ryzen AI is available
+   ./run_ryzen_ai_model.py
+   ```
